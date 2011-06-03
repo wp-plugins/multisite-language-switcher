@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 16:48+0200\n"
+"POT-Creation-Date: 2011-06-03 19:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,65 +17,66 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: MultisiteLanguageSwitcher.php:140 MultisiteLanguageSwitcher.php:148
-#: MultisiteLanguageSwitcher.php:252 MultisiteLanguageSwitcher.php:253
+#: MultisiteLanguageSwitcher.php:124 MultisiteLanguageSwitcher.php:132
+#: MultisiteLanguageSwitcher.php:236 MultisiteLanguageSwitcher.php:237
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:190 MultisiteLanguageSwitcher.php:271
+#: MultisiteLanguageSwitcher.php:174 MultisiteLanguageSwitcher.php:256
 msgid "Update"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:197
+#: MultisiteLanguageSwitcher.php:181
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:265
+#: MultisiteLanguageSwitcher.php:249
 msgid "Multisite Language Switcher Options"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:277
+#: MultisiteLanguageSwitcher.php:250
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr ""
+
+#: MultisiteLanguageSwitcher.php:262
 msgid "Main Settings"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:278
+#: MultisiteLanguageSwitcher.php:263
 msgid "Display"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:279
+#: MultisiteLanguageSwitcher.php:264
 msgid "Description"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:280
-msgid "Text/codes before the list"
+#: MultisiteLanguageSwitcher.php:265
+msgid "Text/HTML before the list"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:281
-msgid "Text/codes after the list"
+#: MultisiteLanguageSwitcher.php:266
+msgid "Text/HTML after the list"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:282
-msgid "Text/codes before each item"
+#: MultisiteLanguageSwitcher.php:267
+msgid "Text/HTML before each item"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:283
-msgid "Text/codes after each item"
+#: MultisiteLanguageSwitcher.php:268
+msgid "Text/HTML after each item"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:290
+#: MultisiteLanguageSwitcher.php:275
 msgid "Flags and description"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:291
+#: MultisiteLanguageSwitcher.php:276
 msgid "Flags only"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:292
+#: MultisiteLanguageSwitcher.php:277
 msgid "Description only"
-msgstr ""
-
-#: MultisiteLanguageSwitcher.php:293
-msgid "Don't include this blog"
 msgstr ""

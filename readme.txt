@@ -7,11 +7,11 @@ Requires at least: 3.0
 Tested up to:  3.1.3
 Stable tag: 0.1
 
-A simple but powerful plugin that will help to you to manage the relations of the posts and pages of your multisite-multilingual-installation
+A simple but powerful plugin that will help you to manage the relations of posts and pages in your multisite-multilingual-installation
 
 == Description ==
 
-A simple but powerful plugin that will help to you to manage the relations of the posts and pages of your multisite-multilingual-installation
+A simple but powerful plugin that will help you to manage the relations of posts and pages in your multisite-multilingual-installation
 
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
@@ -19,10 +19,11 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 
 - download the plugin
 - uncompress it with your preferred unzip programme
-- copy the entire directory in your plugins directory of your wordpress blog (/wp-content/plugins)
-- activate the plugin in your plugins page
+- copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
+- activate the plugin in your plugin page
 - set some configuration in Options -> Multisite Language Switcher
 - set the relations of your pages and posts in Posts -> Edit or Page -> Edit 
+- It's ready! ;)
 
 == Changelog ==
 
