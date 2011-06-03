@@ -1,0 +1,33 @@
+# Italian translations for PACKAGE package
+# Traduzioni italiane per il pacchetto PACKAGE..
+# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Dennis Ploetner <lella@freely.de>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-02 14:20+0200\n"
+"PO-Revision-Date: 2011-06-02 14:50+0100\n"
+"Last-Translator: Dennis Ploetner <dploetner@feniciaspa.it>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: MultisiteLanguageSwitcher.php:122
+#: MultisiteLanguageSwitcher.php:130
+msgid "Multisite Language Switcher"
+msgstr ""
+
+#: MultisiteLanguageSwitcher.php:172
+msgid "Update"
+msgstr ""
+
+#: MultisiteLanguageSwitcher.php:179
+msgid "You should define at least another blog in a different language for having some benefit thru this plugin!"
+msgstr ""
+
