@@ -1,0 +1,91 @@
+# German translations for PACKAGE package.
+# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Dennis Ploetner <re@lloc.de>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Language Switcher 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-03 19:47+0200\n"
+"PO-Revision-Date: 2011-06-03 19:51+0100\n"
+"Last-Translator: Dennis Ploetner <dploetner@feniciaspa.it>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-KeywordsList: __\n"
+
+#: MultisiteLanguageSwitcher.php:124
+#: MultisiteLanguageSwitcher.php:132
+#: MultisiteLanguageSwitcher.php:236
+#: MultisiteLanguageSwitcher.php:237
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
+
+#: MultisiteLanguageSwitcher.php:174
+#: MultisiteLanguageSwitcher.php:256
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: MultisiteLanguageSwitcher.php:181
+#, fuzzy
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
+
+#: MultisiteLanguageSwitcher.php:249
+#, fuzzy
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher"
+
+#: MultisiteLanguageSwitcher.php:250
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin für jedes Blog einzeln konfiguriert werden."
+
+#: MultisiteLanguageSwitcher.php:262
+msgid "Main Settings"
+msgstr "Einstellungen"
+
+#: MultisiteLanguageSwitcher.php:263
+msgid "Display"
+msgstr "Anzeige"
+
+#: MultisiteLanguageSwitcher.php:264
+msgid "Description"
+msgstr "Beschreibung"
+
+#: MultisiteLanguageSwitcher.php:265
+msgid "Text/HTML before the list"
+msgstr "Text/HTML vor der Liste"
+
+#: MultisiteLanguageSwitcher.php:266
+msgid "Text/HTML after the list"
+msgstr "Text/HTML nach der Liste"
+
+#: MultisiteLanguageSwitcher.php:267
+msgid "Text/HTML before each item"
+msgstr "Text/HTML vor jedem Element"
+
+#: MultisiteLanguageSwitcher.php:268
+msgid "Text/HTML after each item"
+msgstr "Text/HTML nach jedem Element"
+
+#: MultisiteLanguageSwitcher.php:275
+msgid "Flags and description"
+msgstr "Flagge und Beschreibung"
+
+#: MultisiteLanguageSwitcher.php:276
+msgid "Flags only"
+msgstr "Nur Flagge"
+
+#: MultisiteLanguageSwitcher.php:277
+msgid "Description only"
+msgstr "Nur beschreibung"
+
+#~ msgid "Don't include this blog"
+#~ msgstr "Dieses Blog nicht einbeziehen"
+
