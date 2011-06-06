@@ -32,16 +32,16 @@ if (!class_exists('MslsMain')) {
 		static function init ();
 	}
 
-    require_once (dirname (__FILE__) . '/include/MslsOutput.php');
+    require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
 
 	register_activation_hook (__FILE__, 'MslsMain::activate');
 	register_deactivation_hook (__FILE__, 'MslsMain::deactivate');
 
 	if (is_admin()) {
-		require_once (dirname (__FILE__) . '/include/MslsMetaBox.php');
+		require_once (dirname (__FILE__) . '/includes/MslsMetaBox.php');
 		add_action ('load-post.php', 'MslsMetaBox::init');
 
-		require_once (dirname (__FILE__) . '/include/MslsAdmin.php');
+		require_once (dirname (__FILE__) . '/includes/MslsAdmin.php');
 		add_action ('admin_menu', 'MslsAdmin::init');
 	}
 
