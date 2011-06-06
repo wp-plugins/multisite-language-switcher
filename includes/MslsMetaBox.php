@@ -1,5 +1,7 @@
 <?php
 
+require_once (dirname (__FILE__) . '/MslsMain.php');
+
 class MslsMetaBox extends MslsMain implements iMslsMain {
 
 	static function init () {
@@ -34,7 +36,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 		if ($blogs) {
 			$temp = $post;
 			$mydata = get_option (self::DEF_STRING . '_' . $post->ID);
-			wp_nonce_field (plugin_basename (__FILE__), self::DEF_STRING . '_noncename');
+			wp_nonce_field (MSLS_PLUGIN_DIR, self::DEF_STRING . '_noncename');
 			echo '<ul>';
 			foreach ($blogs as $language => $blog) {
 				switch_to_blog ($blog->userblog_id);
@@ -85,7 +87,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 	public function save ($post_id) {
 		if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE) 
 			return;
-		if (!wp_verify_nonce ($_POST[self::DEF_STRING . '_noncename'], plugin_basename( __FILE__ )))
+		if (!wp_verify_nonce ($_POST[self::DEF_STRING . '_noncename'], MSLS_PLUGIN_DIR))
 			return;
 		if ('page' == $_POST['post_type']) {
 			if (!current_user_can ('edit_page', $post_id))

@@ -1,5 +1,7 @@
 <?php
 
+require_once (dirname (__FILE__) . '/MslsMain.php');
+
 class MslsOutput extends MslsMain implements iMslsMain {
 
 	static function init () {

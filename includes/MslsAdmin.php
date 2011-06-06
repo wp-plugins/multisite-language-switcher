@@ -1,5 +1,7 @@
 <?php
 
+require_once (dirname (__FILE__) . '/MslsMain.php');
+
 class MslsAdmin extends MslsMain implements iMslsMain {
 
 	static function init () {
