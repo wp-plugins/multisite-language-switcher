@@ -1,5 +1,7 @@
 <?php
 
+require_once (dirname (__FILE__) . '/MslsOptions.php');
+
 interface iMslsMain {
 
 	static function init ();
@@ -10,12 +12,10 @@ class MslsMain {
 
 	protected $user_id;
 	protected $current_blog_id;
+	protected $options;
 
 	protected $blogs = null;
 	protected $image_url = null;
-	protected $options = null;
-
-	const DEF_STRING = 'msls';
 
 	static function activate () {
 		if (function_exists ('is_multisite') && is_multisite ()) 
@@ -31,7 +31,8 @@ class MslsMain {
 	public function __construct () {
 		$this->current_blog_id = get_current_blog_id ();
 		$this->user_id = get_user_id_from_string (get_blog_option ($this->current_blog_id, 'admin_email'));
-		load_plugin_textdomain (self::DEF_STRING, false, dirname (plugin_basename ( __FILE__ )) . '/languages/');
+		$this->options = new MslsOptions;
+		load_plugin_textdomain (MSLS_DEF_STRING, false, dirname (plugin_basename ( __FILE__ )) . '/languages/');
 	}
 
 	public function get_blogs () {
@@ -51,8 +52,9 @@ class MslsMain {
 	public function get_image_url ($language) {
 		if (is_null ($this->image_url)) {
 			$this->image_url = sprintf (
-				'%s/%s/%s',
-				WP_PLUGIN_URL, dirname (MSLS_PLUGIN_DIR), 'flags'
+				'%s/%s/flags',
+				WP_PLUGIN_URL, 
+				dirname (MSLS_PLUGIN_PATH)
 			);
 		}
 		if (strlen ($language) == 5) 
@@ -61,13 +63,6 @@ class MslsMain {
 			'%s/%s.png',
 			$this->image_url, $language
 		);
-	}
-
-	public function get_options ($key = null) {
-		if (is_null ($this->options)) {
-			$this->options = get_option (self::DEF_STRING);
-		}
-		return (!is_null ($key) && isset ($this->options[$key]) ? $this->options[$key] : $this->options);
 	}
 
 }

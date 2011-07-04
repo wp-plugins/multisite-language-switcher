@@ -28,11 +28,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 if (!class_exists('MslsMain')) {
 
-	if (!defined ('MSLS_PLUGIN_DIR'))  
-		define ('MSLS_PLUGIN_DIR', plugin_basename (__FILE__));
+	if (!defined ('MSLS_PLUGIN_PATH'))  
+		define ('MSLS_PLUGIN_PATH', plugin_basename (__FILE__));
 
-    require_once (dirname (__FILE__) . '/includes/MslsMain.php');
-    require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
+	require_once (dirname (__FILE__) . '/includes/MslsMain.php');
+	require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
 
 	register_activation_hook (__FILE__, 'MslsMain::activate');
 	register_deactivation_hook (__FILE__, 'MslsMain::deactivate');
@@ -43,11 +43,6 @@ if (!class_exists('MslsMain')) {
 
 		require_once (dirname (__FILE__) . '/includes/MslsAdmin.php');
 		add_action ('admin_menu', 'MslsAdmin::init');
-	}
-
-	function the_msls () {
-		$obj = new MslsOutput ();
-		echo $obj->output ();
 	}
 
 }
