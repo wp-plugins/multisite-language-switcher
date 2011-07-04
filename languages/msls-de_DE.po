@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 19:47+0200\n"
-"PO-Revision-Date: 2011-06-03 19:51+0100\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2011-07-04 12:35:53+00:00\n"
+"PO-Revision-Date: 2011-07-04 14:42+0100\n"
 "Last-Translator: Dennis Ploetner <dploetner@feniciaspa.it>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -20,71 +20,73 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-KeywordsList: __\n"
 
-#: MultisiteLanguageSwitcher.php:124
-#: MultisiteLanguageSwitcher.php:132
-#: MultisiteLanguageSwitcher.php:236
-#: MultisiteLanguageSwitcher.php:237
+#: includes/MslsLink.php:20
+msgid "Flag and description"
+msgstr "Flagge und Beschreibung"
+
+#: includes/MslsLink.php:62
+msgid "Description only"
+msgstr "Nur Beschreibung"
+
+#: includes/MslsLink.php:72
+msgid "Flag only"
+msgstr "Nur Flagge"
+
+#: includes/MslsLink.php:82
+msgid "Description and flag"
+msgstr "Beschreibung und Flagge"
+
+#: includes/MslsAdmin.php:12
+#: includes/MslsAdmin.php:13
+#: includes/MslsMetaBox.php:18
+#: includes/MslsMetaBox.php:26
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: MultisiteLanguageSwitcher.php:174
-#: MultisiteLanguageSwitcher.php:256
-msgid "Update"
-msgstr "Aktualisieren"
-
-#: MultisiteLanguageSwitcher.php:181
-#, fuzzy
-msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
-msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
-
-#: MultisiteLanguageSwitcher.php:249
-#, fuzzy
+#: includes/MslsAdmin.php:25
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher"
 
-#: MultisiteLanguageSwitcher.php:250
+#: includes/MslsAdmin.php:26
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin für jedes Blog einzeln konfiguriert werden."
 
-#: MultisiteLanguageSwitcher.php:262
+#: includes/MslsAdmin.php:32
+#: includes/MslsMetaBox.php:68
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: includes/MslsAdmin.php:38
 msgid "Main Settings"
 msgstr "Einstellungen"
 
-#: MultisiteLanguageSwitcher.php:263
+#: includes/MslsAdmin.php:39
 msgid "Display"
 msgstr "Anzeige"
 
-#: MultisiteLanguageSwitcher.php:264
+#: includes/MslsAdmin.php:40
 msgid "Description"
 msgstr "Beschreibung"
 
-#: MultisiteLanguageSwitcher.php:265
+#: includes/MslsAdmin.php:41
 msgid "Text/HTML before the list"
 msgstr "Text/HTML vor der Liste"
 
-#: MultisiteLanguageSwitcher.php:266
+#: includes/MslsAdmin.php:42
 msgid "Text/HTML after the list"
 msgstr "Text/HTML nach der Liste"
 
-#: MultisiteLanguageSwitcher.php:267
+#: includes/MslsAdmin.php:43
 msgid "Text/HTML before each item"
 msgstr "Text/HTML vor jedem Element"
 
-#: MultisiteLanguageSwitcher.php:268
+#: includes/MslsAdmin.php:44
 msgid "Text/HTML after each item"
 msgstr "Text/HTML nach jedem Element"
 
-#: MultisiteLanguageSwitcher.php:275
-msgid "Flags and description"
-msgstr "Flagge und Beschreibung"
-
-#: MultisiteLanguageSwitcher.php:276
-msgid "Flags only"
-msgstr "Nur Flagge"
-
-#: MultisiteLanguageSwitcher.php:277
-msgid "Description only"
-msgstr "Nur beschreibung"
+#: includes/MslsMetaBox.php:75
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
 
 #~ msgid "Don't include this blog"
 #~ msgstr "Dieses Blog nicht einbeziehen"

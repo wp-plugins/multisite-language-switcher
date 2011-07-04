@@ -1,6 +1,7 @@
 <?php
 
 require_once (dirname (__FILE__) . '/MslsMain.php');
+require_once (dirname (__FILE__) . '/MslsOptions.php');
 
 class MslsMetaBox extends MslsMain implements iMslsMain {
 
@@ -14,7 +15,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 	public function add () {
 		add_meta_box (
 			 'msls',
-			 __ ("Multisite Language Switcher", self::DEF_STRING),
+			 __ ("Multisite Language Switcher", MSLS_DEF_STRING),
 			 array ($this, 'render_post'),
 			 'post',
 			 'side',
@@ -22,7 +23,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 		);
 		add_meta_box (
 			 'msls',
-			 __ ("Multisite Language Switcher", self::DEF_STRING),
+			 __ ("Multisite Language Switcher", MSLS_DEF_STRING),
 			 array ($this, 'render_page'),
 			 'page',
 			 'side',
@@ -35,8 +36,8 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 		$blogs = $this->get_blogs ();
 		if ($blogs) {
 			$temp = $post;
-			$mydata = get_option (self::DEF_STRING . '_' . $post->ID);
-			wp_nonce_field (MSLS_PLUGIN_DIR, self::DEF_STRING . '_noncename');
+			$mydata = new MslsPostOptions ($post->ID);
+			wp_nonce_field (MSLS_PLUGIN_PATH, MSLS_DEF_STRING . '_noncename');
 			echo '<ul>';
 			foreach ($blogs as $language => $blog) {
 				switch_to_blog ($blog->userblog_id);
@@ -47,31 +48,31 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 					'orderby' => 'title',
 					'order' => 'ASC',
 				); 
-				$my_query = new WP_Query ($args);
 				$options = '';
+				$my_query = new WP_Query ($args);
 				while ($my_query->have_posts ()) {
 					$my_query->the_post ();
 					$my_id = get_the_ID ();
 					$options .= sprintf (
 						'<option value="%s"%s>%s</option>',
-						$my_id, (isset ($mydata[$language]) && $my_id == $mydata[$language] ? ' selected="selected"' : ''), get_the_title ()
+						$my_id, ($my_id == $mydata->$language ? ' selected="selected"' : ''), get_the_title ()
 					);
 				}
 				printf (
 					'<li><label for="%s[%s]"><img alt="%s" src="%s" /> </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
-					self::DEF_STRING, $language, $language, $this->get_image_url ($language), self::DEF_STRING, $language, $options
+					MSLS_DEF_STRING, $language, $language, $this->get_image_url ($language), MSLS_DEF_STRING, $language, $options
 				);
 			}
 			printf (
 				'</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
-				__ ("Update", self::DEF_STRING)
+				__ ("Update", MSLS_DEF_STRING)
 			);
 			$post = $temp;
 			restore_current_blog ();
 		} else {
 			printf (
 				'<p>%s</p>',
-				__ ("You should define at least another blog in a different language in order to have some benefit from this plugin!", self::DEF_STRING)
+				__ ("You should define at least another blog in a different language in order to have some benefit from this plugin!", MSLS_DEF_STRING)
 			);
 		}
 	}
@@ -87,7 +88,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 	public function save ($post_id) {
 		if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE) 
 			return;
-		if (!wp_verify_nonce ($_POST[self::DEF_STRING . '_noncename'], MSLS_PLUGIN_DIR))
+		if (!wp_verify_nonce ($_POST[MSLS_DEF_STRING . '_noncename'], MSLS_PLUGIN_PATH))
 			return;
 		if ('page' == $_POST['post_type']) {
 			if (!current_user_can ('edit_page', $post_id))
@@ -96,10 +97,9 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 			if (!current_user_can ('edit_post', $post_id))
 				return;
 		}
-		$mydata = $_POST[self::DEF_STRING];
+		$mydata = $_POST[MSLS_DEF_STRING];
 		$language = get_blog_option ($blog->current_blog_id, 'WPLANG');
 		$mydata[$language] = $post_id;
-
 		$this->set ($mydata, $language);
 		foreach ($this->get_blogs () as $language => $blog) {
 			switch_to_blog ($blog->userblog_id);
@@ -110,7 +110,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 	}
 
 	protected function set ($mydata, $language) {
-		$myname = self::DEF_STRING . '_' . $mydata[$language];
+		$myname = MSLS_DEF_STRING . '_' . $mydata[$language];
 		delete_option ($myname);
 		if (!empty ($mydata[$language])) {
 			$mydata = array_filter ($mydata);
