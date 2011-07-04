@@ -21,7 +21,6 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 
 #: includes/MslsLink.php:20
-#, fuzzy
 msgid "Flag and description"
 msgstr "Flagge und Beschreibung"
 
@@ -30,7 +29,6 @@ msgid "Description only"
 msgstr "Nur Beschreibung"
 
 #: includes/MslsLink.php:72
-#, fuzzy
 msgid "Flag only"
 msgstr "Nur Flagge"
 
@@ -46,7 +44,6 @@ msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
 #: includes/MslsAdmin.php:25
-#, fuzzy
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher"
 
@@ -88,7 +85,6 @@ msgid "Text/HTML after each item"
 msgstr "Text/HTML nach jedem Element"
 
 #: includes/MslsMetaBox.php:75
-#, fuzzy
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
 msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
 
