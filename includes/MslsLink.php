@@ -69,7 +69,7 @@ class MslsLinkImageOnly extends MslsLink {
 	protected $format_string = '<img src="{src}" alt="{alt}"/>';
 
 	static function getDescription () {
-		return __ ("Description and flags", MSLS_DEF_STRING);
+		return __ ("Flags only", MSLS_DEF_STRING);
 	}
 
 }
@@ -79,8 +79,9 @@ class MslsLinkTextImage extends MslsLink {
 	protected $format_string = '{txt} <img src="{src}" alt="{alt}"/>';
 
 	static function getDescription () {
-		return __ ("Flags only", MSLS_DEF_STRING);
+		return __ ("Description and flags", MSLS_DEF_STRING);
 	}
+
 }
 
 ?>
