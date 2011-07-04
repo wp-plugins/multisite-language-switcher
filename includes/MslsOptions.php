@@ -18,7 +18,7 @@ class MslsOptions {
 		);
 	}
 
-	public function __isset () {
+	public function __isset ($key) {
 		return isset ($this->options[$key]);
 	}
 
