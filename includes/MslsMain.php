@@ -32,7 +32,7 @@ class MslsMain {
 		$this->current_blog_id = get_current_blog_id ();
 		$this->user_id = get_user_id_from_string (get_blog_option ($this->current_blog_id, 'admin_email'));
 		$this->options = new MslsOptions;
-		load_plugin_textdomain (MSLS_DEF_STRING, false, dirname (plugin_basename ( __FILE__ )) . '/languages/');
+		load_plugin_textdomain (MSLS_DEF_STRING, false, dirname (MSLS_PLUGIN_PATH) . '/languages/');
 	}
 
 	public function get_blogs () {
