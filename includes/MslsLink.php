@@ -7,7 +7,7 @@ class MslsLink {
 	protected $args = array ();
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
-	static function geTypes () {
+	static function getTypes () {
 		return array ( 
 			'0' => 'MslsLink',
 			'1' => 'MslsLinkTextOnly',
