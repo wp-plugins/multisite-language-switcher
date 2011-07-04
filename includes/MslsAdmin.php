@@ -85,7 +85,7 @@ class MslsAdmin extends MslsMain implements iMslsMain {
 	public function render_input ($key, $size = '30') {
 		return sprintf (
 			'<input id="%s" name="%s[%s]" value="%s" size="%s"/>',
-			$key, MSLS_DEF_STRING, $key, $this->options->$key
+			$key, MSLS_DEF_STRING, $key, $this->options->$key, $size
 		);
 
 	}
