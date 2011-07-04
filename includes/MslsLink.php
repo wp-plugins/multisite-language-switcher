@@ -9,7 +9,7 @@ class MslsLink {
 
 	static function geTypes () {
 		return array ( 
-			'0' => 'MslsLinkImageText',
+			'0' => 'MslsLink',
 			'1' => 'MslsLinkTextOnly',
 			'2' => 'MslsLinkImageOnly',
 			'3' => 'MslsLinkTextImage',
