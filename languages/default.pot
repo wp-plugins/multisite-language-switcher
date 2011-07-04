@@ -1,82 +1,81 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 19:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2011-07-04 12:35:53+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
 
-#: MultisiteLanguageSwitcher.php:124 MultisiteLanguageSwitcher.php:132
-#: MultisiteLanguageSwitcher.php:236 MultisiteLanguageSwitcher.php:237
+#: includes/MslsLink.php:20
+msgid "Flag and description"
+msgstr ""
+
+#: includes/MslsLink.php:62
+msgid "Description only"
+msgstr ""
+
+#: includes/MslsLink.php:72
+msgid "Flag only"
+msgstr ""
+
+#: includes/MslsLink.php:82
+msgid "Description and flag"
+msgstr ""
+
+#: includes/MslsAdmin.php:12 includes/MslsAdmin.php:13
+#: includes/MslsMetaBox.php:18 includes/MslsMetaBox.php:26
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:174 MultisiteLanguageSwitcher.php:256
-msgid "Update"
-msgstr ""
-
-#: MultisiteLanguageSwitcher.php:181
-msgid ""
-"You should define at least another blog in a different language in order to "
-"have some benefit from this plugin!"
-msgstr ""
-
-#: MultisiteLanguageSwitcher.php:249
+#: includes/MslsAdmin.php:25
 msgid "Multisite Language Switcher Options"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:250
+#: includes/MslsAdmin.php:26
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:262
+#: includes/MslsAdmin.php:32 includes/MslsMetaBox.php:68
+msgid "Update"
+msgstr ""
+
+#: includes/MslsAdmin.php:38
 msgid "Main Settings"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:263
+#: includes/MslsAdmin.php:39
 msgid "Display"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:264
+#: includes/MslsAdmin.php:40
 msgid "Description"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:265
+#: includes/MslsAdmin.php:41
 msgid "Text/HTML before the list"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:266
+#: includes/MslsAdmin.php:42
 msgid "Text/HTML after the list"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:267
+#: includes/MslsAdmin.php:43
 msgid "Text/HTML before each item"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:268
+#: includes/MslsAdmin.php:44
 msgid "Text/HTML after each item"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:275
-msgid "Flags and description"
-msgstr ""
-
-#: MultisiteLanguageSwitcher.php:276
-msgid "Flags only"
-msgstr ""
-
-#: MultisiteLanguageSwitcher.php:277
-msgid "Description only"
+#: includes/MslsMetaBox.php:75
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
 msgstr ""
