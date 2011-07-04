@@ -50,7 +50,7 @@ class MslsLink {
 
 }
 
-class MslsLinkTextOnly extends MslsLinkImageText {
+class MslsLinkTextOnly extends MslsLink {
 
 	protected $format_string = '<img src="{src}" alt="{alt}"/>';
 
@@ -60,7 +60,7 @@ class MslsLinkTextOnly extends MslsLinkImageText {
 
 }
 
-class MslsLinkImageOnly extends MslsLinkImageText {
+class MslsLinkImageOnly extends MslsLink {
 
 	protected $format_string = '{txt}';
 
@@ -70,7 +70,7 @@ class MslsLinkImageOnly extends MslsLinkImageText {
 
 }
 
-class MslsLinkTextImage extends MslsLinkImageText {
+class MslsLinkTextImage extends MslsLink {
 
 	protected $format_string = '{txt} <img src="{src}" alt="{alt}"/>';
 
