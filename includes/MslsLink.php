@@ -32,7 +32,7 @@ class MslsLink {
 	
 	public function create ($display) {
 		$types = self::getTypes ();
-		if (!in_array ($display, $types)) $display = 0;
+		if (!in_array ($display, array_keys ($types))) $display = 0;
 		return new $types[$display];
 	}
 
@@ -41,9 +41,13 @@ class MslsLink {
 	}
 
 	public function __toString () {
+		$temp = array ();
+		foreach (array_keys ($this->args) as $key) {
+			$temp[] = '{' . $key . '}';
+		}
 		return str_replace (
-			array_keys ($this->args), 
-			$this->args, 
+			$temp,
+			$this->args,
 			$this->format_string
 		);
 	}
