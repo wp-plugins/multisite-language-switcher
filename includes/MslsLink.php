@@ -8,7 +8,7 @@ class MslsLink {
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
 	static function geTypes () {
-		return ( 
+		return array ( 
 			'0' => 'MslsLinkImageText',
 			'1' => 'MslsLinkTextOnly',
 			'2' => 'MslsLinkImageOnly',
