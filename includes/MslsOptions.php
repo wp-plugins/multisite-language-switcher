@@ -30,12 +30,17 @@ class MslsPostOptions extends MslsOptions {
 		$this->options = get_option (MSLS_DEF_STRING . '_' . $post_id);
 	}
 
-	public function get_permalink ($language) {
+	public function get_postlink ($language) {
 		return (
 			(is_single () || is_page ()) && !empty ($this->options[$language]) ? 
 			get_permalink ($this->options[$language]) : 
-			site_url ()
+			false
 		);
+	}
+
+	public function get_permalink ($language) {
+		$postlink = $this->get_postlink ($language);
+		return ($postlink ? $postlink : site_url ());
 	}
 
 }

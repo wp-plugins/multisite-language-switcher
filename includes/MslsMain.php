@@ -1,6 +1,7 @@
 <?php
 
 require_once (dirname (__FILE__) . '/MslsOptions.php');
+require_once (dirname (__FILE__) . '/MslsOutput.php');
 
 interface iMslsMain {
 
@@ -33,6 +34,8 @@ class MslsMain {
 		$this->user_id = get_user_id_from_string (get_blog_option ($this->current_blog_id, 'admin_email'));
 		$this->options = new MslsOptions;
 		load_plugin_textdomain (MSLS_DEF_STRING, false, dirname (MSLS_PLUGIN_PATH) . '/languages/');
+		if ($this->options->content_filter == 1)
+			add_filter ('the_content', 'msls_content_filter');
 	}
 
 	public function get_blogs () {

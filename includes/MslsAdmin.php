@@ -42,6 +42,8 @@ class MslsAdmin extends MslsMain implements iMslsMain {
 		add_settings_field ('after_output', __ ("Text/HTML after the list", MSLS_DEF_STRING), array ($this, 'after_output'), __CLASS__, 'section');
 		add_settings_field ('before_item', __ ("Text/HTML before each item", MSLS_DEF_STRING), array ($this, 'before_item'), __CLASS__, 'section');
 		add_settings_field ('after_item', __ ("Text/HTML after each item", MSLS_DEF_STRING), array ($this, 'after_item'), __CLASS__, 'section');
+		add_settings_field ('content_filter', __ ("Add hint for available translations", MSLS_DEF_STRING), array ($this, 'content_filter'), __CLASS__, 'section');
+		add_settings_field ('content_priority', __ ("Hint priority", MSLS_DEF_STRING), array ($this, 'content_priority'), __CLASS__, 'section');
 	}
 
 	public function section () { }
@@ -82,10 +84,38 @@ class MslsAdmin extends MslsMain implements iMslsMain {
 		echo $this->render_input ('after_item');
 	}
 
+	public function content_filter () {
+		printf (
+			'<input type="checkbox" id="content_filter" name="%s[content_filter]" value="1"%s/>',
+			MSLS_DEF_STRING, 
+			($this->options->content_filter == 1 ? ' checked="checked"' : '')
+		);
+	}
+
+	public function content_priority () {
+		$priority = (
+			!empty ($this->options->content_priority) ? 
+			$this->options->content_priority :
+			10
+		);
+		$items = '';
+		foreach (range (1, 10) as $key) {
+			$items .= sprintf (
+				'<option%s>%s</option>',
+				($priority == $key ? ' selected="selected"' : ''), 
+				$key
+			);
+		}
+		printf (
+			'<select id="content_priority" name="%s[content_priority]">%s</select>',
+			MSLS_DEF_STRING, $items
+		);
+	}
+
 	public function render_input ($key, $size = '30') {
 		return sprintf (
 			'<input id="%s" name="%s[%s]" value="%s" size="%s"/>',
-			$key, MSLS_DEF_STRING, $key, $this->options->$key, $size
+			$key, MSLS_DEF_STRING, $key, esc_attr ($this->options->$key), $size
 		);
 
 	}
