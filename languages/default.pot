@@ -1,81 +1,108 @@
-# Copyright (C) 2010 
-# This file is distributed under the same license as the  package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2011-07-04 12:35:53+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-05 16:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: includes/MslsLink.php:20
-msgid "Flag and description"
-msgstr ""
-
-#: includes/MslsLink.php:62
-msgid "Description only"
-msgstr ""
-
-#: includes/MslsLink.php:72
-msgid "Flag only"
-msgstr ""
-
-#: includes/MslsLink.php:82
-msgid "Description and flag"
-msgstr ""
-
-#: includes/MslsAdmin.php:12 includes/MslsAdmin.php:13
-#: includes/MslsMetaBox.php:18 includes/MslsMetaBox.php:26
+#: MslsAdmin.php:12 MslsAdmin.php:13 MslsMetaBox.php:18 MslsMetaBox.php:26
+#: MslsOutput.php:63
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: includes/MslsAdmin.php:25
+#: MslsAdmin.php:25
 msgid "Multisite Language Switcher Options"
 msgstr ""
 
-#: includes/MslsAdmin.php:26
+#: MslsAdmin.php:26
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 
-#: includes/MslsAdmin.php:32 includes/MslsMetaBox.php:68
+#: MslsAdmin.php:32 MslsMetaBox.php:68
 msgid "Update"
 msgstr ""
 
-#: includes/MslsAdmin.php:38
+#: MslsAdmin.php:38
 msgid "Main Settings"
 msgstr ""
 
-#: includes/MslsAdmin.php:39
+#: MslsAdmin.php:39
 msgid "Display"
 msgstr ""
 
-#: includes/MslsAdmin.php:40
+#: MslsAdmin.php:40
 msgid "Description"
 msgstr ""
 
-#: includes/MslsAdmin.php:41
+#: MslsAdmin.php:41
 msgid "Text/HTML before the list"
 msgstr ""
 
-#: includes/MslsAdmin.php:42
+#: MslsAdmin.php:42
 msgid "Text/HTML after the list"
 msgstr ""
 
-#: includes/MslsAdmin.php:43
+#: MslsAdmin.php:43
 msgid "Text/HTML before each item"
 msgstr ""
 
-#: includes/MslsAdmin.php:44
+#: MslsAdmin.php:44
 msgid "Text/HTML after each item"
 msgstr ""
 
-#: includes/MslsMetaBox.php:75
+#: MslsAdmin.php:45
+msgid "Add hint for available translations"
+msgstr ""
+
+#: MslsAdmin.php:46
+msgid "Hint priority"
+msgstr ""
+
+#: MslsLink.php:20
+msgid "Flag and description"
+msgstr ""
+
+#: MslsLink.php:62
+msgid "Description only"
+msgstr ""
+
+#: MslsLink.php:72
+msgid "Flag only"
+msgstr ""
+
+#: MslsLink.php:82
+msgid "Description and flag"
+msgstr ""
+
+#: MslsMetaBox.php:75
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
+msgstr ""
+
+#: MslsOutput.php:88
+msgid "Title"
+msgstr ""
+
+#: MslsOutput.php:105
+#, php-format
+msgid "%s and %s"
+msgstr ""
+
+#: MslsOutput.php:115
+#, php-format
+msgid "This post is also available in %s."
 msgstr ""
