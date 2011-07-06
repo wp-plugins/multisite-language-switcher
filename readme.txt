@@ -16,19 +16,21 @@ A simple but powerful plugin that will help you to manage the relations of posts
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
 = Translators =
-German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net)
-Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de)
+* German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net)
+* Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de)
+
+If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
 == Installation ==
 
-- download the plugin
-- uncompress it with your preferred unzip programme
-- copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
-- activate the plugin in your plugin page
-- set some configuration in Options -> Multisite Language Switcher
-- set the relations of your pages and posts in Posts -> Edit or Page -> Edit
-- you can use the widget and/or the content_filter which displays a hint if a translation is available
-- optionally you can use a command like <?php if (function_exists("the_msls")) the_msls(); ?> in your theme files
+* download the plugin
+* uncompress it with your preferred unzip programme
+* copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
+* activate the plugin in your plugin page
+* set some configuration in Options -> Multisite Language Switcher
+* set the relations of your pages and posts in Posts -> Edit or Page -> Edit
+* now you can use the widget and/or the content_filter which displays a hint if a translation is available
+* optionally you can use a line like _<?php if (function_exists("the_msls")) the_msls(); ?>_ directly in your theme-files
 
 == Changelog ==
 
