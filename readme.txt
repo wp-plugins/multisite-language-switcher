@@ -7,7 +7,7 @@ Requires at least: 3.0
 Tested up to:  3.2.1
 Stable tag: 0.6
 
-A simple but powerful plugin that will help you to manage the relations of posts and pages in your multisite-multilingual-installation
+A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation
 
 == Description ==
 
