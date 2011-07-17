@@ -4,10 +4,16 @@ if (!defined ('MSLS_DEF_STRING'))  define ('MSLS_DEF_STRING', 'msls');
 
 class MslsOptions {
 
-	protected $options;
+	protected $name;
+	protected $options = array ();
+	protected $exists = false;
+	protected $sep = '';
+	protected $autoload = 'yes';
 
 	public function __construct () {
-		$this->options = get_option (MSLS_DEF_STRING);
+		$args = func_get_args ();
+		$this->name = MSLS_DEF_STRING . $this->sep . implode ($this->sep, $args);
+		$this->exists = $this->set (get_option ($this->name));
 	}
 
 	public function __get ($key) {
@@ -18,29 +24,101 @@ class MslsOptions {
 		);
 	}
 
+	public function __set ($key, $value) {
+		if ('' == $value) {
+			if (isset ($this->options[$key]))
+				unset ($this->options[$key]);
+		} else {
+			$this->options[$key] = $value;
+		}
+	}
+
+	public function set ($arr) {
+		if (is_array ($arr)) {
+			foreach ($arr as $key => $value) {
+				$this->__set ($key, $value);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public function save ($arr) {
+		if ($this->set ($arr)) {
+			delete_option ($this->name);
+			add_option ($this->name, $this->options, '', $this->autoload);
+		}
+	}
+
 	public function __isset ($key) {
 		return isset ($this->options[$key]);
+	}
+
+	public function get_postlink ($language) {
+		return false;
+	}
+
+	public function get_permalink ($language) {
+		$postlink = $this->get_postlink ($language);
+		return ($postlink ? $postlink : site_url ());
+	}
+
+}
+
+class MslsOptionsFactory {
+
+	static function create () {
+		if (is_single () || is_page ()) {
+			global $post;
+			return new MslsPostOptions ($post->ID);
+		} elseif (is_category ()) {
+			return new MslsCategoryOptions (get_query_var ('cat'));
+		} elseif (is_tag ()) {
+			return new MslsTermOptions (get_query_var ('tag_id'));
+		}
+		return new MslsOptions ();
 	}
 
 }
 
 class MslsPostOptions extends MslsOptions {
 
-	public function __construct ($post_id) {
-		$this->options = get_option (MSLS_DEF_STRING . '_' . $post_id);
-	}
+	protected $sep = '_';
+	protected $autoload = 'no';
 
 	public function get_postlink ($language) {
 		return (
-			(is_single () || is_page ()) && !empty ($this->options[$language]) ? 
+			!empty ($this->options[$language]) ? 
 			get_permalink ($this->options[$language]) : 
 			false
 		);
 	}
 
-	public function get_permalink ($language) {
-		$postlink = $this->get_postlink ($language);
-		return ($postlink ? $postlink : site_url ());
+}
+
+class MslsTermOptions extends MslsOptions {
+
+	protected $sep = '_term_';
+	protected $autoload = 'no';
+
+	public function get_postlink ($language) {
+		return (
+			!empty ($this->options[$language]) ? 
+			get_tag_link ($this->options[$language]) : 
+			false
+		);
+	}
+
+}
+
+class MslsCategoryOptions extends MslsTermOptions {
+
+	public function get_postlink ($language) {
+		return (
+			!empty ($this->options[$language]) ? 
+			get_category_link ($this->options[$language]) : 
+			false
+		);
 	}
 
 }

@@ -8,7 +8,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 	static function init () {
 		$obj = new self ();
 		add_action ('add_meta_boxes', array ($obj, 'add'));
-		add_action ('save_post', array ($obj, 'save'));
+		add_action ('save_post', array ($obj, 'set'));
 		return $obj;
 	}
 
@@ -85,38 +85,17 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 		$this->render ('page');
 	}
 
-	public function save ($post_id) {
+	public function set ($post_id) {
 		if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE) 
 			return;
 		if (!wp_verify_nonce ($_POST[MSLS_DEF_STRING . '_noncename'], MSLS_PLUGIN_PATH))
 			return;
 		if ('page' == $_POST['post_type']) {
-			if (!current_user_can ('edit_page', $post_id))
-				return;
+			if (!current_user_can ('edit_page')) return;
 		} else {
-			if (!current_user_can ('edit_post', $post_id))
-				return;
+			if (!current_user_can ('edit_post')) return;
 		}
-		$mydata = $_POST[MSLS_DEF_STRING];
-		$language = get_blog_option ($blog->current_blog_id, 'WPLANG');
-		$mydata[$language] = $post_id;
-		$this->set ($mydata, $language);
-		foreach ($this->get_blogs () as $language => $blog) {
-			switch_to_blog ($blog->userblog_id);
-			$this->set ($mydata, $language);
-		}
-		restore_current_blog ();
-		return $mydata;
-	}
-
-	protected function set ($mydata, $language) {
-		$myname = MSLS_DEF_STRING . '_' . $mydata[$language];
-		delete_option ($myname);
-		if (!empty ($mydata[$language])) {
-			$mydata = array_filter ($mydata);
-			unset ($mydata[$language]); 
-			add_option ($myname, $mydata, '', 'no');
-		}
+		$this->save ($post_id, 'MslsPostOptions');
 	}
 
 }

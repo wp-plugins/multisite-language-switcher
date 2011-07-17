@@ -4,14 +4,14 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multisite, language, switcher, international, localization, multilingual
 Requires at least: 3.0
-Tested up to:  3.2
-Stable tag: 0.5
+Tested up to:  3.2.1
+Stable tag: 0.6
 
 A simple but powerful plugin that will help you to manage the relations of posts and pages in your multisite-multilingual-installation
 
 == Description ==
 
-A simple but powerful plugin that will help you to manage the relations of posts and pages in your multisite-multilingual-installation
+A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation
 
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
@@ -30,10 +30,14 @@ If you have created your own language pack, or have an update of an existing one
 * activate the plugin in your plugin page
 * set some configuration in Options -> Multisite Language Switcher
 * set the relations of your pages and posts in Posts -> Edit or Page -> Edit
+* set the relations of your categories and tags in Posts -> Categories or Post -> Tags
 * now you can use the widget and/or the content_filter which displays a hint if a translation is available
 * optionally you can use a line like _<?php if (function_exists("the_msls")) the_msls(); ?>_ directly in your theme-files
 
 == Changelog ==
+
+= 0.6 =
+* new: relations between categories and tags in different languages
 
 = 0.5 =
 * language file for nl_NL added

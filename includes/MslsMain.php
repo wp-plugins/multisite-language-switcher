@@ -68,6 +68,26 @@ class MslsMain {
 		);
 	}
 
+	protected function save ($id, $class) {
+		if (isset ($_POST[MSLS_DEF_STRING])) {
+			$mydata = $_POST[MSLS_DEF_STRING];
+			$options = new $class ($id);
+			$options->save ($mydata);
+			$language = get_blog_option ($blog->current_blog_id, 'WPLANG');
+			$mydata[$language] = $id;
+			foreach ($this->get_blogs () as $language => $blog) {
+				if (!empty ($mydata[$language])) {
+					switch_to_blog ($blog->userblog_id);
+					$temp = $mydata;
+					$options = new $class ($temp[$language]);
+					unset ($temp[$language]);
+					$options->save ($temp);
+				}
+			}
+			restore_current_blog ();
+		}
+	}
+
 }
 
 ?>
