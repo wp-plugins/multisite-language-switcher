@@ -3,7 +3,7 @@
 /*
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
-Description: A simple but powerful plugin that will help you to manage the relations of posts, pages, categories & tags in your multisite-multilingual-installation.
+Description: A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 Version: 0.6.1
 Author: Dennis Ploetner	
 Author URI: http://lloc.de/
