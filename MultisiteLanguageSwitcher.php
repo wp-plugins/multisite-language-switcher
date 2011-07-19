@@ -3,8 +3,8 @@
 /*
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
-Description: A simple plugin that will help to you with your multisite-multilingual-installation
-Version: 0.5
+Description: A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
+Version: 0.6.1
 Author: Dennis Ploetner	
 Author URI: http://lloc.de/
 */
@@ -32,10 +32,10 @@ if (!class_exists('MslsMain')) {
 		define ('MSLS_PLUGIN_PATH', plugin_basename (__FILE__));
 
 	require_once (dirname (__FILE__) . '/includes/MslsMain.php');
-	require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
-
 	register_activation_hook (__FILE__, 'MslsMain::activate');
 	register_deactivation_hook (__FILE__, 'MslsMain::deactivate');
+
+	require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
 
 	if (is_admin()) {
 		require_once (dirname (__FILE__) . '/includes/MslsMetaBox.php');
@@ -43,6 +43,9 @@ if (!class_exists('MslsMain')) {
 
 		require_once (dirname (__FILE__) . '/includes/MslsAdmin.php');
 		add_action ('admin_menu', 'MslsAdmin::init');
+
+		require_once (dirname (__FILE__) . '/includes/MslsPostTag.php');
+		add_action ('load-edit-tags.php', 'MslsPostTag::init');
 	}
 
 }

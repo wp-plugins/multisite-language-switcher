@@ -16,8 +16,7 @@ class MslsOutput extends MslsMain implements iMslsMain {
 		$arr = array ();
 		$blogs = $this->get_blogs ();
 		if ($blogs) {
-			global $post;
-			$mydata = new MslsPostOptions ($post->ID);
+			$mydata = MslsOptionsFactory::create ();
 			foreach ($blogs as $language => $blog) {
 				switch_to_blog ($blog->userblog_id);
 				$temp = new MslsOptions;
@@ -34,7 +33,7 @@ class MslsOutput extends MslsMain implements iMslsMain {
 				$arr[] = sprintf (
 					'<a href="%s" title="%s">%s</a>',
 					$mydata->get_permalink ($language),
-					$link->txt,
+					$link->getTxt (),
 					$link
 				);
 			}
