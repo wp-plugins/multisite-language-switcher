@@ -40,6 +40,10 @@ class MslsLink {
 		$this->args[$key] = $value;
 	}
 
+	public function getTxt () {
+		return (isset ($this->args['txt']) ? $this->args['txt'] : ''); 
+	}
+
 	public function __toString () {
 		$temp = array ();
 		foreach (array_keys ($this->args) as $key) {

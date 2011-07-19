@@ -5,9 +5,9 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multisite, language, switcher, international, localization, multilingual
 Requires at least: 3.0
 Tested up to:  3.2.1
-Stable tag: 0.6
+Stable tag: 0.6.1
 
-A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation
+A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
 
 == Description ==
 
@@ -36,6 +36,9 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.6.1 =
+* bugfix: notice when Msls::$txt was requested for output of the link-title
+
 = 0.6 =
 * new: relations between categories and tags in different languages
 
@@ -52,7 +55,7 @@ If you have created your own language pack, or have an update of an existing one
 * optimization/refactoring
 
 = 0.2 =
-* bugfix: Showstopper in MslsMain::__construct ()
+* bugfix: showstopper in MslsMain::__construct ()
 
 = 0.1 =
 * first version
