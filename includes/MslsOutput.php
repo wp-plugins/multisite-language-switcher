@@ -17,7 +17,8 @@ class MslsOutput extends MslsMain implements iMslsMain {
 		$blogs = $this->get_blogs ();
 		if ($blogs) {
 			$mydata = MslsOptionsFactory::create ();
-			foreach ($blogs as $language => $blog) {
+			foreach ($blogs as $lang => $blog) {
+				$language = (empty ($lang) ? 'us' : $lang);
 				switch_to_blog ($blog->userblog_id);
 				$temp = new MslsOptions;
 				if (true == $exists && !$mydata->get_postlink ($language))
