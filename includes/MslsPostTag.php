@@ -43,8 +43,8 @@ class MslsPostTag extends MslsMain implements iMslsMain {
 					'<tr class="form-field"><th scope="row" valign="top"><label for="%s[%s]"><img alt="%s" src="%s" /> </label></th><td><select style="width:25em;" name="%s[%s]"><option value=""></option>%s</select></td>',
 					MSLS_DEF_STRING, $language, $language, $this->get_image_url ($language), MSLS_DEF_STRING, $language, $options
 				);
+				restore_current_blog ();
 			}
-			restore_current_blog ();
 		}
 	}
 
