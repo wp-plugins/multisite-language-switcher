@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multisite, language, switcher, international, localization, multilingual
 Requires at least: 3.0
 Tested up to:  3.2.1
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 
 A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 
@@ -35,6 +35,9 @@ If you have created your own language pack, or have an update of an existing one
 * optionally you can use a line like _<?php if (function_exists("the_msls")) the_msls(); ?>_ directly in your theme-files
 
 == Changelog ==
+
+= 0.6.4 =
+* bugfix: strange behaviour of the sidebar-widget corrected
 
 = 0.6.3 =
 * bugfix: there was a problem with restore_current_blog() and more then 2 languages

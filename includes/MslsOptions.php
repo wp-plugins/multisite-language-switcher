@@ -54,6 +54,10 @@ class MslsOptions {
 		return isset ($this->options[$key]);
 	}
 
+	public function has_value ($language) {
+		return (!empty ($this->options[$language]) ? true : false);
+	}
+
 	public function get_postlink ($language) {
 		return false;
 	}
@@ -88,7 +92,7 @@ class MslsPostOptions extends MslsOptions {
 
 	public function get_postlink ($language) {
 		return (
-			!empty ($this->options[$language]) ? 
+			$this->has_value ($language) ? 
 			get_permalink ($this->options[$language]) : 
 			false
 		);
@@ -103,7 +107,7 @@ class MslsTermOptions extends MslsOptions {
 
 	public function get_postlink ($language) {
 		return (
-			!empty ($this->options[$language]) ? 
+			$this->has_value ($language) ? 
 			get_tag_link ($this->options[$language]) : 
 			false
 		);
@@ -115,7 +119,7 @@ class MslsCategoryOptions extends MslsTermOptions {
 
 	public function get_postlink ($language) {
 		return (
-			!empty ($this->options[$language]) ? 
+			$this->has_value ($language) ? 
 			get_category_link ($this->options[$language]) : 
 			false
 		);
