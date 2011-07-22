@@ -6,10 +6,12 @@ require_once (dirname (__FILE__) . '/MslsLink.php');
 
 class MslsOutput extends MslsMain implements iMslsMain {
 
-	protected $content_filter;
-
 	static function init () {
 		return new self ();
+	}
+
+	public function is_content_filter () {
+		return ($this->options->content_filter == 1 ? true : false);
 	}
 
 	public function get ($display, $exists = false) {
@@ -36,8 +38,8 @@ class MslsOutput extends MslsMain implements iMslsMain {
 					$link->getTxt (),
 					$link
 				);
+				restore_current_blog ();
 			}
-			restore_current_blog ();
 		}
 		return $arr;
 	}
@@ -98,28 +100,31 @@ add_action ('widgets_init', create_function ('', 'return register_widget("MslsWi
 
 function msls_content_filter ($content) {
 	$obj = new MslsOutput ();
-	$links = $obj->get (1, true);
-	if (!empty ($links)) {
-		if (count ($links) > 2) {
-			$last = array_pop ($links);
-			$links = sprintf (
-				__ ("%s and %s", MSLS_DEF_STRING),
-				implode (', ', $links),
-				$last
-			);
-		} else {
-			$links = $links[0];
+	if ($obj->is_content_filter ()) { 
+		$links = $obj->get (1, true);
+		if (!empty ($links)) {
+			if (count ($links) > 1) {
+				$last = array_pop ($links);
+				$links = sprintf (
+					__ ("%s and %s", MSLS_DEF_STRING),
+					implode (', ', $links),
+					$last
+				);
+			} else {
+				$links = $links[0];
+			}
+			$content .= 
+				'<p id="msls">' .
+				sprintf (
+					__ ("This post is also available in %s.", MSLS_DEF_STRING),
+					$links
+				) .
+				'</p>';
 		}
-		$content .= 
-			'<p id="msls">' .
-			sprintf (
-				__ ("This post is also available in %s.", MSLS_DEF_STRING),
-				$links
-			) .
-			'</p>';
 	}
 	return $content;
 }
+add_filter ('the_content', 'msls_content_filter');
 
 function the_msls () {
 	$obj = new MslsOutput ();

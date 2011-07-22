@@ -62,13 +62,13 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 					'<li><label for="%s[%s]"><img alt="%s" src="%s" /> </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
 					MSLS_DEF_STRING, $language, $language, $this->get_image_url ($language), MSLS_DEF_STRING, $language, $options
 				);
+				restore_current_blog ();
 			}
 			printf (
 				'</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
 				__ ("Update", MSLS_DEF_STRING)
 			);
 			$post = $temp;
-			restore_current_blog ();
 		} else {
 			printf (
 				'<p>%s</p>',
