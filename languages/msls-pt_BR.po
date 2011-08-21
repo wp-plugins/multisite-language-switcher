@@ -1,0 +1,103 @@
+# Copyright (C) 2010
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Language Switcher\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2011-07-06 14:19:03+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-08-21 12:36+0100\n"
+"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
+"Language-Team: coolweb <victor@coolweb.com.br>\n"
+
+#: includes/MslsOutput.php:65
+#: includes/MslsMetaBox.php:18
+#: includes/MslsMetaBox.php:26
+#: includes/MslsAdmin.php:12
+#: includes/MslsAdmin.php:13
+msgid "Multisite Language Switcher"
+msgstr "Seletor Multisite de Linguagens "
+
+#: includes/MslsOutput.php:90
+msgid "Title"
+msgstr "Título"
+
+#: includes/MslsOutput.php:107
+msgid "%s and %s"
+msgstr "%s e %s"
+
+#: includes/MslsOutput.php:117
+msgid "This post is also available in %s."
+msgstr "Este post está disponível também em %s"
+
+#: includes/MslsLink.php:20
+msgid "Flag and description"
+msgstr "Bandeira e descrição"
+
+#: includes/MslsLink.php:62
+msgid "Description only"
+msgstr "Descrição apenas"
+
+#: includes/MslsLink.php:72
+msgid "Flag only"
+msgstr "Bandeiras apenas"
+
+#: includes/MslsLink.php:82
+msgid "Description and flag"
+msgstr "Descrição e bandeira"
+
+#: includes/MslsMetaBox.php:68
+#: includes/MslsAdmin.php:32
+msgid "Update"
+msgstr "Atualizar"
+
+#: includes/MslsMetaBox.php:75
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Você deve definir pelo menos outro blog em uma linguagem diferente para ter algum benefício deste plugin!"
+
+#: includes/MslsAdmin.php:25
+msgid "Multisite Language Switcher Options"
+msgstr "Opções do seletor de Linguagens Multisite"
+
+#: includes/MslsAdmin.php:26
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Para atingir máxima flexibilidade, você tem que configurar cada site separadamente."
+
+#: includes/MslsAdmin.php:38
+msgid "Main Settings"
+msgstr "Configurações principais"
+
+#: includes/MslsAdmin.php:39
+msgid "Display"
+msgstr "Visualização"
+
+#: includes/MslsAdmin.php:40
+msgid "Description"
+msgstr "Descrição"
+
+#: includes/MslsAdmin.php:41
+msgid "Text/HTML before the list"
+msgstr "Texto/HTML antes da lista"
+
+#: includes/MslsAdmin.php:42
+msgid "Text/HTML after the list"
+msgstr "Texto/HTML depois da lsita"
+
+#: includes/MslsAdmin.php:43
+msgid "Text/HTML before each item"
+msgstr "Texto/HTML antes de cada item"
+
+#: includes/MslsAdmin.php:44
+msgid "Text/HTML after each item"
+msgstr "Texto/HTML depois de cada item"
+
+#: includes/MslsAdmin.php:45
+msgid "Add hint for available translations"
+msgstr "Adicionar dica para traduções disponíveis"
+
+#: includes/MslsAdmin.php:46
+msgid "Hint priority"
+msgstr "Indicar prioridade"
+
