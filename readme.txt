@@ -2,10 +2,10 @@
 
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
-Tags: multisite, language, switcher, international, localization, multilingual
+Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.0
 Tested up to:  3.2.1
-Stable tag: 0.6.4
+Stable tag: 0.6.6
 
 A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 
@@ -19,6 +19,8 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
+* Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
+* Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -35,6 +37,12 @@ If you have created your own language pack, or have an update of an existing one
 * optionally you can use a line like _<?php if (function_exists("the_msls")) the_msls(); ?>_ directly in your theme-files
 
 == Changelog ==
+
+= 0.6.6 =
+* language files for es_ES added
+
+= 0.6.5 =
+* language files for pt_BR added
 
 = 0.6.4 =
 * bugfix: strange behaviour of the sidebar-widget corrected
@@ -53,7 +61,7 @@ If you have created your own language pack, or have an update of an existing one
 * new: relations between categories and tags in different languages
 
 = 0.5 =
-* language file for nl_NL added
+* language files for nl_NL added
 
 = 0.4 =
 * widget added
