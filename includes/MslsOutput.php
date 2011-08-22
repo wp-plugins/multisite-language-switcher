@@ -96,7 +96,13 @@ class MslsWidget extends WP_Widget {
 	}
 
 }
-add_action ('widgets_init', create_function ('', 'return register_widget("MslsWidget");'));
+
+function msls_widgets_init () {
+	if (get_option (MSLS_DEF_STRING)) {
+		register_widget ("MslsWidget");
+	}
+}
+add_action ('widgets_init', 'msls_widgets_init');
 
 function msls_content_filter ($content) {
 	$obj = new MslsOutput ();

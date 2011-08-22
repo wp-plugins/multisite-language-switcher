@@ -49,6 +49,10 @@ class MslsOptions {
 		}
 	}
 
+	public function __isset ($key) {
+		return isset ($this->options[$key]);
+	}
+
 	public function set ($arr) {
 		if (is_array ($arr)) {
 			foreach ($arr as $key => $value) {
@@ -64,10 +68,6 @@ class MslsOptions {
 			delete_option ($this->name);
 			add_option ($this->name, $this->options, '', $this->autoload);
 		}
-	}
-
-	public function __isset ($key) {
-		return isset ($this->options[$key]);
 	}
 
 	public function has_value ($language) {
