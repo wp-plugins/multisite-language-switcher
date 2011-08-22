@@ -51,7 +51,7 @@ class MslsOutput extends MslsMain implements iMslsMain {
 			implode (
 				$this->options->after_item . 
 				$this->options->before_item,
-				$this->get ($this->options->display)
+				$this->get ((int) $this->options->display)
 			) .
 			$this->options->after_item .
 			$this->options->after_output
@@ -83,7 +83,7 @@ class MslsWidget extends WP_Widget {
 		return $instance;
 	}
 
-    function form($instance) {
+    function form ($instance) {
         $title = esc_attr ($instance['title']);
 		printf (
 			'<p><label for="%s">%s:</label> <input class="widefat" id="%s" name="%s" type="text" value="%s" /></p>',

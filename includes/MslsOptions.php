@@ -2,6 +2,22 @@
 
 if (!defined ('MSLS_DEF_STRING'))  define ('MSLS_DEF_STRING', 'msls');
 
+class MslsOptionsFactory {
+
+	static function create () {
+		if (is_single () || is_page ()) {
+			global $post;
+			return new MslsPostOptions ($post->ID);
+		} elseif (is_category ()) {
+			return new MslsCategoryOptions (get_query_var ('cat'));
+		} elseif (is_tag ()) {
+			return new MslsTermOptions (get_query_var ('tag_id'));
+		}
+		return new MslsOptions ();
+	}
+
+}
+
 class MslsOptions {
 
 	protected $name;
@@ -65,22 +81,6 @@ class MslsOptions {
 	public function get_permalink ($language) {
 		$postlink = $this->get_postlink ($language);
 		return ($postlink ? $postlink : site_url ());
-	}
-
-}
-
-class MslsOptionsFactory {
-
-	static function create () {
-		if (is_single () || is_page ()) {
-			global $post;
-			return new MslsPostOptions ($post->ID);
-		} elseif (is_category ()) {
-			return new MslsCategoryOptions (get_query_var ('cat'));
-		} elseif (is_tag ()) {
-			return new MslsTermOptions (get_query_var ('tag_id'));
-		}
-		return new MslsOptions ();
 	}
 
 }
