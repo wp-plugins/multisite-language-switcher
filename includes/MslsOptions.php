@@ -119,14 +119,15 @@ class MslsTermOptions extends MslsOptions {
 	protected $autoload = 'no';
 
 	protected function set_base () {
-		$this->base = get_option ('tag_base', 'tag');
+		$this->base = get_option ('tag_base');
+		if (empty ($this->base)) $this->base = 'tag';
 	}
 
 	public function get_postlink ($language) {
 		if ($this->has_value ($language)) {
 			$url = get_term_link ((int) $this->options[$language], 'post_tag');
-			$base = get_option ('tag_base', 'tag');
-			return $this->correct ($url, $base);
+			$base = get_option ('tag_base');
+			return $this->correct ($url, (!empty ($base) ? $base : 'tag'));
 		}
 		return false;
 	}
@@ -136,14 +137,15 @@ class MslsTermOptions extends MslsOptions {
 class MslsCategoryOptions extends MslsTermOptions {
 
 	protected function set_base () {
-		$this->base = get_option ('category_base', 'category');
+		$this->base = get_option ('category_base');
+		if (empty ($this->base)) $this->base = 'category';
 	}
 
 	public function get_postlink ($language) {
 		if ($this->has_value ($language)) { 
 			$url = get_term_link ((int) $this->options[$language], 'category'); 
-			$base = get_option ('category_base', 'category');
-			return $this->correct ($url, $base);
+			$base = get_option ('category_base');
+			return $this->correct ($url, (!empty ($base) ? $base : 'category'));
 		}
 		return false;
 	}
