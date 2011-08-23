@@ -38,6 +38,9 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.6.8 =
+* bugfix: str_replace problem with counter
+
 = 0.6.7 =
 * bugfix: get_term_link seems to fail if there is a custom category_base or tag_base defined
 * bugfix: get_term_link expects term_id as integer

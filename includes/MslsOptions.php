@@ -59,7 +59,7 @@ class MslsOptions {
 		if ($this->base != $base) {
 			$search = '/' . $this->base . '/';
 			$replace = '/' . $base . '/';
-			$url = str_replace ($search, $replace, $url, 1);
+			$url = str_replace ($search, $replace, $url);
 		}
 		return $url;
 	}
