@@ -108,7 +108,7 @@ class MslsTermOptions extends MslsOptions {
 	public function get_postlink ($language) {
 		return (
 			$this->has_value ($language) ? 
-			get_tag_link ($this->options[$language]) : 
+			get_term_link ((int) $this->options[$language], 'post_tag') : 
 			false
 		);
 	}
@@ -120,7 +120,7 @@ class MslsCategoryOptions extends MslsTermOptions {
 	public function get_postlink ($language) {
 		return (
 			$this->has_value ($language) ? 
-			get_category_link ($this->options[$language]) : 
+			get_term_link ((int) $this->options[$language], 'category') : 
 			false
 		);
 	}
