@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.0
 Tested up to:  3.2.1
-Stable tag: 0.6.7
+Stable tag: 0.6.8
 
 A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 
@@ -39,7 +39,7 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.6.8 =
-* bugfix: str_replace problem with counter
+* bugfix: str_replace problem with 4th parameter
 
 = 0.6.7 =
 * bugfix: get_term_link seems to fail if there is a custom category_base or tag_base defined
