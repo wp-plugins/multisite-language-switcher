@@ -120,6 +120,7 @@ class MslsTermOptions extends MslsOptions {
 
 	protected function set_base () {
 		$this->base = get_option ('tag_base');
+		if (empty ($this->base)) $this->base = 'tag';
 	}
 
 	public function get_postlink ($language) {
@@ -137,6 +138,7 @@ class MslsCategoryOptions extends MslsTermOptions {
 
 	protected function set_base () {
 		$this->base = get_option ('category_base');
+		if (empty ($this->base)) $this->base = 'category';
 	}
 
 	public function get_postlink ($language) {
