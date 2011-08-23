@@ -32,7 +32,7 @@ class MslsLink {
 	
 	public function create ($display) {
 		$types = self::getTypes ();
-		if (!in_array ($display, array_keys ($types))) $display = 0;
+		if (!in_array ($display, array_keys ($types), true)) $display = 0;
 		return new $types[$display];
 	}
 
