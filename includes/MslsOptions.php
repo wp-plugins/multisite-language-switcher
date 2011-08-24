@@ -56,10 +56,12 @@ class MslsOptions {
 	}
 
 	protected function correct ($url, $base) {
+		if (empty ($url) || !is_string ($url)) return site_url ();
 		if ($this->base != $base) {
 			$search = '/' . $this->base . '/';
 			$replace = '/' . $base . '/';
-			$url = str_replace ($search, $replace, $url);
+			$count = 1;
+			$url = str_replace ($search, $replace, $url, $count);
 		}
 		return $url;
 	}
