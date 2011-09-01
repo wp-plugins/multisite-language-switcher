@@ -132,11 +132,21 @@ function msls_content_filter ($content) {
 }
 add_filter ('the_content', 'msls_content_filter');
 
+/**
+ * Get the output for using the links to the translations in your code
+ * 
+ * @return string
+ */
 function get_the_msls () {
 	$obj = new MslsOutput ();
 	return sprintf ('%s', $obj);
 }
 
+/**
+ * Output the links to the translations in your template
+ * 
+ * @uses get_the_msls
+ */
 function the_msls () {
 	echo get_the_msls ();
 }

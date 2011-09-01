@@ -40,6 +40,7 @@ If you have created your own language pack, or have an update of an existing one
 
 = 0.7 =
 * new: flags in edit_posts are clickable now, link to edit the translation
+* new: function get_the_msls for complete the_msls
 
 = 0.6.8 =
 * bugfix: str_replace problem with 4th parameter
