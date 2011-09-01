@@ -37,6 +37,8 @@ class MslsAdmin extends MslsMain implements iMslsMain {
 		register_setting (MSLS_DEF_STRING, MSLS_DEF_STRING, array ($this, 'validate'));
 		add_settings_section ('section', __ ("Main Settings", MSLS_DEF_STRING), array ($this, 'section'), __CLASS__);
 		add_settings_field ('display', __ ("Display", MSLS_DEF_STRING), array ($this, 'display'), __CLASS__, 'section');
+		add_settings_field ('exclude_current_blog', __ ("Exclude this blog from output", MSLS_DEF_STRING), array ($this, 'exclude_current_blog'), __CLASS__, 'section');
+		add_settings_field ('output_current_blog', __ ("Display link to the current language", MSLS_DEF_STRING), array ($this, 'output_current_blog'), __CLASS__, 'section');
 		add_settings_field ('description', __ ("Description", MSLS_DEF_STRING), array ($this, 'description'), __CLASS__, 'section');
 		add_settings_field ('before_output', __ ("Text/HTML before the list", MSLS_DEF_STRING), array ($this, 'before_output'), __CLASS__, 'section');
 		add_settings_field ('after_output', __ ("Text/HTML after the list", MSLS_DEF_STRING), array ($this, 'after_output'), __CLASS__, 'section');
@@ -82,6 +84,22 @@ class MslsAdmin extends MslsMain implements iMslsMain {
 
 	public function after_item () {
 		echo $this->render_input ('after_item');
+	}
+
+	public function exclude_current_blog () {
+		printf (
+			'<input type="checkbox" id="content_filter" name="%s[exclude_current_blog]" value="1"%s/>',
+			MSLS_DEF_STRING, 
+			($this->options->exclude_current_blog == 1 ? ' checked="checked"' : '')
+		);
+	}
+
+	public function output_current_blog () {
+		printf (
+			'<input type="checkbox" id="content_filter" name="%s[output_current_blog]" value="1"%s/>',
+			MSLS_DEF_STRING, 
+			($this->options->output_current_blog == 1 ? ' checked="checked"' : '')
+		);
 	}
 
 	public function content_filter () {

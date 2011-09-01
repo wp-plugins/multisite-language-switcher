@@ -19,12 +19,28 @@ class MslsOutput extends MslsMain implements iMslsMain {
 		$blogs = $this->get_blogs ();
 		if ($blogs) {
 			$mydata = MslsOptionsFactory::create ();
+			$link = MslsLink::create ($display);
+			if ($this->options->output_current_blog && false == $exists) {
+				$language = $this->get_language ();
+				$link->txt = (
+					isset ($this->options->description) ? 
+					$this->options->description :
+					$language
+				);
+				$link->src = $this->get_image_url ($language);
+				$link->alt = $language;
+				$arr[] = sprintf (
+					'<a href="%s" title="%s">%s</a>',
+					$mydata->get_current_link (),
+					$link->getTxt (),
+					$link
+				);
+			}
 			foreach ($blogs as $language => $blog) {
 				if (true == $exists && !$mydata->has_value ($language))
 					continue;
 				switch_to_blog ($blog->userblog_id);
 				$temp = new MslsOptions;
-				$link = MslsLink::create ($display);
 				$link->txt = (
 					isset ($temp->description) ? 
 					$temp->description :
@@ -97,6 +113,9 @@ class MslsWidget extends WP_Widget {
 
 }
 
+/**
+ * Registers Widget
+ */
 function msls_widgets_init () {
 	if (get_option (MSLS_DEF_STRING)) {
 		register_widget ("MslsWidget");
@@ -132,11 +151,21 @@ function msls_content_filter ($content) {
 }
 add_filter ('the_content', 'msls_content_filter');
 
+/**
+ * Get the output for using the links to the translations in your code
+ * 
+ * @return string
+ */
 function get_the_msls () {
 	$obj = new MslsOutput ();
 	return sprintf ('%s', $obj);
 }
 
+/**
+ * Output the links to the translations in your template
+ * 
+ * @uses get_the_msls
+ */
 function the_msls () {
 	echo get_the_msls ();
 }

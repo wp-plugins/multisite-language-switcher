@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Multisite Language Switcher\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2011-09-01 14:36:18+00:00\n"
-"PO-Revision-Date: 2011-09-01 17:50+0100\n"
+"PO-Revision-Date: 2011-09-01 17:55+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: Andreas Breitschopp <a-breitschopp@ab-tools.com>\n"
 "Language: \n"
@@ -15,19 +15,19 @@ msgstr ""
 
 #: includes/MslsLink.php:20
 msgid "Flag and description"
-msgstr "Bandera y la descripción"
+msgstr "Pavillonnerie et description"
 
 #: includes/MslsLink.php:66
 msgid "Description only"
-msgstr "Solamente la descripción"
+msgstr "Description seule"
 
 #: includes/MslsLink.php:76
 msgid "Flag only"
-msgstr "Solamente la bandera"
+msgstr "Pavillonnerie seule"
 
 #: includes/MslsLink.php:86
 msgid "Description and flag"
-msgstr "Descripción y la bandera"
+msgstr "Description et pavillonnerie"
 
 #: includes/MslsAdmin.php:12
 #: includes/MslsAdmin.php:13
@@ -40,74 +40,74 @@ msgstr "Multisite Language Switcher"
 
 #: includes/MslsAdmin.php:25
 msgid "Multisite Language Switcher Options"
-msgstr "Opciones de Multisite Language Switcher"
+msgstr "Options de Multisite Language Switcher"
 
 #: includes/MslsAdmin.php:26
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Para la máxima flexibilidad, lo que tienes que configurar cada blog por separado."
+msgstr "Pour atteindre un maximum de flexibilité, vous devez configurer chaque blog séparément."
 
 #: includes/MslsAdmin.php:32
 #: includes/MslsMetaBox.php:78
 msgid "Update"
-msgstr "Actualización"
+msgstr "Mise à jour"
 
 #: includes/MslsAdmin.php:38
 msgid "Main Settings"
-msgstr "Configuración principal"
+msgstr "Paramètres principaux"
 
 #: includes/MslsAdmin.php:39
 msgid "Display"
-msgstr "Mostrar"
+msgstr "Affichage"
 
 #: includes/MslsAdmin.php:40
 msgid "Exclude this blog from output"
-msgstr "Este blog no muestra"
+msgstr "Ce blog ne montre pas"
 
 #: includes/MslsAdmin.php:41
 msgid "Display link to the current language"
-msgstr "Mostrar enlace del lenguaje actual"
+msgstr "Afficher un lien du langage courant"
 
 #: includes/MslsAdmin.php:42
 msgid "Description"
-msgstr "Descripción"
+msgstr "Description"
 
 #: includes/MslsAdmin.php:43
 msgid "Text/HTML before the list"
-msgstr "Texto/HTML antes de la lista"
+msgstr "Texte/HTML avant la liste"
 
 #: includes/MslsAdmin.php:44
 msgid "Text/HTML after the list"
-msgstr "Texto/HTML después de la lista"
+msgstr "Texte/HTML après la liste"
 
 #: includes/MslsAdmin.php:45
 msgid "Text/HTML before each item"
-msgstr "Texto/HTML antes de cada elemento"
+msgstr "Texte/HTML avant chaque article"
 
 #: includes/MslsAdmin.php:46
 msgid "Text/HTML after each item"
-msgstr "Texto/HTML después de cada elemento"
+msgstr "Texte/HTML après chaque article"
 
 #: includes/MslsAdmin.php:47
 msgid "Add hint for available translations"
-msgstr "Añadir sugerencia de las traducciones disponibles"
+msgstr "Ajoutez la indication pour les traductions disponibles"
 
 #: includes/MslsAdmin.php:48
 msgid "Hint priority"
-msgstr "Prioridad de la sugerencias"
+msgstr "Priorité du indication"
 
 #: includes/MslsMetaBox.php:84
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
-msgstr "¡Definir al menos otro blog en un idioma diferente al uso de este plugin!"
+msgstr "Vous devez définir au moins un autre blog dans une langue différente afin d'avoir un avantage de ce plugin!"
 
 #: includes/MslsOutput.php:107
 msgid "Title"
-msgstr "Título"
+msgstr "Titre"
 
 #: includes/MslsOutput.php:134
 msgid "%s and %s"
-msgstr "%s y %s"
+msgstr "%s et %s"
 
 #: includes/MslsOutput.php:144
 msgid "This post is also available in %s."
-msgstr "Esta entrada también está disponible en %s."
+msgstr "Ce article est aussi disponible en %s."
 

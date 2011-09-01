@@ -20,6 +20,7 @@ class MslsOptionsFactory {
 
 class MslsOptions {
 
+	protected $args;
 	protected $name;
 	protected $options = array ();
 	protected $exists = false;
@@ -28,8 +29,8 @@ class MslsOptions {
 	protected $base;
 
 	public function __construct () {
-		$args = func_get_args ();
-		$this->name = MSLS_DEF_STRING . $this->sep . implode ($this->sep, $args);
+		$this->args = func_get_args ();
+		$this->name = MSLS_DEF_STRING . $this->sep . implode ($this->sep, $this->args);
 		$this->exists = $this->set (get_option ($this->name));
 		$this->base = $this->get_base ();
 	}
@@ -89,6 +90,10 @@ class MslsOptions {
 		return (!empty ($this->options[$language]) ? true : false);
 	}
 
+	public function get_current_link () {
+		return site_url ();
+	}
+
 }
 
 class MslsPostOptions extends MslsOptions {
@@ -102,6 +107,10 @@ class MslsPostOptions extends MslsOptions {
 			get_permalink ($this->options[$language]) : 
 			null
 		);
+	}
+
+	public function get_current_link () {
+		return get_permalink ((int) $this->args[0]);
 	}
 
 }
@@ -138,6 +147,10 @@ class MslsTermOptions extends MslsOptions {
 		return null;
 	}
 
+	public function get_current_link () {
+		return get_tag_link ((int) $this->args[0]);
+	}
+
 }
 
 class MslsCategoryOptions extends MslsTermOptions {
@@ -145,6 +158,10 @@ class MslsCategoryOptions extends MslsTermOptions {
 	protected $base_option = 'category_base';
 	protected $base_defined = 'category';
 	protected $taxonomy = 'category';
+
+	public function get_current_link () {
+		return get_category_link ((int) $this->args[0]);
+	}
 
 }
 

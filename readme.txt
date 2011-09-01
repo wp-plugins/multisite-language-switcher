@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.0
 Tested up to:  3.2.1
-Stable tag: 0.6.8
+Stable tag: 0.7
 
 A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 
@@ -21,6 +21,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
 * Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
 * Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
+* French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -40,6 +41,10 @@ If you have created your own language pack, or have an update of an existing one
 
 = 0.7 =
 * new: flags in edit_posts are clickable now, link to edit the translation
+* new: function get_the_msls for complete the_msls
+* new: option to choose if a link to the current blog should be displayed too
+* new: option to exclude a blog from output
+* language files for fr_FR added
 
 = 0.6.8 =
 * bugfix: str_replace problem with 4th parameter
