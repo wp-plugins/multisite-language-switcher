@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Language Switcher 0.1\n"
+"Project-Id-Version: Multisite Language Switcher 0.7\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2011-09-01 14:36:18+00:00\n"
-"PO-Revision-Date: 2011-09-01 16:40+0100\n"
+"PO-Revision-Date: 2011-09-01 17:23+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -16,8 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
 "X-Poedit-KeywordsList: __\n"
 
 #: includes/MslsLink.php:20
@@ -72,7 +70,7 @@ msgstr "Dieses Blog bei der Ausgabe ausschliessen"
 
 #: includes/MslsAdmin.php:41
 msgid "Display link to the current language"
-msgstr "Link zur akuellen Sprache anzeigen"
+msgstr "Link zur aktuellen Sprache anzeigen"
 
 #: includes/MslsAdmin.php:42
 msgid "Description"
