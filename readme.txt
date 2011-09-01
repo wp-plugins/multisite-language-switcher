@@ -42,6 +42,7 @@ If you have created your own language pack, or have an update of an existing one
 * new: flags in edit_posts are clickable now, link to edit the translation
 * new: function get_the_msls for complete the_msls
 * new: option to choose if a link to the current blog should be displayed too
+* language files for fr_FR added
 
 = 0.6.8 =
 * bugfix: str_replace problem with 4th parameter
