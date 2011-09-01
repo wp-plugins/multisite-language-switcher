@@ -1,6 +1,6 @@
 <?php
 
-if (!defined ('MSLS_DEF_STRING'))  define ('MSLS_DEF_STRING', 'msls');
+if (!defined ('MSLS_DEF_STRING')) define ('MSLS_DEF_STRING', 'msls');
 
 class MslsOptionsFactory {
 
@@ -31,7 +31,7 @@ class MslsOptions {
 		$args = func_get_args ();
 		$this->name = MSLS_DEF_STRING . $this->sep . implode ($this->sep, $args);
 		$this->exists = $this->set (get_option ($this->name));
-		$this->set_base ();
+		$this->base = $this->get_base ();
 	}
 
 	public function __get ($key) {
@@ -55,17 +55,6 @@ class MslsOptions {
 		return isset ($this->options[$key]);
 	}
 
-	protected function correct ($url, $base) {
-		if (empty ($url) || !is_string ($url)) return site_url ();
-		if ($this->base != $base) {
-			$search = '/' . $this->base . '/';
-			$replace = '/' . $base . '/';
-			$count = 1;
-			$url = str_replace ($search, $replace, $url, $count);
-		}
-		return $url;
-	}
-
 	public function save ($arr) {
 		if ($this->set ($arr)) {
 			delete_option ($this->name);
@@ -83,7 +72,9 @@ class MslsOptions {
 		return false;
 	}
 
-	protected function set_base () { }
+	protected function get_base () { 
+		return null;
+	}
 
 	public function get_permalink ($language) {
 		$postlink = $this->get_postlink ($language);
@@ -91,7 +82,7 @@ class MslsOptions {
 	}
 
 	public function get_postlink ($language) {
-		return false;
+		return null;
 	}
 
 	public function has_value ($language) {
@@ -109,7 +100,7 @@ class MslsPostOptions extends MslsOptions {
 		return (
 			$this->has_value ($language) ? 
 			get_permalink ($this->options[$language]) : 
-			false
+			null
 		);
 	}
 
@@ -119,38 +110,41 @@ class MslsTermOptions extends MslsOptions {
 
 	protected $sep = '_term_';
 	protected $autoload = 'no';
+	protected $base_option = 'tag_base';
+	protected $base_defined = 'tag';
+	protected $taxonomy = 'post_tag';
 
-	protected function set_base () {
-		$this->base = get_option ('tag_base');
-		if (empty ($this->base)) $this->base = 'tag';
+	protected function get_base () {
+		$base = get_option ($this->base_option);
+		return (!empty ($base) ? $base : $this->base_defined);
 	}
 
 	public function get_postlink ($language) {
 		if ($this->has_value ($language)) {
-			$url = get_term_link ((int) $this->options[$language], 'post_tag');
-			$base = get_option ('tag_base');
-			return $this->correct ($url, (!empty ($base) ? $base : 'tag'));
+			$url = get_term_link (
+				(int) $this->options[$language], 
+				$this->taxonomy
+			);
+			if (empty ($url) || !is_string ($url)) return null;
+			$base = $this->get_base ();
+			if ($this->base != $base) {
+				$search = '/' . $this->base . '/';
+				$replace = '/' . $base . '/';
+				$count = 1;
+				$url = str_replace ($search, $replace, $url, $count);
+			}
+			return $url;
 		}
-		return false;
+		return null;
 	}
 
 }
 
 class MslsCategoryOptions extends MslsTermOptions {
 
-	protected function set_base () {
-		$this->base = get_option ('category_base');
-		if (empty ($this->base)) $this->base = 'category';
-	}
-
-	public function get_postlink ($language) {
-		if ($this->has_value ($language)) { 
-			$url = get_term_link ((int) $this->options[$language], 'category'); 
-			$base = get_option ('category_base');
-			return $this->correct ($url, (!empty ($base) ? $base : 'category'));
-		}
-		return false;
-	}
+	protected $base_option = 'category_base';
+	protected $base_defined = 'category';
+	protected $taxonomy = 'category';
 
 }
 

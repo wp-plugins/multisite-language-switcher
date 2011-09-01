@@ -50,6 +50,7 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 				); 
 				$options = '';
 				$my_query = new WP_Query ($args);
+				$edit_link = '#';
 				while ($my_query->have_posts ()) {
 					$my_query->the_post ();
 					$my_id = get_the_ID ();
@@ -57,10 +58,12 @@ class MslsMetaBox extends MslsMain implements iMslsMain {
 						'<option value="%s"%s>%s</option>',
 						$my_id, ($my_id == $mydata->$language ? ' selected="selected"' : ''), get_the_title ()
 					);
+					if ($my_id == $mydata->$language)
+						$edit_link = get_edit_post_link ($my_id);
 				}
 				printf (
-					'<li><label for="%s[%s]"><img alt="%s" src="%s" /> </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
-					MSLS_DEF_STRING, $language, $language, $this->get_image_url ($language), MSLS_DEF_STRING, $language, $options
+					'<li><label for="%s[%s]"><a href="%s"><img alt="%s" src="%s" /></a> </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
+					MSLS_DEF_STRING, $language, $edit_link, $language, $this->get_image_url ($language), MSLS_DEF_STRING, $language, $options
 				);
 				restore_current_blog ();
 			}

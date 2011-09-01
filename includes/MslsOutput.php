@@ -132,9 +132,13 @@ function msls_content_filter ($content) {
 }
 add_filter ('the_content', 'msls_content_filter');
 
-function the_msls () {
+function get_the_msls () {
 	$obj = new MslsOutput ();
-	echo $obj;
+	return sprintf ('%s', $obj);
+}
+
+function the_msls () {
+	echo get_the_msls ();
 }
 
 ?>
