@@ -90,6 +90,10 @@ class MslsOptions {
 		return (!empty ($this->options[$language]) ? true : false);
 	}
 
+	public function get_current_link () {
+		return site_url ();
+	}
+
 }
 
 class MslsPostOptions extends MslsOptions {
@@ -105,7 +109,7 @@ class MslsPostOptions extends MslsOptions {
 		);
 	}
 
-	public function get_link () {
+	public function get_current_link () {
 		return get_permalink ((int) $this->args[0]);
 	}
 
@@ -143,7 +147,7 @@ class MslsTermOptions extends MslsOptions {
 		return null;
 	}
 
-	public function get_link () {
+	public function get_current_link () {
 		return get_tag_link ((int) $this->args[0]);
 	}
 
@@ -155,7 +159,7 @@ class MslsCategoryOptions extends MslsTermOptions {
 	protected $base_defined = 'category';
 	protected $taxonomy = 'category';
 
-	public function get_link () {
+	public function get_current_link () {
 		return get_category_link ((int) $this->args[0]);
 	}
 

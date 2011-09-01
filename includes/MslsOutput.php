@@ -31,7 +31,7 @@ class MslsOutput extends MslsMain implements iMslsMain {
 				$link->alt = $language;
 				$arr[] = sprintf (
 					'<a href="%s" title="%s">%s</a>',
-					$mydata->get_permalink (),
+					$mydata->get_current_link (),
 					$link->getTxt (),
 					$link
 				);
