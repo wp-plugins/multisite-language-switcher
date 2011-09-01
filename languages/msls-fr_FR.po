@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Multisite Language Switcher\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2011-09-01 14:36:18+00:00\n"
-"PO-Revision-Date: 2011-09-01 16:41+0100\n"
+"PO-Revision-Date: 2011-09-01 17:55+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: Andreas Breitschopp <a-breitschopp@ab-tools.com>\n"
 "Language: \n"
@@ -61,11 +61,11 @@ msgstr "Affichage"
 
 #: includes/MslsAdmin.php:40
 msgid "Exclude this blog from output"
-msgstr ""
+msgstr "Ce blog ne montre pas"
 
 #: includes/MslsAdmin.php:41
 msgid "Display link to the current language"
-msgstr ""
+msgstr "Afficher un lien du langage courant"
 
 #: includes/MslsAdmin.php:42
 msgid "Description"
