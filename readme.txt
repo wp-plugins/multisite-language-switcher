@@ -21,6 +21,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
 * Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
 * Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
+* French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 

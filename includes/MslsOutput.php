@@ -20,7 +20,7 @@ class MslsOutput extends MslsMain implements iMslsMain {
 		if ($blogs) {
 			$mydata = MslsOptionsFactory::create ();
 			$link = MslsLink::create ($display);
-			if ($this->options->output_current_blog && $exists = false) {
+			if ($this->options->output_current_blog && false == $exists) {
 				$language = $this->get_language ();
 				$link->txt = (
 					isset ($this->options->description) ? 
