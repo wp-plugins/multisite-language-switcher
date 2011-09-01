@@ -19,12 +19,28 @@ class MslsOutput extends MslsMain implements iMslsMain {
 		$blogs = $this->get_blogs ();
 		if ($blogs) {
 			$mydata = MslsOptionsFactory::create ();
+			$link = MslsLink::create ($display);
+			if ($this->options->output_current_blog) {
+				$language = $this->get_language ();
+				$link->txt = (
+					isset ($this->options->description) ? 
+					$this->options->description :
+					$language
+				);
+				$link->src = $this->get_image_url ($language);
+				$link->alt = $language;
+				$arr[] = sprintf (
+					'<a href="%s" title="%s">%s</a>',
+					get_permalink (),
+					$link->getTxt (),
+					$link
+				);
+			}
 			foreach ($blogs as $language => $blog) {
 				if (true == $exists && !$mydata->has_value ($language))
 					continue;
 				switch_to_blog ($blog->userblog_id);
 				$temp = new MslsOptions;
-				$link = MslsLink::create ($display);
 				$link->txt = (
 					isset ($temp->description) ? 
 					$temp->description :
@@ -97,6 +113,9 @@ class MslsWidget extends WP_Widget {
 
 }
 
+/**
+ * Registers Widget
+ */
 function msls_widgets_init () {
 	if (get_option (MSLS_DEF_STRING)) {
 		register_widget ("MslsWidget");

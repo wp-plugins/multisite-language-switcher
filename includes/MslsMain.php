@@ -52,7 +52,8 @@ class MslsMain {
 		return $this->blogs;
 	}
 
-	public function get_language ($blog_id) {
+	public function get_language ($blog_id = 0) {
+		if (0 == $blog_id) $blog_id = $this->current_blog_id;
 		$language = get_blog_option ($blog_id, 'WPLANG');
 		return (empty ($language) ? 'us' : $language);
 	}
@@ -78,7 +79,7 @@ class MslsMain {
 			$mydata = $_POST[MSLS_DEF_STRING];
 			$options = new $class ($id);
 			$options->save ($mydata);
-			$language = $this->get_language ($blog->current_blog_id);
+			$language = $this->get_language ();
 			$mydata[$language] = $id;
 			foreach ($this->get_blogs () as $language => $blog) {
 				if (!empty ($mydata[$language])) {
