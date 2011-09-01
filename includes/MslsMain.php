@@ -41,7 +41,8 @@ class MslsMain {
 			$this->blogs = array ();
 			foreach (get_blogs_of_user ($this->user_id) as $blog) {
 				if ($blog->userblog_id != $this->current_blog_id) {
-					if (false != get_blog_option ($blog->userblog_id, MSLS_DEF_STRING)) {
+					$temp = get_blog_option ($blog->userblog_id, MSLS_DEF_STRING);
+					if ($temp && empty ($temp['exclude_current_blog'])) {
 						$language = $this->get_language ($blog->userblog_id);
 						$this->blogs[$language] = $blog;
 					}
