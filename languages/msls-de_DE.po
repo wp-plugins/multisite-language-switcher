@@ -1,8 +1,3 @@
-# German translations for PACKAGE package.
-# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Dennis Ploetner <re@lloc.de>, 2011.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.7\n"
@@ -11,26 +6,36 @@ msgstr ""
 "PO-Revision-Date: 2011-09-01 17:56+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: German\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: __\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
 
 #: includes/MslsLink.php:20
+#@ msls
 msgid "Flag and description"
 msgstr "Flagge und Beschreibung"
 
 #: includes/MslsLink.php:66
+#@ msls
 msgid "Description only"
 msgstr "Nur Beschreibung"
 
 #: includes/MslsLink.php:76
+#@ msls
 msgid "Flag only"
 msgstr "Nur Flagge"
 
 #: includes/MslsLink.php:86
+#@ msls
 msgid "Description and flag"
 msgstr "Beschreibung und Flagge"
 
@@ -38,86 +43,102 @@ msgstr "Beschreibung und Flagge"
 #: includes/MslsAdmin.php:13
 #: includes/MslsMetaBox.php:18
 #: includes/MslsMetaBox.php:26
-#: includes/MslsPostTag.php:27
 #: includes/MslsOutput.php:82
+#: includes/MslsPostTag.php:27
+#@ msls
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
 #: includes/MslsAdmin.php:25
+#@ msls
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher"
 
 #: includes/MslsAdmin.php:26
+#@ msls
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin für jedes Blog einzeln konfiguriert werden."
 
 #: includes/MslsAdmin.php:32
 #: includes/MslsMetaBox.php:78
+#@ msls
 msgid "Update"
 msgstr "Aktualisieren"
 
 #: includes/MslsAdmin.php:38
+#@ msls
 msgid "Main Settings"
 msgstr "Einstellungen"
 
 #: includes/MslsAdmin.php:39
+#@ msls
 msgid "Display"
 msgstr "Anzeige"
 
 #: includes/MslsAdmin.php:40
+#@ msls
 msgid "Exclude this blog from output"
 msgstr "Dieses Blog bei der Ausgabe ausschließen"
 
 #: includes/MslsAdmin.php:41
+#@ msls
 msgid "Display link to the current language"
 msgstr "Link zur aktuellen Sprache anzeigen"
 
 #: includes/MslsAdmin.php:42
+#@ msls
 msgid "Description"
 msgstr "Beschreibung"
 
 #: includes/MslsAdmin.php:43
+#@ msls
 msgid "Text/HTML before the list"
 msgstr "Text/HTML vor der Liste"
 
 #: includes/MslsAdmin.php:44
+#@ msls
 msgid "Text/HTML after the list"
 msgstr "Text/HTML nach der Liste"
 
 #: includes/MslsAdmin.php:45
+#@ msls
 msgid "Text/HTML before each item"
 msgstr "Text/HTML vor jedem Element"
 
 #: includes/MslsAdmin.php:46
+#@ msls
 msgid "Text/HTML after each item"
 msgstr "Text/HTML nach jedem Element"
 
 #: includes/MslsAdmin.php:47
+#@ msls
 msgid "Add hint for available translations"
 msgstr "Hinweis unter Post anzeigen, wenn Übersetzung verfügbar"
 
 #: includes/MslsAdmin.php:48
+#@ msls
 msgid "Hint priority"
 msgstr "Priorität des Hinweises"
 
 #: includes/MslsMetaBox.php:84
+#@ msls
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
 msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
 
 #: includes/MslsOutput.php:107
+#@ msls
 msgid "Title"
 msgstr "Titel"
 
 #: includes/MslsOutput.php:134
+#, php-format
+#@ msls
 msgid "%s and %s"
 msgstr "%s und %s"
 
 #: includes/MslsOutput.php:144
+#, php-format
+#@ msls
 msgid "This post is also available in %s."
 msgstr "Der Artikel ist auch in %s verfügbar."
-
-#~ msgid "Priority for the output of the hint"
-#~ msgstr "Priorität des Hinweises"
-#~ msgid "Don't include this blog"
-#~ msgstr "Dieses Blog nicht einbeziehen"
 
