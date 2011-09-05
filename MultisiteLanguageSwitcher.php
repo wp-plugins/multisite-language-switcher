@@ -5,7 +5,7 @@ Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
 Description: A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 Version: 0.7.1
-Author: Dennis Ploetner	
+Author: Dennis Ploetner 
 Author URI: http://lloc.de/
 */
 
@@ -26,28 +26,34 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!class_exists('MslsMain')) {
+if ( !class_exists( 'MslsMain' ) ) {
+    if ( !defined( 'MSLS_PLUGIN_PATH' ) )  
+        define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 
-	if (!defined ('MSLS_PLUGIN_PATH'))  
-		define ('MSLS_PLUGIN_PATH', plugin_basename (__FILE__));
+    require_once dirname( __FILE__ ) . '/includes/MslsMain.php';
+    register_activation_hook( __FILE__, 'MslsMain::activate' );
+    register_deactivation_hook( __FILE__, 'MslsMain::deactivate' );
 
-	require_once (dirname (__FILE__) . '/includes/MslsMain.php');
-	register_activation_hook (__FILE__, 'MslsMain::activate');
-	register_deactivation_hook (__FILE__, 'MslsMain::deactivate');
+    require_once dirname( __FILE__ ) . '/includes/MslsOutput.php';
 
-	require_once (dirname (__FILE__) . '/includes/MslsOutput.php');
+    if ( is_admin() ) {
+        require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';
+        add_action( 'load-post.php', 'MslsMetaBox::init' );
 
-	if (is_admin()) {
-		require_once (dirname (__FILE__) . '/includes/MslsMetaBox.php');
-		add_action ('load-post.php', 'MslsMetaBox::init');
+        require_once dirname( __FILE__ ) . '/includes/MslsAdmin.php';
+        add_action( 'admin_menu', 'MslsAdmin::init' );
 
-		require_once (dirname (__FILE__) . '/includes/MslsAdmin.php');
-		add_action ('admin_menu', 'MslsAdmin::init');
-
-		require_once (dirname (__FILE__) . '/includes/MslsPostTag.php');
-		add_action ('load-edit-tags.php', 'MslsPostTag::init');
-	}
-
+        require_once dirname( __FILE__ ) . '/includes/MslsPostTag.php';
+        add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
+    }
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
 ?>

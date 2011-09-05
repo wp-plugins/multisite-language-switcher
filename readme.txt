@@ -35,9 +35,12 @@ If you have created your own language pack, or have an update of an existing one
 * set the relations of your pages and posts in Posts -> Edit or Page -> Edit
 * set the relations of your categories and tags in Posts -> Categories or Post -> Tags
 * now you can use the widget and/or the content_filter which displays a hint if a translation is available
-* optionally you can use a line like _<?php if (function_exists("the_msls")) the_msls(); ?>_ directly in your theme-files
+* optionally you can use a line like `<?php if ( function_exists( 'the_msls' )) the_msls(); ?>` directly in your theme-files
 
 == Changelog ==
+
+= 0.7.2 =
+* source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)
 
 = 0.7.1 =
 * language files for pt_BR updated
@@ -93,7 +96,7 @@ If you have created your own language pack, or have an update of an existing one
 * optimization/refactoring
 
 = 0.2 =
-* bugfix: showstopper in MslsMain::__construct ()
+* bugfix: showstopper in MslsMain::__construct()
 
 = 0.1 =
 * first version
