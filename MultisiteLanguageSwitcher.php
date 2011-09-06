@@ -39,6 +39,7 @@ if ( !class_exists( 'MslsMain' ) ) {
     if ( is_admin() ) {
         require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';
         add_action( 'load-post.php', 'MslsMetaBox::init' );
+        add_action( 'load-post-new.php', 'MslsMetaBox::init' );
 
         require_once dirname( __FILE__ ) . '/includes/MslsAdmin.php';
         add_action( 'admin_menu', 'MslsAdmin::init' );

@@ -40,6 +40,7 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.8 =
+* new: meta-box is now available too when you want to add a new post 
 * new: custom url for flag-images
 * new: now you can order the output by description; default is country-code
 * new: apply_filters( 'mls_get_blogs_return', $this->blogs ); in MslsMain::get_blogs();
