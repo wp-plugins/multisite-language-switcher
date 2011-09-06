@@ -2,8 +2,18 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * MslsOptions.php
+ *
+ * @package Msls
+ */
+
+
 if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
 
+/**
+ * MslsOptionsFactory
+ */
 class MslsOptionsFactory {
 
     static function create() {
@@ -20,6 +30,9 @@ class MslsOptionsFactory {
 
 }
 
+/**
+ * MslsOptions
+ */
 class MslsOptions {
 
     protected $args;
@@ -102,6 +115,9 @@ class MslsOptions {
 
 }
 
+/**
+ * MslsPostOptions
+ */
 class MslsPostOptions extends MslsOptions {
 
     protected $sep      = '_';
@@ -121,6 +137,9 @@ class MslsPostOptions extends MslsOptions {
 
 }
 
+/**
+ * MslsTermOptions
+ */
 class MslsTermOptions extends MslsOptions {
 
     protected $sep          = '_term_';
@@ -144,7 +163,8 @@ class MslsTermOptions extends MslsOptions {
                 (int) $this->options[$language], 
                 $this->taxonomy
             );
-            if ( empty( $url ) || !is_string( $url ) ) return null;
+            if ( empty( $url ) || !is_string( $url ) )
+                return null;
             $base = $this->get_base();
             if ( $this->base != $base ) {
                 $search  = '/' . $this->base . '/';
@@ -163,6 +183,9 @@ class MslsTermOptions extends MslsOptions {
 
 }
 
+/**
+ * MslsCategoryOptions
+ */
 class MslsCategoryOptions extends MslsTermOptions {
 
     protected $base_option  = 'category_base';

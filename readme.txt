@@ -40,6 +40,7 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.7.2 =
+* added empty index.php-files to all subdirectories
 * source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)
 
 = 0.7.1 =

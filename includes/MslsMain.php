@@ -52,6 +52,7 @@ class MslsMain {
             }
             ksort( $this->blogs );
         }
+        $this->blogs = apply_filters( 'mls_get_blogs_return', $this->blogs );
         return $this->blogs;
     }
 
