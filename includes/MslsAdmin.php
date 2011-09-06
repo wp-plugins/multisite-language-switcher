@@ -54,6 +54,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         add_settings_field( 'after_item', __( 'Text/HTML after each item', MSLS_DEF_STRING ), array( $this, 'after_item' ), __CLASS__, 'section' );
         add_settings_field( 'content_filter', __( 'Add hint for available translations', MSLS_DEF_STRING ), array( $this, 'content_filter' ), __CLASS__, 'section' );
         add_settings_field( 'content_priority', __( 'Hint priority', MSLS_DEF_STRING ), array( $this, 'content_priority' ), __CLASS__, 'section' );
+        add_settings_field( 'image_url', __( 'Custom URL for flag-images', MSLS_DEF_STRING ), array( $this, 'image_url' ), __CLASS__, 'section' );
     }
 
     public function section() {}
@@ -130,6 +131,10 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
+    public function image_url() {
+        echo $this->render_input( 'image_url' );
+    }
+
     public function render_checkbox( $key ) {
         return sprintf(
             '<input type="checkbox" id="%s" name="%s[%s]" value="1"%s/>',
@@ -153,7 +158,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     }
 
     public function validate( $input ) {
-        if ( !is_numeric( $input['display'] ) ) $input['display'] = 0; 
+        if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
+        $input['image_url'] = rtrim( $input['image_url'], '/' );
         return $input;
     }
 

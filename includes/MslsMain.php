@@ -17,8 +17,7 @@ class MslsMain {
     protected $current_blog_id;
     protected $options;
 
-    protected $blogs     = null;
-    protected $image_url = null;
+    protected $blogs = null;
 
     static function activate() {
         if ( function_exists( 'is_multisite' ) && is_multisite() ) 
@@ -63,8 +62,9 @@ class MslsMain {
     }
 
     public function get_image_url( $language ) {
-        if ( is_null( $this->image_url ) ) {
-            $this->image_url = sprintf(
+        $url = $this->options->image_url;
+        if ( empty( $url ) ) {
+            $url = sprintf(
                 '%s/%s/flags',
                 WP_PLUGIN_URL, 
                 dirname( MSLS_PLUGIN_PATH )
@@ -74,7 +74,7 @@ class MslsMain {
             $language = strtolower( substr( $language, -2 ) );
         return sprintf(
             '%s/%s.png',
-            $this->image_url,
+            $url,
             $language
         );
     }

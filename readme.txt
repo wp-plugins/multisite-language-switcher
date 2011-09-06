@@ -40,7 +40,8 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.8 =
-* new: now you can order the output by description
+* new: custom url for flag-images
+* new: now you can order the output by description; default is country-code
 * new: apply_filters( 'mls_get_blogs_return', $this->blogs ); in MslsMain::get_blogs();
 * added empty index.php-files to all subdirectories
 * source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)

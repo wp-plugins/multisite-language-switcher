@@ -36,7 +36,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
                 $link->src      = $this->get_image_url( $language );
                 $link->alt      = $language;
                 $sort_key       = (
-                    $this->options->sort_by_descr ?
+                    $this->options->sort_by_description ?
                     $link->get_txt() :
                     $language
                 );
@@ -60,7 +60,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
                 $link->src      = $this->get_image_url( $language );
                 $link->alt      = $language;
                 $sort_key       = (
-                    $this->options->sort_by_descr ?
+                    $this->options->sort_by_description ?
                     $link->get_txt() :
                     $language
                 );
