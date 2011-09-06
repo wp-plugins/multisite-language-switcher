@@ -44,6 +44,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
             __CLASS__
         );
         add_settings_field( 'display', __( 'Display', MSLS_DEF_STRING ), array( $this, 'display' ), __CLASS__, 'section' );
+        add_settings_field( 'sort_by_description', __( 'Sort output by description', MSLS_DEF_STRING ), array( $this, 'sort_by_description' ), __CLASS__, 'section' );
         add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', MSLS_DEF_STRING ), array( $this, 'exclude_current_blog' ), __CLASS__, 'section' );
         add_settings_field( 'output_current_blog', __( 'Display link to the current language', MSLS_DEF_STRING ), array( $this, 'output_current_blog' ), __CLASS__, 'section' );
         add_settings_field( 'description', __( 'Description', MSLS_DEF_STRING ), array( $this, 'description' ), __CLASS__, 'section' );
@@ -73,6 +74,18 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
+    public function sort_by_description() {
+        echo $this->render_checkbox( 'sort_by_description' );
+    }
+
+    public function exclude_current_blog() {
+        echo $this->render_checkbox( 'exclude_current_blog' );
+    }
+
+    public function output_current_blog() {
+        echo $this->render_checkbox( 'output_current_blog' );
+    }
+
     public function description() {
         echo $this->render_input( 'description', '40' );
     }
@@ -93,28 +106,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         echo $this->render_input( 'after_item' );
     }
 
-    public function exclude_current_blog() {
-        printf(
-            '<input type="checkbox" id="content_filter" name="%s[exclude_current_blog]" value="1"%s/>',
-            MSLS_DEF_STRING, 
-            ( $this->options->exclude_current_blog == 1 ? ' checked="checked"' : '' )
-        );
-    }
-
-    public function output_current_blog() {
-        printf(
-            '<input type="checkbox" id="content_filter" name="%s[output_current_blog]" value="1"%s/>',
-            MSLS_DEF_STRING, 
-            ( $this->options->output_current_blog == 1 ? ' checked="checked"' : '' )
-        );
-    }
-
     public function content_filter() {
-        printf(
-            '<input type="checkbox" id="content_filter" name="%s[content_filter]" value="1"%s/>',
-            MSLS_DEF_STRING, 
-            ( $this->options->content_filter == 1 ? ' checked="checked"' : '' )
-        );
+        echo $this->render_checkbox( 'content_filter' );
     }
 
     public function content_priority() {
@@ -137,10 +130,25 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
+    public function render_checkbox( $key ) {
+        return sprintf(
+            '<input type="checkbox" id="%s" name="%s[%s]" value="1"%s/>',
+            $key,
+            MSLS_DEF_STRING,
+            $key,
+            ( $this->options->$key == 1 ? ' checked="checked"' : '' )
+        );
+
+    }
+
     public function render_input( $key, $size = '30' ) {
         return sprintf(
             '<input id="%s" name="%s[%s]" value="%s" size="%s"/>',
-            $key, MSLS_DEF_STRING, $key, esc_attr( $this->options->$key ), $size
+            $key,
+            MSLS_DEF_STRING,
+            $key,
+            esc_attr( $this->options->$key ),
+            $size
         );
     }
 

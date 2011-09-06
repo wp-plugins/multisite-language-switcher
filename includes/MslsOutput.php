@@ -27,15 +27,20 @@ class MslsOutput extends MslsMain implements IMslsMain {
             $mydata = MslsOptionsFactory::create();
             $link   = MslsLink::create( $display );
             if ( $this->options->output_current_blog && false == $exists ) {
-                $language  = $this->get_language();
-                $link->txt = (
+                $language       = $this->get_language();
+                $link->txt      = (
                     isset( $this->options->description ) ?
                     $this->options->description :
                     $language
                 );
-                $link->src = $this->get_image_url( $language );
-                $link->alt = $language;
-                $arr[]     = sprintf(
+                $link->src      = $this->get_image_url( $language );
+                $link->alt      = $language;
+                $sort_key       = (
+                    $this->options->sort_by_descr ?
+                    $link->get_txt() :
+                    $language
+                );
+                $arr[$sort_key] = sprintf(
                     '<a href="%s" title="%s">%s</a>',
                     $mydata->get_current_link(),
                     $link->get_txt(),
@@ -46,15 +51,20 @@ class MslsOutput extends MslsMain implements IMslsMain {
                 if ( true == $exists && !$mydata->has_value( $language ) )
                     continue;
                 switch_to_blog( $blog->userblog_id );
-                $temp      = new MslsOptions;
-                $link->txt = (
+                $temp           = new MslsOptions;
+                $link->txt      = (
                     isset( $temp->description ) ?
                     $temp->description :
                     $language
                 );
-                $link->src = $this->get_image_url( $language );
-                $link->alt = $language;
-                $arr[]     = sprintf(
+                $link->src      = $this->get_image_url( $language );
+                $link->alt      = $language;
+                $sort_key       = (
+                    $this->options->sort_by_descr ?
+                    $link->get_txt() :
+                    $language
+                );
+                $arr[$sort_key] = sprintf(
                     '<a href="%s" title="%s">%s</a>',
                     $mydata->get_permalink( $language ),
                     $link->get_txt(),
@@ -62,6 +72,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
                 );
                 restore_current_blog();
             }
+            ksort( $arr );
         }
         return $arr;
     }
