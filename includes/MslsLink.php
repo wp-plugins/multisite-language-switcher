@@ -128,11 +128,7 @@ class MslsAdminIcon {
     }
 
     public function __toString() {
-        return sprintf(
-            '<a href="%s">%s</a>',
-            $this->get_path(),
-            $this->get_img()
-        );
+        return $this->get_a();
     }
 
     protected function get_img() {
@@ -144,10 +140,10 @@ class MslsAdminIcon {
     }
 
     protected function get_path() {
-        return( 
-            !empty( $this->path ) ?
-            $this->path :
-            $this->get_edit_new()
+        return sprintf(
+            '<a href="%s">%s</a>',
+            ( !empty( $this->href ) ? $this->href : $this->get_edit_new() ),
+            $this->get_img()
         );
     }
 
