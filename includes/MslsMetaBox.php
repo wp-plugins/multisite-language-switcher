@@ -106,7 +106,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
     public function set( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
             return;
-        if ( !wp_verify_nonce( $_POST[MSLS_DEF_STRING . '_noncename'], MSLS_PLUGIN_PATH ) )
+        if ( !isset( $_POST[MSLS_DEF_STRING . '_noncename'] ) || !wp_verify_nonce( $_POST[MSLS_DEF_STRING . '_noncename'], MSLS_PLUGIN_PATH ) )
             return;
         if ( 'page' == $_POST['post_type'] ) {
             if ( !current_user_can( 'edit_page' ) ) return;
