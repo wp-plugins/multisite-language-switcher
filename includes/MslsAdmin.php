@@ -46,6 +46,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         add_settings_field( 'display', __( 'Display', MSLS_DEF_STRING ), array( $this, 'display' ), __CLASS__, 'section' );
         add_settings_field( 'sort_by_description', __( 'Sort output by description', MSLS_DEF_STRING ), array( $this, 'sort_by_description' ), __CLASS__, 'section' );
         add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', MSLS_DEF_STRING ), array( $this, 'exclude_current_blog' ), __CLASS__, 'section' );
+        add_settings_field( 'only_with_translation', __( 'Show only links with a translation', MSLS_DEF_STRING ), array( $this, 'only_with_translation' ), __CLASS__, 'section' );
         add_settings_field( 'output_current_blog', __( 'Display link to the current language', MSLS_DEF_STRING ), array( $this, 'output_current_blog' ), __CLASS__, 'section' );
         add_settings_field( 'description', __( 'Description', MSLS_DEF_STRING ), array( $this, 'description' ), __CLASS__, 'section' );
         add_settings_field( 'before_output', __( 'Text/HTML before the list', MSLS_DEF_STRING ), array( $this, 'before_output' ), __CLASS__, 'section' );
@@ -81,6 +82,10 @@ class MslsAdmin extends MslsMain implements IMslsMain {
 
     public function exclude_current_blog() {
         echo $this->render_checkbox( 'exclude_current_blog' );
+    }
+
+    public function only_with_translation() {
+        echo $this->render_checkbox( 'only_with_translation' );
     }
 
     public function output_current_blog() {

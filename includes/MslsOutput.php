@@ -83,7 +83,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
             $this->options->before_item .
             implode(
                 $this->options->after_item . $this->options->before_item,
-                $this->get( (int) $this->options->display )
+                $this->get( (int) $this->options->display, (bool) $this->exclude_current_blog )
             ) .
             $this->options->after_item .
             $this->options->after_output

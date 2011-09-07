@@ -52,6 +52,7 @@ If you have created your own language pack, or have an update of an existing one
 * language files for pt_BR updated
 
 = 0.7 =
+* new: you can now choose if you want to show only links with a translation
 * new: flags in edit_posts are clickable now, link to edit the translation
 * new: function get_the_msls for complete the_msls
 * new: option to choose if a link to the current blog should be displayed too
