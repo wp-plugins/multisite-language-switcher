@@ -24,13 +24,14 @@ class MslsPostTag extends MslsMain implements IMslsMain {
     }
 
     public function add( $tag ) {
+        $term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
         $blogs = $this->get_blogs();
         if ( $blogs ) {
             printf(
                 '<tr><th colspan="2"><strong>%s</strong></th></tr>',
                 __( 'Multisite Language Switcher', MSLS_DEF_STRING )
             );
-            $mydata = new MslsTermOptions( $tag->term_id );
+            $mydata = new MslsTermOptions( $term_id );
             foreach ( $blogs as $language => $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $options   = '';
