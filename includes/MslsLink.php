@@ -139,7 +139,7 @@ class MslsAdminIcon {
         );
     }
 
-    protected function get_path() {
+    protected function get_a() {
         return sprintf(
             '<a href="%s">%s</a>',
             ( !empty( $this->href ) ? $this->href : $this->get_edit_new() ),
