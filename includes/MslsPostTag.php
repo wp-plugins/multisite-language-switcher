@@ -12,7 +12,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
 
     static function init() {
         $obj = new self();
-        if ( isset( $_REQUEST['taxonomy'] ) ) {
+        if ( !$obj->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj->taxonomy = $_REQUEST['taxonomy'];
             if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
                 add_action( "{$obj->taxonomy}_edit_form_fields", array( $obj, 'add' ) );

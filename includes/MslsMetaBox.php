@@ -10,8 +10,10 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
 
     static function init() {
         $obj = new self();
-        add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-        add_action( 'save_post', array( $obj, 'set' ) );
+        if ( !$obj->is_excluded() ) {
+            add_action( 'add_meta_boxes', array( $obj, 'add' ) );
+            add_action( 'save_post', array( $obj, 'set' ) );
+        }
         return $obj;
     }
 

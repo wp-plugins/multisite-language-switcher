@@ -79,6 +79,10 @@ class MslsMain {
         );
     }
 
+    public function is_excluded() {
+        return (bool) $this->options->exclude_current_blog;
+    }
+
     protected function save( $id, $class ) {
         if ( isset( $_POST[MSLS_DEF_STRING] ) ) {
             $mydata  = $_POST[MSLS_DEF_STRING];

@@ -21,73 +21,81 @@ class MslsOutput extends MslsMain implements IMslsMain {
     }
 
     public function get( $display, $exists = false ) {
-        $arr   = array();
-        $blogs = $this->get_blogs();
-        if ( $blogs ) {
-            $mydata = MslsOptionsFactory::create();
-            $link   = MslsLink::create( $display );
-            if ( $this->options->output_current_blog && false == $exists ) {
-                $language       = $this->get_language();
-                $link->txt      = (
-                    isset( $this->options->description ) ?
-                    $this->options->description :
-                    $language
-                );
-                $link->src      = $this->get_image_url( $language );
-                $link->alt      = $language;
-                $sort_key       = (
-                    $this->options->sort_by_description ?
-                    $link->get_txt() :
-                    $language
-                );
-                $arr[$sort_key] = sprintf(
-                    '<a href="%s" title="%s">%s</a>',
-                    $mydata->get_current_link(),
-                    $link->get_txt(),
-                    $link
-                );
+        $arr = array();
+        if ( !$this->is_excluded() ) {
+            $blogs = $this->get_blogs();
+            if ( $blogs ) {
+                $mydata = MslsOptionsFactory::create();
+                $link   = MslsLink::create( $display );
+                if ( $this->options->output_current_blog && false == $exists ) {
+                    $language       = $this->get_language();
+                    $link->txt      = (
+                        isset( $this->options->description ) ?
+                        $this->options->description :
+                        $language
+                    );
+                    $link->src      = $this->get_image_url( $language );
+                    $link->alt      = $language;
+                    $sort_key       = (
+                        $this->options->sort_by_description ?
+                        $link->get_txt() :
+                        $language
+                    );
+                    $arr[$sort_key] = sprintf(
+                        '<a href="%s" title="%s">%s</a>',
+                        $mydata->get_current_link(),
+                        $link->get_txt(),
+                        $link
+                    );
+                }
+                foreach ( $blogs as $language => $blog ) {
+                    if ( true == $exists && !$mydata->has_value( $language ) )
+                        continue;
+                    switch_to_blog( $blog->userblog_id );
+                    $temp           = new MslsOptions;
+                    $link->txt      = (
+                        isset( $temp->description ) ?
+                        $temp->description :
+                        $language
+                    );
+                    $link->src      = $this->get_image_url( $language );
+                    $link->alt      = $language;
+                    $sort_key       = (
+                        $this->options->sort_by_description ?
+                        $link->get_txt() :
+                        $language
+                    );
+                    $arr[$sort_key] = sprintf(
+                        '<a href="%s" title="%s">%s</a>',
+                        $mydata->get_permalink( $language ),
+                        $link->get_txt(),
+                        $link
+                    );
+                    restore_current_blog();
+                }
+                ksort( $arr );
             }
-            foreach ( $blogs as $language => $blog ) {
-                if ( true == $exists && !$mydata->has_value( $language ) )
-                    continue;
-                switch_to_blog( $blog->userblog_id );
-                $temp           = new MslsOptions;
-                $link->txt      = (
-                    isset( $temp->description ) ?
-                    $temp->description :
-                    $language
-                );
-                $link->src      = $this->get_image_url( $language );
-                $link->alt      = $language;
-                $sort_key       = (
-                    $this->options->sort_by_description ?
-                    $link->get_txt() :
-                    $language
-                );
-                $arr[$sort_key] = sprintf(
-                    '<a href="%s" title="%s">%s</a>',
-                    $mydata->get_permalink( $language ),
-                    $link->get_txt(),
-                    $link
-                );
-                restore_current_blog();
-            }
-            ksort( $arr );
         }
         return $arr;
     }
 
     public function __toString() {
-        return(
-            $this->options->before_output . 
-            $this->options->before_item .
-            implode(
-                $this->options->after_item . $this->options->before_item,
-                $this->get( (int) $this->options->display, (bool) $this->options->only_with_translation )
-            ) .
-            $this->options->after_item .
-            $this->options->after_output
+        $arr = $this->get(
+            (int) $this->options->display,
+            (bool) $this->options->only_with_translation
         );
+        $str = '';
+        if ( !empty( $arr ) ) {
+            $str = $this->options->before_output .
+                $this->options->before_item .
+                implode(
+                    $this->options->after_item . $this->options->before_item,
+                    $arr
+                ) .
+                $this->options->after_item .
+                $this->options->after_output;
+        }
+        return $str;
     }
 
 }
@@ -134,7 +142,9 @@ class MslsWidget extends WP_Widget {
  */
 function msls_widgets_init() {
     if ( get_option( MSLS_DEF_STRING ) ) {
-        register_widget( 'MslsWidget' );
+        $obj = new MslsOutput();
+        if ( !$obj->is_excluded() )
+            register_widget( 'MslsWidget' );
     }
 }
 add_action( 'widgets_init', 'msls_widgets_init' );
@@ -173,7 +183,7 @@ add_filter( 'the_content', 'msls_content_filter' );
  */
 function get_the_msls() {
     $obj = new MslsOutput();
-    return sprintf( '%s', $obj );
+    return( sprintf( '%s', $obj ) );
 }
 
 /**
