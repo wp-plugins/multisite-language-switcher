@@ -40,6 +40,7 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.8 =
+* new: flags in the backend are allways clickable now, link to edit the translation or to create a new item
 * new: meta-box is now available too when you want to add a new post 
 * new: custom url for flag-images
 * new: now you can order the output by description; default is country-code

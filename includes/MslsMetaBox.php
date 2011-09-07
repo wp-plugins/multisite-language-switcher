@@ -4,6 +4,7 @@
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
+require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsMetaBox extends MslsMain implements IMslsMain {
 
@@ -52,26 +53,23 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                 );
                 $options   = '';
                 $my_query  = new WP_Query( $args );
-                $edit_link = sprintf(
-                    '<img alt="%s" src="%s" />',
-                    $language,
-                    $this->get_image_url( $language )
-                );
+                $edit_link = MslsAdminIcon::create( $type );
+                $edit_link->set_language( $language );
+                $edit_link->set_src( $this->get_image_url( $language ) );
                 while ( $my_query->have_posts() ) {
                     $my_query->the_post();
                     $my_id    = get_the_ID();
+                    $selected = '';
+                    if ( $my_id == $mydata->$language ) {
+                        $selected = 'selected="selected"';
+                        $edit_link->set_href( get_edit_post_link( $my_id ) );
+                    }
                     $options .= sprintf(
                         '<option value="%s"%s>%s</option>',
                         $my_id,
-                        ( $my_id == $mydata->$language ? ' selected="selected"' : '' ),
+                        $selected,
                         get_the_title()
                     );
-                    if ($my_id == $mydata->$language)
-                        $edit_link = sprintf(
-                            '<a href="%s">%s</a>',
-                            get_edit_post_link( $my_id ),
-                            $edit_link
-                        );
                 }
                 printf(
                     '<li><label for="%s[%s]">%s </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',

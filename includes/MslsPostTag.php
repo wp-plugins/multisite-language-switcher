@@ -4,6 +4,7 @@
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
+require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsPostTag extends MslsMain implements IMslsMain {
 
@@ -31,24 +32,31 @@ class MslsPostTag extends MslsMain implements IMslsMain {
             $mydata = new MslsTermOptions( $tag->term_id );
             foreach ( $blogs as $language => $blog ) {
                 switch_to_blog( $blog->userblog_id );
-                $options = '';
-                $terms   = get_terms( $this->taxonomy );
+                $options   = '';
+                $terms     = get_terms( $this->taxonomy );
+                $edit_link = MslsAdminIcon::create( $this->taxonomy );
+                $edit_link->set_language( $language );
+                $edit_link->set_src( $this->get_image_url( $language ) );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
+                        $selected = '';
+                        if ( $term->term_id == $mydata->$language ) {
+                            $selected = 'selected="selected"';
+                            $edit_link->set_href( get_edit_term_link( $term->term_id, $this->taxonomys ) );
+                        }
                         $options .= sprintf(
                             '<option value="%s"%s>%s</option>',
                             $term->term_id,
-                            ($term->term_id == $mydata->$language ? ' selected="selected"' : ''),
+                            $selected,
                             $term->name
                         );
                     }
                 }
                 printf(
-                    '<tr class="form-field"><th scope="row" valign="top"><label for="%s[%s]"><img alt="%s" src="%s" /> </label></th><td><select style="width:25em;" name="%s[%s]"><option value=""></option>%s</select></td>',
+                    '<tr class="form-field"><th scope="row" valign="top"><label for="%s[%s]">%s </label></th><td><select style="width:25em;" name="%s[%s]"><option value=""></option>%s</select></td>',
                     MSLS_DEF_STRING,
                     $language,
-                    $language,
-                    $this->get_image_url( $language ),
+                    $edit_link,
                     MSLS_DEF_STRING,
                     $language,
                     $options

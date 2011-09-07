@@ -90,6 +90,91 @@ class MslsLinkTextImage extends MslsLink {
 
 }
 
+class MslsAdminIcon {
+
+    protected $language;
+    protected $src;
+    protected $href;
+    protected $blog_id;
+    protected $path = 'post-new.php';
+
+    static function create( $type ) {
+        if ( 'page' == $type ) {
+            return new MslsAdminIconPage;
+        }
+        elseif ( 'category' == $type ) {
+            return new MslsAdminIconCategory;
+        }
+        elseif ( 'post_tag' == $type ) {
+            return new MslsAdminIconTag;
+        }
+        return new MslsAdminIcon;
+    }
+
+    public function __construct() {
+        $this->blog_id = get_current_blog_id();
+    }
+
+    public function set_language( $language ) {
+        $this->language = $language;
+    }
+
+    public function set_src( $src ) {
+        $this->src = $src;
+    }
+
+    public function set_href( $href ) {
+        $this->href = $href;
+    }
+
+    public function __toString() {
+        return sprintf(
+            '<a href="%s">%s</a>',
+            $this->get_path(),
+            $this->get_img()
+        );
+    }
+
+    protected function get_img() {
+        return sprintf(
+            '<img alt="%s" src="%s" />',
+            $this->language,
+            $this->src
+        );
+    }
+
+    protected function get_path() {
+        return( 
+            !empty( $this->path ) ?
+            $this->path :
+            $this->get_edit_new()
+        );
+    }
+
+    protected function get_edit_new() {
+        return get_admin_url( $this->blog_id, $this->path );
+    }
+
+}
+
+class MslsAdminIconPage extends MslsAdminIcon {
+
+    protected $path = 'post-new.php?post_type=page';
+
+}
+
+class MslsAdminIconCategory extends MslsAdminIcon {
+
+    protected $path = 'edit-tags.php?taxonomy=category';
+
+}
+
+class MslsAdminIconTag extends MslsAdminIcon {
+
+    protected $path = 'edit-tags.php?taxonomy=post_tag';
+
+}
+
 /*
  * Local variables:
  * tab-width: 4
