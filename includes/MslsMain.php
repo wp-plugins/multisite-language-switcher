@@ -32,9 +32,15 @@ class MslsMain {
 
     public function __construct() {
         $this->current_blog_id = get_current_blog_id();
-        $this->user_id = get_user_id_from_string( get_blog_option( $this->current_blog_id, 'admin_email' ) );
+        $this->user_id = get_user_id_from_string(
+            get_blog_option( $this->current_blog_id, 'admin_email' )
+        );
         $this->options = new MslsOptions;
-        load_plugin_textdomain( MSLS_DEF_STRING, false, dirname( MSLS_PLUGIN_PATH ) . '/languages/' );
+        load_plugin_textdomain(
+            MSLS_DEF_STRING,
+            false,
+            dirname( MSLS_PLUGIN_PATH ) . '/languages/'
+        );
     }
 
     public function get_blogs() {
@@ -61,16 +67,24 @@ class MslsMain {
         return empty($language) ? 'us' : $language;
     }
 
-    public function get_image_url( $language ) {
-        $url = $this->options->image_url;
-        if ( empty( $url ) ) {
-            $url = sprintf(
-                '%s/%s/flags',
-                WP_PLUGIN_URL, 
-                dirname( MSLS_PLUGIN_PATH )
-            );
+    public function get_url( $type ) {
+        $url = sprintf(
+            '%s/%s/%s',
+            WP_PLUGIN_URL, 
+            dirname( MSLS_PLUGIN_PATH ),
+            $type
+        );
+        return esc_url( $url );
+    }
+
+    public function get_flag_url( $language, $plugin = false ) {
+        if ( !$plugin && !empty( $this->options->image_url ) ) {
+            $url = $this->options->image_url;
         }
-        if ( 5 == strlen( $language ) ) 
+        else {
+            $url = $this->get_url( 'flags' );
+        }
+        if ( 5 == strlen( $language ) )
             $language = strtolower( substr( $language, -2 ) );
         return sprintf(
             '%s/%s.png',

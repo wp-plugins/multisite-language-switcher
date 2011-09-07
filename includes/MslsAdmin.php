@@ -164,7 +164,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
 
     public function validate( $input ) {
         if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
-        $input['image_url'] = rtrim( $input['image_url'], '/' );
+        $input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
         return $input;
     }
 

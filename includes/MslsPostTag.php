@@ -16,6 +16,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
             $obj->taxonomy = $_REQUEST['taxonomy'];
             if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
                 add_action( "{$obj->taxonomy}_edit_form_fields", array( $obj, 'add' ) );
+                add_action( "{$obj->taxonomy}_add_form_fields", array( $obj, 'add' ) );
                 add_action( "edited_{$obj->taxonomy}", array( $obj, 'set' ) );
             }
         }
@@ -36,7 +37,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                 $terms     = get_terms( $this->taxonomy );
                 $edit_link = MslsAdminIcon::create( $this->taxonomy );
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_image_url( $language ) );
+                $edit_link->set_src( $this->get_flag_url( $language ) );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
                         $selected = '';

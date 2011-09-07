@@ -57,7 +57,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                 $my_query  = new WP_Query( $args );
                 $edit_link = MslsAdminIcon::create( $type );
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_image_url( $language ) );
+                $edit_link->set_src( $this->get_flag_url( $language ) );
                 while ( $my_query->have_posts() ) {
                     $my_query->the_post();
                     $my_id    = get_the_ID();
