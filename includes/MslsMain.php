@@ -121,7 +121,7 @@ class MslsMain {
         $blogs = $this->get_blogs();
         if ( $blogs ) {
             foreach ( array_keys( $blogs ) as $language ) {
-                $columns[$language] = get_flag_url( $language, true );
+                $columns[$language] = $this->get_flag_url( $language, true );
             }
         }
         return $columns;
