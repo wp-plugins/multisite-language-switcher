@@ -8,8 +8,6 @@
  * @package Msls
  */
 
-if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
-
 /**
  * MslsOptionsFactory
  */
