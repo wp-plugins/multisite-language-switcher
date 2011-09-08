@@ -44,7 +44,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             $edit_link = MslsAdminIcon::create( $type );
             $edit_link->set_language( $column_name );
             $edit_link->set_src( $this->get_url( 'images' ) . '/pencil.png' );
-            $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+            $edit_link->set_href( get_edit_post_link( $mydata->$column_name ) );
             echo $edit_link;
             restore_current_blog();
         }
