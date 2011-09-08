@@ -16,8 +16,7 @@ class MslsMain {
     protected $user_id;
     protected $current_blog_id;
     protected $options;
-
-    protected $blogs = null;
+    protected $blogs;
 
     static function activate() {
         if ( function_exists( 'is_multisite' ) && is_multisite() ) 
@@ -36,6 +35,7 @@ class MslsMain {
             get_blog_option( $this->current_blog_id, 'admin_email' )
         );
         $this->options = new MslsOptions;
+        $this->blogs = null;
         load_plugin_textdomain(
             MSLS_DEF_STRING,
             false,
