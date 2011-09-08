@@ -11,10 +11,18 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     static function init() {
         $obj = new self();
         if ( !$obj->is_excluded() ) {
-            add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
-            add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
-            add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
-            add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
+            if ( isset( $_REQUEST['taxonomy'] ) ) {
+                $obj->taxonomy = $_REQUEST['taxonomy'];
+                if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
+                    add_filter( "manage_{$obj->taxonomy}-posts_columns" , array( $obj, 'manage' ) );
+                    add_action( "manage_{$obj->taxonomy}-posts_custom_column" , array( $obj, 'taxonomy_columns' ), 10, 2 );
+                }
+            } else {
+                add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
+                add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
+                add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
+                add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
+            }
         }
         return $obj;
     }
@@ -41,6 +49,8 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     public function posts_columns( $column_name, $post_id ) {
         $this->columns( 'post', $column_name, $post_id );
     }
+
+    public function taxonomy_columns( $column_name, $post_id ) {}
 
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->get_blogs();
