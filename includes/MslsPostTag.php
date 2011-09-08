@@ -25,7 +25,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
 
     public function add( $tag ) {
         $term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
-        $blogs = $this->get_blogs();
+        $blogs   = $this->get_blogs();
         if ( $blogs ) {
             printf(
                 '<tr><th colspan="2"><strong>%s</strong></th></tr>',

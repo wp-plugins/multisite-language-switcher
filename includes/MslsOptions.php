@@ -8,7 +8,6 @@
  * @package Msls
  */
 
-
 if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
 
 /**
@@ -50,6 +49,10 @@ class MslsOptions {
         $this->base   = $this->get_base();
     }
 
+    /**
+     * @param mixed $key
+     * @return string
+     */
     public function __get( $key ) {
         return (
             isset( $this->options[$key] ) ?
@@ -177,6 +180,9 @@ class MslsTermOptions extends MslsOptions {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function get_current_link() {
         return get_tag_link( (int) $this->args[0] );
     }
@@ -192,6 +198,9 @@ class MslsCategoryOptions extends MslsTermOptions {
     protected $base_defined = 'category';
     protected $taxonomy     = 'category';
 
+    /**
+     * @return string
+     */
     public function get_current_link() {
         return get_category_link( (int) $this->args[0] );
     }
