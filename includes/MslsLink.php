@@ -148,7 +148,7 @@ class MslsAdminIcon {
             );
         }
         else {
-            $url = $this->get_edit_new();
+            $href = $this->get_edit_new();
             $title = sprintf(
                 __( 'Create a translation in %s' ),
                 $this->language
@@ -157,7 +157,7 @@ class MslsAdminIcon {
         return sprintf(
             '<a title="%s" href="%s">%s</a>',
             $title,
-            $url,
+            $href,
             $this->get_img()
         );
     }
