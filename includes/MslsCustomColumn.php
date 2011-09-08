@@ -10,8 +10,8 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $obj = new self();
         add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
         add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
-        add_action( 'manage_pages_custom_column' , array( $obj, 'post_columns' ), 10, 2 );
-        add_action( 'manage_posts_custom_column' , array( $obj, 'post_columns' ), 10, 2 );
+        add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
+        add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
         return $obj;
     }
 
@@ -28,13 +28,25 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         return $columns;
     }
 
-    function columns( $column_name, $post_id ) {
+    public function pages_columns( $column_name, $post_id ) {
+        $this->columns( 'page', $column_name, $post_id );
+    }
+
+    public function posts_columns( $column_name, $post_id ) {
+        $this->columns( 'post', $column_name, $post_id );
+    }
+
+    protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->get_blogs();
-        if ( $blogs ) {
-            if ( in_array( $column_name, array_keys( $blogs ) ) ) {
-                $mydata = new MslsPostOptions( $post_id );
-                echo $mydata->$column_name;
-            }
+        if ( $blogs && in_array( $column_name, array_keys( $blogs ) ) ) {
+            $mydata = new MslsPostOptions( $post_id );
+            switch_to_blog( $blogs[$column_name]->userblog_id );
+            $edit_link = MslsAdminIcon::create( $type );
+            $edit_link->set_language( $column_name );
+            $edit_link->set_src( $this->get_url( 'images' ) . '/pencil.png' );
+            $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+            echo $edit_link;
+            restore_current_blog();
         }
     }
 

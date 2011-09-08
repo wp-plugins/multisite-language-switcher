@@ -67,12 +67,12 @@ class MslsMain {
         return empty($language) ? 'us' : $language;
     }
 
-    public function get_url( $type ) {
+    public function get_url( $dir ) {
         $url = sprintf(
             '%s/%s/%s',
             WP_PLUGIN_URL, 
             dirname( MSLS_PLUGIN_PATH ),
-            $type
+            $dir
         );
         return esc_url( $url );
     }

@@ -64,7 +64,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                     $selected = '';
                     if ( $my_id == $mydata->$language ) {
                         $selected = 'selected="selected"';
-                        $edit_link->set_href( get_edit_post_link( $my_id ) );
+                        $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
                     }
                     $options .= sprintf(
                         '<option value="%s"%s>%s</option>',
