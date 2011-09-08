@@ -143,14 +143,14 @@ class MslsAdminIcon {
         if ( !empty( $this->href ) ) {
             $href = $this->href;
             $title = sprintf(
-                __( 'Edit the translation in %s' ),
+                __( 'Edit the translation in %s-blog' ),
                 $this->language
             );
         }
         else {
             $href = $this->get_edit_new();
             $title = sprintf(
-                __( 'Create a translation in %s' ),
+                __( 'Create a new translation in the %s-blog' ),
                 $this->language
             );
         }

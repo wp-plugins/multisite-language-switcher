@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+require_once dirname( __FILE__ ) . '/MslsOptions.php';
+require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsCustomColumn extends MslsMain implements IMslsMain {
 
@@ -20,11 +22,12 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     function manage( $columns ) {
         $blogs = $this->get_blogs();
         if ( $blogs ) {
+            $columns[MSLS_DEF_STRING] = '';
             foreach ( array_keys( $blogs ) as $language ) {
                 $icon = new MslsAdminIcon();
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
-                $columns[$language] = $icon->get_img();
+                $columns[MSLS_DEF_STRING] .= $icon->get_img();
             }
         }
         return $columns;
@@ -40,20 +43,24 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->get_blogs();
-        if ( $blogs && in_array( $column_name, array_keys( $blogs ) ) ) {
+        if ( $blogs && MSLS_DEF_STRING == $column_name ) ) {
+            $str = '';
             $mydata = new MslsPostOptions( $post_id );
-            switch_to_blog( $blogs[$column_name]->userblog_id );
-            $edit_link = MslsAdminIcon::create( $type );
-            $edit_link->set_language( $column_name );
-            if ( $mydata->has_value( $column_name ) ) {
-                $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
-                $edit_link->set_href( get_edit_post_link( $mydata->$column_name ) );
+            foreach ( $blogs as $language => $blog ) {
+                switch_to_blog( $blog->userblog_id );
+                $edit_link = MslsAdminIcon::create( $type );
+                $edit_link->set_language( $language );
+                if ( $mydata->has_value( $language ) ) {
+                    $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
+                    $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+                }
+                else {
+                    $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
+                }
+                $str .= sprintf( '%s', $edit_link );
+                restore_current_blog();
             }
-            else {
-                $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
-            }
-            echo $edit_link;
-            restore_current_blog();
+            echo $str;
         }
     }
 
