@@ -2,8 +2,6 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
-
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsOutput.php';
 
@@ -15,8 +13,10 @@ interface IMslsMain {
 
 class MslsMain {
 
-    protected $blogs;
+    protected $user_id;
+    protected $current_blog_id;
     protected $options;
+    protected $blogs;
 
     static function activate() {
         if ( function_exists( 'is_multisite' ) && is_multisite() ) 
@@ -30,7 +30,10 @@ class MslsMain {
     static function deactivate() { }
 
     public function __construct() {
-        $this->blogs = MslsBlogs::getInstance();
+        $this->current_blog_id = get_current_blog_id();
+        $this->user_id = get_user_id_from_string(
+            get_blog_option( $this->current_blog_id, 'admin_email' )
+        );
         $this->options = new MslsOptions;
         load_plugin_textdomain(
             MSLS_DEF_STRING,
@@ -40,7 +43,21 @@ class MslsMain {
     }
 
     public function get_blogs() {
-        return apply_filters( 'mls_get_blogs_return', $this->blogs->get() );
+        if ( is_null( $this->blogs ) ) {
+            $this->blogs = array();
+            foreach ( get_blogs_of_user( $this->user_id ) as $blog ) {
+                if ( $blog->userblog_id != $this->current_blog_id ) {
+                    $temp = get_blog_option( $blog->userblog_id, MSLS_DEF_STRING );
+                    if ( $temp && empty( $temp['exclude_current_blog'] ) ) {
+                        $language = $this->get_language( $blog->userblog_id );
+                        $this->blogs[$language] = $blog;
+                    }
+                }
+            }
+            ksort( $this->blogs );
+        }
+        $this->blogs = apply_filters( 'mls_get_blogs_return', $this->blogs );
+        return $this->blogs;
     }
 
     public function get_language( $blog_id = 0 ) {
@@ -97,52 +114,6 @@ class MslsMain {
                 }
             }
         }
-    }
-
-}
-
-class MslsBlogs {
-
-    protected $arr = array();
-
-    private static $instance = null;
-
-    private function __construct() {
-        $current_blog_id = get_current_blog_id();
-        $user_id = get_user_id_from_string(
-            get_blog_option( $current_blog_id, 'admin_email' )
-        );
-        $this->arr = array();
-        foreach ( get_blogs_of_user( $user_id ) as $blog ) {
-            if ( $blog->userblog_id != $current_blog_id ) {
-                $temp = get_blog_option( $blog->userblog_id, MSLS_DEF_STRING );
-                if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
-                    $language = $this->get_language( $blog->userblog_id );
-                    $this->arr[$language] = $blog;
-                }
-            }
-        }
-        ksort( $this->arr );
-    }
-
-    public function get() {
-        return $arr;
-    }
-
-    public function __get( $key ) {
-        return(
-            isset( $this->arr[$key] ) ?
-            $this->arr[$key] :
-            false
-        );
-    }
-
-    public static function getInstance() {
-        if ( self::$instance == null ) {   
-            $c = __CLASS__;
-            self::$instance = new $c;
-        }
-        return self::$instance;
     }
 
 }
