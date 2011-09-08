@@ -15,10 +15,10 @@ interface IMslsMain {
 
 class MslsMain {
 
-    protected $user_id;
-    protected $current_blog_id;
     protected $options;
-    protected $blogs;
+
+    protected $language;
+    protected $blogs = array();
 
     static function activate() {
         if ( function_exists( 'is_multisite' ) && is_multisite() ) 
@@ -32,11 +32,21 @@ class MslsMain {
     static function deactivate() { }
 
     public function __construct() {
+        $this->options = new MslsOptions;
         $this->current_blog_id = get_current_blog_id();
-        $this->user_id = get_user_id_from_string(
+        $user_id = get_user_id_from_string(
             get_blog_option( $this->current_blog_id, 'admin_email' )
         );
-        $this->options = new MslsOptions;
+        foreach ( get_blogs_of_user( $user_id ) as $blog ) {
+            if ( $blog->userblog_id != $this->current_blog_id ) {
+                $temp = get_blog_option( $blog->userblog_id, MSLS_DEF_STRING );
+                if ( $temp && empty( $temp['exclude_current_blog'] ) ) {
+                    $language = $this->get_language( $blog->userblog_id );
+                    $this->blogs[$language] = $blog;
+                }
+            }
+        }
+        ksort( $this->blogs );
         load_plugin_textdomain(
             MSLS_DEF_STRING,
             false,
@@ -45,21 +55,7 @@ class MslsMain {
     }
 
     public function get_blogs() {
-        if ( is_null( $this->blogs ) ) {
-            $this->blogs = array();
-            foreach ( get_blogs_of_user( $this->user_id ) as $blog ) {
-                if ( $blog->userblog_id != $this->current_blog_id ) {
-                    $temp = get_blog_option( $blog->userblog_id, MSLS_DEF_STRING );
-                    if ( $temp && empty( $temp['exclude_current_blog'] ) ) {
-                        $language = $this->get_language( $blog->userblog_id );
-                        $this->blogs[$language] = $blog;
-                    }
-                }
-            }
-            ksort( $this->blogs );
-        }
-        $this->blogs = apply_filters( 'mls_get_blogs_return', $this->blogs );
-        return $this->blogs;
+        return apply_filters( 'mls_get_blogs_return', $this->blogs );
     }
 
     public function get_language( $blog_id = 0 ) {
