@@ -18,7 +18,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
             add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
             add_action( 'manage_category_custom_column' , array( $obj, 'taxonomy_columns' ), 10, 2 );
-            add_action( 'manage_post_tag_column' , array( $obj, 'taxonomy_columns' ), 10, 2 );
+            add_action( 'manage_post_tag_custom_column' , array( $obj, 'taxonomy_columns' ), 10, 2 );
         }
         return $obj;
     }
@@ -47,7 +47,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function taxonomy_columns( $column_name, $post_id ) {
-        echo '&nbsp;';
+        echo '1&nbsp;';
     }
 
     protected function columns( $type, $column_name, $post_id ) {
