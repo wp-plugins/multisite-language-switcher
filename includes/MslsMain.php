@@ -2,6 +2,8 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
+
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsOutput.php';
 
