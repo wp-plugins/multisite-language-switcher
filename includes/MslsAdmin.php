@@ -18,7 +18,6 @@ class MslsAdmin extends MslsMain implements IMslsMain {
             array( $obj, 'render' )
         );
         add_action( 'admin_init', array( $obj, 'register' ) );
-        
         return $obj;
     }
 

@@ -46,6 +46,9 @@ if ( !class_exists( 'MslsMain' ) ) {
 
         require_once dirname( __FILE__ ) . '/includes/MslsPostTag.php';
         add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
+
+        require_once dirname( __FILE__ ) . '/includes/MslsCustomColumn.php';
+        add_action( 'edit.php', 'MslsCustomColumn::init' );
     }
 }
 

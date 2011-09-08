@@ -14,9 +14,6 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
         }
-        add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
-        add_action( 'manage_pages_custom_column' , array( $obj, 'columns' ), 10, 2 );
-        add_action( 'manage_posts_custom_column' , array( $obj, 'columns' ), 10, 2 );
         return $obj;
     }
 
@@ -119,16 +116,6 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
             if ( !current_user_can( 'edit_post' ) ) return;
         }
         $this->save( $post_id, 'MslsPostOptions' );
-    }
-
-    function columns( $column_name, $post_id ) {
-        $blogs = $this->get_blogs();
-        if ( $blogs ) {
-            if ( in_array( $column_name, array_keys( $blogs ) ) ) {
-                $mydata = new MslsPostOptions( $post_id );
-                echo $mydata->$column_name;
-            }
-        }
     }
 
 }
