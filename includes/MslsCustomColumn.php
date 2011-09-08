@@ -22,13 +22,14 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     function manage( $columns ) {
         $blogs = $this->get_blogs();
         if ( $blogs ) {
-            $columns[MSLS_DEF_STRING] = '';
+            $arr = array();
             foreach ( array_keys( $blogs ) as $language ) {
                 $icon = new MslsAdminIcon();
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
-                $columns[MSLS_DEF_STRING] .= $icon->get_img();
+                $arr[] = $icon->get_img();
             }
+            $columns[MSLS_DEF_STRING] = implode( '&nbsp;', $arr );
         }
         return $columns;
     }
@@ -44,7 +45,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->get_blogs();
         if ( $blogs && MSLS_DEF_STRING == $column_name ) {
-            $str = '';
+            $arr    = array();
             $mydata = new MslsPostOptions( $post_id );
             foreach ( $blogs as $language => $blog ) {
                 switch_to_blog( $blog->userblog_id );
@@ -57,10 +58,10 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                 else {
                     $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
                 }
-                $str .= sprintf( '%s', $edit_link );
+                $arr[] = sprintf( '%s', $edit_link );
                 restore_current_blog();
             }
-            echo $str;
+            echo implode( '&nbsp;', $arr );
         }
     }
 
