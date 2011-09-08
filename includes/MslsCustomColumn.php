@@ -46,11 +46,11 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             $edit_link = MslsAdminIcon::create( $type );
             $edit_link->set_language( $column_name );
             if ( $mydata->has_value( $column_name ) ) {
-                $edit_link->set_src( $this->get_url( 'images' ) . '/pencil.png' );
+                $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
                 $edit_link->set_href( get_edit_post_link( $mydata->$column_name ) );
             }
             else {
-                $edit_link->set_src( $this->get_url( 'images' ) . '/add.png' );
+                $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
             }
             echo $edit_link;
             restore_current_blog();
