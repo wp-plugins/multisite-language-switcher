@@ -117,16 +117,6 @@ class MslsMain {
         }
     }
 
-    function manage( $columns ) {
-        $blogs = $this->get_blogs();
-        if ( $blogs ) {
-            foreach ( array_keys( $blogs ) as $language ) {
-                $columns[$language] = $this->get_flag_url( $language, true );
-            }
-        }
-        return $columns;
-    }
-
 }
 
 /*

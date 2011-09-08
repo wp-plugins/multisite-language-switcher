@@ -14,6 +14,19 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         return $obj;
     }
 
+    function manage( $columns ) {
+        $blogs = $this->get_blogs();
+        if ( $blogs ) {
+            foreach ( array_keys( $blogs ) as $language ) {
+                $icon = new MslsAdminIcon();
+                $icon->set_language( $language );
+                $icon->set_src( $this->get_flag_url( $language, true ) );
+                $columns[$language] = $icon->get_img();
+            }
+        }
+        return $columns;
+    }
+
     function columns( $column_name, $post_id ) {
         $blogs = $this->get_blogs();
         if ( $blogs ) {
