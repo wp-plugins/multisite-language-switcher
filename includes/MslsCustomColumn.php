@@ -43,7 +43,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             switch_to_blog( $blogs[$column_name]->userblog_id );
             $edit_link = MslsAdminIcon::create( $type );
             $edit_link->set_language( $column_name );
-            if ( $my_data->has_value( $column_name ) ) {
+            if ( $mydata->has_value( $column_name ) ) {
                 $edit_link->set_src( $this->get_url( 'images' ) . '/pencil.png' );
                 $edit_link->set_href( get_edit_post_link( $mydata->$column_name ) );
             }
