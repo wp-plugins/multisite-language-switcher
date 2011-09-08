@@ -140,9 +140,24 @@ class MslsAdminIcon {
     }
 
     protected function get_a() {
+        if ( !empty( $this->href ) ) {
+            $href = $this->href;
+            $title = sprintf(
+                __( 'Edit the translation in %s' ),
+                $this->language
+            );
+        }
+        else {
+            $url = $this->get_edit_new();
+            $title = sprintf(
+                __( 'Create a translation in %s' ),
+                $this->language
+            );
+        }
         return sprintf(
-            '<a href="%s">%s</a>',
-            ( !empty( $this->href ) ? $this->href : $this->get_edit_new() ),
+            '<a title="%s" href="%s">%s</a>',
+            $title,
+            $url,
             $this->get_img()
         );
     }

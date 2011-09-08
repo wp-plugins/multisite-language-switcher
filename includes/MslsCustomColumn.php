@@ -8,10 +8,12 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     static function init() {
         $obj = new self();
-        add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
-        add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
-        add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
-        add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
+        if ( !$obj->is_excluded() ) {
+            add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
+            add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
+            add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
+            add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
+        }
         return $obj;
     }
 
