@@ -8,22 +8,17 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsCustomColumn extends MslsMain implements IMslsMain {
 
-    public $taxonomy;
-
     static function init() {
         $obj = new self();
         if ( !$obj->is_excluded() ) {
-            if ( isset( $_REQUEST['taxonomy'] ) ) {
-                $obj->taxonomy = $_REQUEST['taxonomy'];
-                if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
-                    add_filter( "manage_{$obj->taxonomy}_columns" , array( $obj, 'manage' ) );
-                    add_action( "manage_{$obj->taxonomy}_custom_column" , array( $obj, 'taxonomy_columns' ), 10, 2 );
-                }
-            } else {
                 add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
                 add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
+                add_filter( 'manage_category_columns' , array( $obj, 'manage' ) );
+                add_filter( 'manage_post_tag_columns' , array( $obj, 'manage' ) );
                 add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
                 add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
+                add_action( 'manage_category_custom_column' , array( $obj, 'taxonomy_columns' ), 10, 2 );
+                add_action( 'manage_post_tag_column' , array( $obj, 'taxonomy_columns' ), 10, 2 );
             }
         }
         return $obj;
