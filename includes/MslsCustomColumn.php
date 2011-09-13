@@ -24,7 +24,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     function manage( $columns ) {
-        $blogs = $this->get_blogs();
+        $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
             foreach ( array_keys( $blogs ) as $language ) {
