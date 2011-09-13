@@ -46,7 +46,7 @@ abstract class MslsRegistryInstance {
      */
     final public static function instance() {
         $registry = MslsRegistry::singleton();
-        $cls      = get_class();
+        $cls      = self::whoami();
         $obj      = $registry->get_object( $cls );
         if ( is_null( $obj ) ) {
             $obj = new $cls;
