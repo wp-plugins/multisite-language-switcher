@@ -48,11 +48,11 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function category_columns( $deprecated, $column_name, $term_id ) {
-        $this->columns( 'category', $column_name, $post_id );
+        $this->columns( 'category', $column_name, $term_id );
     }
 
     public function post_tag_columns( $deprecated, $column_name, $term_id ) {
-        $this->columns( 'post_tag', $column_name, $post_id );
+        $this->columns( 'post_tag', $column_name, $term_id );
     }
 
     protected function columns( $type, $column_name, $item_id ) {
