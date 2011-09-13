@@ -44,7 +44,7 @@ class MslsRegistry {
  *
  * get_called_class is just avalable in php >= 5.3 so I defined an interface here
  */
-interface MslsRegistryInstance {
+interface IMslsRegistryInstance {
 
     /**
      * @return object
