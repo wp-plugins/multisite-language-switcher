@@ -57,7 +57,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->blogs->get();
-        if ( $blogs && 'mslscol' == $column_name ) {
+        if ( $blogs ) {
             $arr    = array();
             $mydata = MslsOptionsFactory::create( $type, $post_id );
             foreach ( $blogs as $blog ) {
