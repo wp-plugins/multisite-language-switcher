@@ -51,7 +51,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $this->columns( 'category', $column_name, $post_id );
     }
 
-    public function category_columns( $column_name, $post_id ) {
+    public function post_tag_columns( $column_name, $post_id ) {
         $this->columns( 'post_tag', $column_name, $post_id );
     }
 
