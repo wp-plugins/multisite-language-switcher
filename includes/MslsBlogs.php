@@ -35,7 +35,7 @@ class MslsBlog {
     public function get_language() {
         return(
             !empty( $this->language ) ?
-            $language->language :
+            $this->language :
             'us'
         );
     }
