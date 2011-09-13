@@ -110,6 +110,10 @@ class MslsBlogCollection extends MslsRegistryInstance {
         return usort( $objects, array( 'MslsBlog', $this->objects_order ) );
     }
 
+    public static function whoami() {
+        return __CLASS__;
+    }
+
 }
 
 /*

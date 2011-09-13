@@ -126,6 +126,10 @@ class MslsOptions extends MslsRegistryInstance {
         return $this->has_value( 'content_filter' );
     }
 
+    public static function whoami() {
+        return __CLASS__;
+    }
+
 }
 
 /**

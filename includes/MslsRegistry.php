@@ -55,6 +55,8 @@ class MslsRegistryInstance {
         return $obj;
     }
 
+    abstract public static function whoami();
+
 }
 
 /*
