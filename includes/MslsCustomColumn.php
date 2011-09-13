@@ -52,7 +52,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     protected function columns( $type, $column_name, $post_id ) {
-        $blogs = $this->get_blogs();
+        $blogs = $this->blogs->get();
         if ( $blogs && 'msls' == $column_name ) {
             $arr    = array();
             $mydata = new MslsPostOptions( $post_id );
