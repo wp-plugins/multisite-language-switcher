@@ -18,8 +18,8 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             add_filter( 'manage_edit-post_tag_columns' , array( $obj, 'manage' ) );
             add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
             add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
-            add_action( 'manage_category_custom_column' , array( $obj, 'category_columns' ), 10, 2 );
-            add_action( 'manage_post_tag_custom_column' , array( $obj, 'post_tag_columns' ), 10, 2 );
+            add_action( 'manage_category_custom_column' , array( $obj, 'category_columns' ), 10, 3 );
+            add_action( 'manage_post_tag_custom_column' , array( $obj, 'post_tag_columns' ), 10, 3s );
         }
     }
 
@@ -34,7 +34,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                 $icon->set_src( $this->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
             }
-            $columns['msls'] = implode( '&nbsp;', $arr );
+            $columns['mslscol'] = implode( '&nbsp;', $arr );
         }
         return $columns;
     }
@@ -57,7 +57,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->blogs->get();
-        if ( $blogs && 'msls' == $column_name ) {
+        if ( $blogs && 'mslscol' == $column_name ) {
             $arr    = array();
             $mydata = MslsOptionsFactory::create( $type, $post_id );
             foreach ( $blogs as $blog ) {
