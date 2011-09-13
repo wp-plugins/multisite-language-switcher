@@ -27,13 +27,14 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
-            foreach ( array_keys( $blogs ) as $language ) {
-                $icon = new MslsAdminIcon();
+            foreach ( $blogs as $blog ) {
+                $language = $blog->get_language();
+                $icon     = new MslsAdminIcon();
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
             }
-            $columns[MSLS_DEF_STRING] = implode( '&nbsp;', $arr );
+            $columns['msls'] = implode( '&nbsp;', $arr );
         }
         return $columns;
     }
@@ -52,7 +53,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     protected function columns( $type, $column_name, $post_id ) {
         $blogs = $this->get_blogs();
-        if ( $blogs && MSLS_DEF_STRING == $column_name ) {
+        if ( $blogs && 'msls' == $column_name ) {
             $arr    = array();
             $mydata = new MslsPostOptions( $post_id );
             foreach ( $blogs as $language => $blog ) {
