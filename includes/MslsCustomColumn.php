@@ -18,7 +18,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             add_filter( 'manage_edit-post_tag_columns' , array( $obj, 'manage' ) );
             add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
             add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
-            add_action( 'manage_category_custom_column' , array( $obj, 'categroy_columns' ), 10, 2 );
+            add_action( 'manage_category_custom_column' , array( $obj, 'category_columns' ), 10, 2 );
             add_action( 'manage_post_tag_custom_column' , array( $obj, 'post_tag_columns' ), 10, 2 );
         }
     }
