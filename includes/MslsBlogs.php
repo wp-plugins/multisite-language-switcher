@@ -57,7 +57,7 @@ class MslsBlog {
 
 }
 
-class MslsBlogCollection extends MslsRegistryInstance {
+class MslsBlogCollection implements IMslsRegistryInstance {
 
     private $current_blog_id;
     private $current_blog_output;
@@ -110,8 +110,15 @@ class MslsBlogCollection extends MslsRegistryInstance {
         return usort( $objects, array( 'MslsBlog', $this->objects_order ) );
     }
 
-    public static function whoami() {
-        return 'MslsBlogCollection';
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
     }
 
 }

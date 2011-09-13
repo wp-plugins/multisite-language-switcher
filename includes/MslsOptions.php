@@ -32,7 +32,7 @@ class MslsOptionsFactory {
 /**
  * MslsOptions
  */
-class MslsOptions extends MslsRegistryInstance {
+class MslsOptions implements IMslsRegistryInstance {
 
     protected $args;
     protected $name;
@@ -126,8 +126,15 @@ class MslsOptions extends MslsRegistryInstance {
         return $this->has_value( 'content_filter' );
     }
 
-    public static function whoami() {
-        return 'MslsOptions';
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
     }
 
 }

@@ -39,23 +39,17 @@ class MslsRegistry {
 
 }
 
-abstract class MslsRegistryInstance {
+/**
+ * Interface for classes which are to register in the MslsRegistry-instance
+ *
+ * get_called_class is just avalable in php >= 5.3 so I defined an interface here
+ */
+interface MslsRegistryInstance {
 
     /**
      * @return object
      */
-    final public static function instance() {
-        $registry = MslsRegistry::singleton();
-        $cls      = self::whoami();
-        $obj      = $registry->get_object( $cls );
-        if ( is_null( $obj ) ) {
-            $obj = new $cls;
-            $registry->set_object( $cls, $obj );
-        }
-        return $obj;
-    }
-
-    abstract public static function whoami();
+    public static function instance();
 
 }
 
