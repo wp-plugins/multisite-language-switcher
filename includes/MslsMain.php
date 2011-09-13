@@ -57,7 +57,7 @@ class MslsMain {
             $mydata  = $_POST['msls'];
             $options = new $class( $id );
             $options->save( $mydata );
-            $language = $this->get_language();
+            $language = $this->blogs->get_current_blog()->get_language();
             $mydata[$language] = $id;
             foreach ( $this->blogs->get() as $blog ) {
                 $language = $blog->get_language();
