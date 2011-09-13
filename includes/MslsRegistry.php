@@ -47,7 +47,7 @@ class MslsRegistryInstance {
     final public static function instance() {
         $registry = MslsRegistry::singleton();
         $cls      = __CLASS__;
-        $obj      = $registry->get_object( $c );
+        $obj      = $registry->get_object( $cls );
         if ( is_null( $obj ) ) {
             $obj = new $cls;
             $registry->set_object( $cls, $obj );
