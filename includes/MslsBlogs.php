@@ -13,7 +13,7 @@ class MslsBlog {
     public function __construct( $obj, $description ) {
         $this->obj         = $obj;
         $this->description = (string) $description;
-        $this->language    = (string) get_blog_option( $this->$obj->userblog_id, 'WPLANG' );
+        $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
     }
 
     final public function __get( $key ) {
@@ -87,7 +87,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 else {
                     $this->objects[$this->current_blog_id] = new MslsBlog(
                         $blog,
-                        $objects->description
+                        $options->description
                     );
                 }
             }
