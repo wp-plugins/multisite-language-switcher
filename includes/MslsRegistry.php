@@ -39,7 +39,7 @@ class MslsRegistry {
 
 }
 
-class MslsRegistryInstance {
+abstract class MslsRegistryInstance {
 
     /**
      * @return object
