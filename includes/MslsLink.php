@@ -127,8 +127,8 @@ class MslsAdminIcon {
         $this->src = $src;
     }
 
-    public function set_href( $href ) {
-        $this->href = $href;
+    public function set_href( $id ) {
+        $this->href = get_edit_post_link( $id );
     }
 
     public function __toString() {
@@ -182,11 +182,19 @@ class MslsAdminIconCategory extends MslsAdminIcon {
 
     protected $path = 'edit-tags.php?taxonomy=category';
 
+    public function set_href( $id ) {
+        $this->href = get_edit_term_link( $id, 'category' );
+    }
+
 }
 
 class MslsAdminIconTag extends MslsAdminIcon {
 
     protected $path = 'edit-tags.php?taxonomy=post_tag';
+
+    public function set_href( $id ) {
+        $this->href = get_edit_term_link( $id, 'post_tag' );
+    }
 
 }
 

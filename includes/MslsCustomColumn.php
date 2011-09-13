@@ -63,7 +63,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                 $edit_link->set_language( $language );
                 if ( $mydata->has_value( $language ) ) {
                     $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
-                    $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+                    $edit_link->set_href( $mydata->$language );
                 }
                 else {
                     $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
