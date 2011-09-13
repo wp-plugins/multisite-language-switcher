@@ -105,7 +105,7 @@ class MslsWidget extends WP_Widget {
 function msls_widgets_init() {
     $options = MslsOptions::instance();
     if ( !$options->is_excluded() )
-            register_widget( 'MslsWidget' );
+        register_widget( 'MslsWidget' );
 }
 add_action( 'widgets_init', 'msls_widgets_init' );
 
