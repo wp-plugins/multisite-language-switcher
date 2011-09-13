@@ -107,7 +107,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         if ( (!$frontend || !$this->current_blog_output) && $this->has_current_blog() )
             unset( $objects[$this->current_blog_id] );
         $objects = apply_filters( 'msls_blog_collection_get', $objects );
-        return usort( $objects, array( 'MslsBlog', $this->objects_order ) );
+        $objects = usort( $objects, array( 'MslsBlog', $this->objects_order ) );
+        return $objects;
     }
 
     public static function instance() {
