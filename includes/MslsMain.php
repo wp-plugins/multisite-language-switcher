@@ -59,7 +59,8 @@ class MslsMain {
             $options->save( $mydata );
             $language = $this->get_language();
             $mydata[$language] = $id;
-            foreach ( $this->get_blogs() as $language => $blog ) {
+            foreach ( $this->blogs->get() as $blog ) {
+                $language = $blog->get_language();
                 if ( !empty( $mydata[$language] ) ) {
                     switch_to_blog( $blog->userblog_id );
                     $temp    = $mydata;

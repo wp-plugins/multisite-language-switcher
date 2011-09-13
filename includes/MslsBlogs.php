@@ -102,6 +102,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         return( isset( $this->objects[$this->current_blog_id] ) ? true : false );
     }
 
+    public function get_current_blog() {
+        return(
+            $this->has_current_blog() ?
+            $this->objects[$this->current_blog_id] :
+            null
+        );
+    }
+
     public function get( $frontend = false ) {
         $objects = $this->objects;
         if ( (!$frontend || !$this->current_blog_output) && $this->has_current_blog() )
