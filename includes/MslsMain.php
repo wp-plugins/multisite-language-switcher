@@ -2,66 +2,28 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-if ( !defined( 'MSLS_DEF_STRING' ) ) define( 'MSLS_DEF_STRING', 'msls' );
-
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
-require_once dirname( __FILE__ ) . '/MslsOutput.php';
+require_once dirname( __FILE__ ) . '/MslsBlogs.php';
 
 interface IMslsMain {
 
-    static function init();
+    public static function init();
 
 }
 
 class MslsMain {
 
     protected $options;
-
-    protected $language;
-    protected $blogs = array();
-
-    static function activate() {
-        if ( function_exists( 'is_multisite' ) && is_multisite() ) 
-            return; 
-        deactivate_plugins( __FILE__ );
-        die(
-            "This plugin needs the activation of the multisite-feature for working properly. Please read <a href='http://codex.wordpress.org/Create_A_Network'>this post</a> if you don't know the meaning.\n"
-        );
-    }
-
-    static function deactivate() { }
+    protected $blogs;
 
     public function __construct() {
-        $this->options = new MslsOptions;
-        $this->current_blog_id = get_current_blog_id();
-        $user_id = get_user_id_from_string(
-            get_blog_option( $this->current_blog_id, 'admin_email' )
-        );
-        foreach ( get_blogs_of_user( $user_id ) as $blog ) {
-            if ( $blog->userblog_id != $this->current_blog_id ) {
-                $temp = get_blog_option( $blog->userblog_id, MSLS_DEF_STRING );
-                if ( $temp && empty( $temp['exclude_current_blog'] ) ) {
-                    $language = $this->get_language( $blog->userblog_id );
-                    $this->blogs[$language] = $blog;
-                }
-            }
-        }
-        ksort( $this->blogs );
         load_plugin_textdomain(
-            MSLS_DEF_STRING,
+            'msls',
             false,
             dirname( MSLS_PLUGIN_PATH ) . '/languages/'
         );
-    }
-
-    public function get_blogs() {
-        return apply_filters( 'mls_get_blogs_return', $this->blogs );
-    }
-
-    public function get_language( $blog_id = 0 ) {
-        if ( 0 == $blog_id ) $blog_id = $this->current_blog_id;
-        $language = get_blog_option( $blog_id, 'WPLANG' );
-        return empty($language) ? 'us' : $language;
+        $this->options = MslsOptions::instance();
+        $this->blogs   = MslsBlogCollection::instance();
     }
 
     public function get_url( $dir ) {
@@ -90,13 +52,9 @@ class MslsMain {
         );
     }
 
-    public function is_excluded() {
-        return (bool) $this->options->exclude_current_blog;
-    }
-
     protected function save( $id, $class ) {
-        if ( isset( $_POST[MSLS_DEF_STRING] ) ) {
-            $mydata  = $_POST[MSLS_DEF_STRING];
+        if ( isset( $_POST['msls'] ) ) {
+            $mydata  = $_POST['msls'];
             $options = new $class( $id );
             $options->save( $mydata );
             $language = $this->get_language();
@@ -116,6 +74,21 @@ class MslsMain {
 
 }
 
+class MslsPlugin {
+
+    public static function activate() {
+        if ( function_exists( 'is_multisite' ) && is_multisite() ) 
+            return; 
+        deactivate_plugins( __FILE__ );
+        die(
+            "This plugin needs the activation of the multisite-feature for working properly. Please read <a href='http://codex.wordpress.org/Create_A_Network'>this post</a> if you don't know the meaning.\n"
+        );
+    }
+
+    public static function deactivate() { }
+
+}
+   
 /*
  * Local variables:
  * tab-width: 4

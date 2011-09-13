@@ -3,7 +3,6 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsPostTag extends MslsMain implements IMslsMain {
@@ -11,8 +10,9 @@ class MslsPostTag extends MslsMain implements IMslsMain {
     public $taxonomy;
 
     static function init() {
-        $obj = new self();
-        if ( !$obj->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
+        $options = MslsOptions::instance();
+        if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
+            $obj = new self();
             $obj->taxonomy = $_REQUEST['taxonomy'];
             if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
                 add_action( "{$obj->taxonomy}_edit_form_fields", array( $obj, 'add' ) );
@@ -20,20 +20,20 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                 add_action( "edited_{$obj->taxonomy}", array( $obj, 'set' ) );
             }
         }
-        return $obj;
     }
 
     public function add( $tag ) {
         $term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
-        $blogs   = $this->get_blogs();
+        $blogs   = $this->blogs->get();
         if ( $blogs ) {
             printf(
                 '<tr><th colspan="2"><strong>%s</strong></th></tr>',
-                __( 'Multisite Language Switcher', MSLS_DEF_STRING )
+                __( 'Multisite Language Switcher', 'msls' )
             );
             $mydata = new MslsTermOptions( $term_id );
-            foreach ( $blogs as $language => $blog ) {
+            foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
+                $language  = $blog->get_language();
                 $options   = '';
                 $terms     = get_terms( $this->taxonomy );
                 $edit_link = MslsAdminIcon::create( $this->taxonomy );
@@ -56,10 +56,10 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                 }
                 printf(
                     '<tr class="form-field"><th scope="row" valign="top"><label for="%s[%s]">%s </label></th><td><select style="width:25em;" name="%s[%s]"><option value=""></option>%s</select></td>',
-                    MSLS_DEF_STRING,
+                    'msls',
                     $language,
                     $edit_link,
-                    MSLS_DEF_STRING,
+                    'msls',
                     $language,
                     $options
                 );

@@ -40,11 +40,11 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.8 =
-* new: flags in the backend are allways clickable now, link to edit the translation or to create a new item
-* new: meta-box is now available too when you want to add a new post 
+* new: now flags in the backend are allways clickable, link to edit the translation or to create a new item
+* new: meta-box is now also available when you want to add a new post 
 * new: custom url for flag-images
 * new: now you can order the output by description; default is country-code
-* new: apply_filters( 'mls_get_blogs_return', $this->blogs ); in MslsMain::get_blogs();
+* new: apply_filters( 'msls_blog_collection_get', $arr ); in MslsBlogCollection::get();
 * added empty index.php-files to all subdirectories
 * source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)
 

@@ -26,15 +26,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( !class_exists( 'MslsMain' ) ) {
+if ( !class_exists( 'Msls' ) ) {
     if ( !defined( 'MSLS_PLUGIN_PATH' ) )  
         define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 
-    require_once dirname( __FILE__ ) . '/includes/MslsMain.php';
-    register_activation_hook( __FILE__, 'MslsMain::activate' );
-    register_deactivation_hook( __FILE__, 'MslsMain::deactivate' );
-
     require_once dirname( __FILE__ ) . '/includes/MslsOutput.php';
+    register_activation_hook( __FILE__, 'MslsPlugin::activate' );
+    register_deactivation_hook( __FILE__, 'MslsPlugin::deactivate' );
 
     if ( is_admin() ) {
         require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';

@@ -19,7 +19,7 @@ class MslsLink {
     }
 
     static function get_description() {
-        return __( 'Flag and description', MSLS_DEF_STRING );
+        return __( 'Flag and description', 'msls' );
     }
 
     static function get_types_description() {
@@ -42,8 +42,12 @@ class MslsLink {
         $this->args[$key] = $value;
     }
 
-    public function get_txt() {
-        return isset ($this->args['txt']) ? $this->args['txt'] : '';
+    public function __get( $key ) {
+        return(
+            isset ($this->args[$key]) ?
+            $this->args[$key] :
+            null
+        );
     }
 
     public function __toString() {
@@ -65,7 +69,7 @@ class MslsLinkTextOnly extends MslsLink {
     protected $format_string = '{txt}';
 
     static function get_description() {
-        return __( 'Description only', MSLS_DEF_STRING );
+        return __( 'Description only', 'msls' );
     }
 
 }
@@ -75,7 +79,7 @@ class MslsLinkImageOnly extends MslsLink {
     protected $format_string = '<img src="{src}" alt="{alt}"/>';
 
     static function get_description() {
-        return __( 'Flag only', MSLS_DEF_STRING );
+        return __( 'Flag only', 'msls' );
     }
 
 }
@@ -85,7 +89,7 @@ class MslsLinkTextImage extends MslsLink {
     protected $format_string = '{txt} <img src="{src}" alt="{alt}"/>';
 
     static function get_description() {
-        return __( 'Description and flag', MSLS_DEF_STRING );
+        return __( 'Description and flag', 'msls' );
     }
 
 }

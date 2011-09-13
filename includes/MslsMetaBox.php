@@ -3,24 +3,23 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsMetaBox extends MslsMain implements IMslsMain {
 
     static function init() {
-        $obj = new self();
-        if ( !$obj->is_excluded() ) {
+        $options = MslsOptions::instance();
+        if ( !$options->is_excluded() ) {
+            $obj = new self();
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
         }
-        return $obj;
     }
 
     public function add() {
         add_meta_box(
             'msls',
-            __( 'Multisite Language Switcher', MSLS_DEF_STRING ),
+            __( 'Multisite Language Switcher', 'msls' ),
             array( $this, 'render_post' ),
             'post',
             'side',
@@ -28,7 +27,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         );
         add_meta_box(
             'msls',
-            __( 'Multisite Language Switcher', MSLS_DEF_STRING ),
+            __( 'Multisite Language Switcher', 'msls' ),
             array( $this, 'render_page' ),
             'page',
             'side',
@@ -38,13 +37,13 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
 
     protected function render( $type ) {
         global $post;
-        $blogs = $this->get_blogs();
+        $blogs = $this->blogs->get();
         if ( $blogs ) {
             $temp   = $post;
             $mydata = new MslsPostOptions( $post->ID );
-            wp_nonce_field( MSLS_PLUGIN_PATH, MSLS_DEF_STRING . '_noncename' );
+            wp_nonce_field( MSLS_PLUGIN_PATH, 'msls' . '_noncename' );
             echo '<ul>';
-            foreach ( $blogs as $language => $blog ) {
+            foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $args = array(
                     'post_type' => $type,
@@ -53,6 +52,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                     'order' => 'ASC',
                     'posts_per_page' => (-1),
                 );
+                $language  = $blog->get_language();
                 $options   = '';
                 $my_query  = new WP_Query( $args );
                 $edit_link = MslsAdminIcon::create( $type );
@@ -75,10 +75,10 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                 }
                 printf(
                     '<li><label for="%s[%s]">%s </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
-                    MSLS_DEF_STRING,
+                    'msls',
                     $language,
                     $edit_link,
-                    MSLS_DEF_STRING,
+                    'msls',
                     $language,
                     $options
                 );
@@ -86,13 +86,13 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
             }
             printf(
                 '</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
-                __( 'Update', MSLS_DEF_STRING )
+                __( 'Update', 'msls' )
             );
             $post = $temp;
         } else {
             printf(
                 '<p>%s</p>',
-                __( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', MSLS_DEF_STRING )
+                __( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
             );
         }
     }
@@ -108,7 +108,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
     public function set( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
             return;
-        if ( !isset( $_POST[MSLS_DEF_STRING . '_noncename'] ) || !wp_verify_nonce( $_POST[MSLS_DEF_STRING . '_noncename'], MSLS_PLUGIN_PATH ) )
+        if ( !isset( $_POST['msls' . '_noncename'] ) || !wp_verify_nonce( $_POST['msls' . '_noncename'], MSLS_PLUGIN_PATH ) )
             return;
         if ( 'page' == $_POST['post_type'] ) {
             if ( !current_user_can( 'edit_page' ) ) return;

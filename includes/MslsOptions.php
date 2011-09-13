@@ -8,6 +8,8 @@
  * @package Msls
  */
 
+require_once dirname( __FILE__ ) . '/MslsRegistry.php';
+
 /**
  * MslsOptionsFactory
  */
@@ -30,7 +32,7 @@ class MslsOptionsFactory {
 /**
  * MslsOptions
  */
-class MslsOptions {
+class MslsOptions extends MslsRegistryInstance {
 
     protected $args;
     protected $name;
@@ -42,7 +44,7 @@ class MslsOptions {
 
     public function __construct() {
         $this->args   = func_get_args();
-        $this->name   = MSLS_DEF_STRING . $this->sep . implode( $this->sep, $this->args );
+        $this->name   = 'msls' . $this->sep . implode( $this->sep, $this->args );
         $this->exists = $this->set( get_option( $this->name ) );
         $this->base   = $this->get_base();
     }
@@ -106,12 +108,22 @@ class MslsOptions {
         return null;
     }
 
-    public function has_value( $language ) {
-        return !empty( $this->options[$language] ) ? true : false;
-    }
-
     public function get_current_link() {
         return site_url();
+    }
+
+    public function has_value( $value ) {
+        return !empty( $this->options[$value] ) ? true : false;
+    }
+
+    public function is_excluded() {
+        if ( false == $this->exists )
+            return true;
+        return $this->has_value( 'exclude_current_blog' );
+    }
+
+    public function is_content_filter() {
+        return $this->has_value( 'content_filter' );
     }
 
 }

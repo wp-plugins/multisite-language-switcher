@@ -3,77 +3,39 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 require_once dirname( __FILE__ ) . '/MslsMain.php';
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsOutput extends MslsMain implements IMslsMain {
 
-    static function init() {
-        return new self();
-    }
-
-    public function is_content_filter() {
-        return(
-            $this->options->content_filter == 1 ?
-            true :
-            false
-        );
-    }
+    static function init() { }
 
     public function get( $display, $exists = false ) {
         $arr = array();
-        if ( !$this->is_excluded() ) {
-            $blogs = $this->get_blogs();
-            if ( $blogs ) {
-                $mydata = MslsOptionsFactory::create();
-                $link   = MslsLink::create( $display );
-                if ( $this->options->output_current_blog && false == $exists ) {
-                    $language       = $this->get_language();
-                    $link->txt      = (
-                        isset( $this->options->description ) ?
-                        $this->options->description :
-                        $language
-                    );
-                    $link->src      = $this->get_flag_url( $language );
-                    $link->alt      = $language;
-                    $sort_key       = (
-                        $this->options->sort_by_description ?
-                        $link->get_txt() :
-                        $language
-                    );
-                    $arr[$sort_key] = sprintf(
-                        '<a href="%s" title="%s">%s</a>',
-                        $mydata->get_current_link(),
-                        $link->get_txt(),
-                        $link
-                    );
-                }
-                foreach ( $blogs as $language => $blog ) {
-                    if ( true == $exists && !$mydata->has_value( $language ) )
-                        continue;
+        $blogs = $this->blogs->get( (false == $exists ? true : false) );
+        if ( $blogs ) {
+            $mydata = MslsOptionsFactory::create();
+            $link   = MslsLink::create( $display );
+            foreach ( $blogs as $blog ) {
+                $language = $blog->get_language();
+                if ( true == $exists && !$mydata->has_value( $language ) )
+                    continue;
+                if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
                     switch_to_blog( $blog->userblog_id );
-                    $temp           = new MslsOptions;
-                    $link->txt      = (
-                        isset( $temp->description ) ?
-                        $temp->description :
-                        $language
-                    );
-                    $link->src      = $this->get_flag_url( $language );
-                    $link->alt      = $language;
-                    $sort_key       = (
-                        $this->options->sort_by_description ?
-                        $link->get_txt() :
-                        $language
-                    );
-                    $arr[$sort_key] = sprintf(
-                        '<a href="%s" title="%s">%s</a>',
-                        $mydata->get_permalink( $language ),
-                        $link->get_txt(),
-                        $link
-                    );
+                    $url = $mydata->get_permalink( $language );
                     restore_current_blog();
                 }
-                ksort( $arr );
+                else {
+                    $url = $mydata->get_current_link();
+                }
+                $link->txt = $blog->get_description();
+                $link->src = $this->get_flag_url( $language );
+                $link->alt = $language;
+                $arr[] = sprintf(
+                    '<a href="%s" title="%s">%s</a>',
+                    $url,
+                    $link->txt,
+                    $link
+                );
             }
         }
         return $arr;
@@ -103,7 +65,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
 class MslsWidget extends WP_Widget {
 
     public function __construct() {
-        parent::__construct( false, $name = __( 'Multisite Language Switcher', MSLS_DEF_STRING ) );
+        parent::__construct( false, $name = __( 'Multisite Language Switcher', 'msls' ) );
     }
 
     function widget( $args, $instance ) {
@@ -128,7 +90,7 @@ class MslsWidget extends WP_Widget {
         printf(
             '<p><label for="%s">%s:</label> <input class="widefat" id="%s" name="%s" type="text" value="%s" /></p>',
             $this->get_field_id( 'title' ),
-            __( 'Title', MSLS_DEF_STRING ),
+            __( 'Title', 'msls' ),
             $this->get_field_id( 'title' ),
             $this->get_field_name( 'title' ),
             $title
@@ -141,23 +103,22 @@ class MslsWidget extends WP_Widget {
  * Registers Widget
  */
 function msls_widgets_init() {
-    if ( get_option( MSLS_DEF_STRING ) ) {
-        $obj = new MslsOutput();
-        if ( !$obj->is_excluded() )
+    $options = MslsOptions::instance();
+    if ( !$options->is_excluded() )
             register_widget( 'MslsWidget' );
-    }
 }
 add_action( 'widgets_init', 'msls_widgets_init' );
 
 function msls_content_filter( $content ) {
-    $obj = new MslsOutput();
-    if ( $obj->is_content_filter() ) {
+    $options = MslsOptions::instance();
+    if ( $options->is_content_filter() ) {
+        $obj   = new MslsOutput();
         $links = $obj->get( 1, true );
         if ( !empty( $links ) ) {
             if ( count( $links ) > 1 ) {
                 $last  = array_pop( $links );
                 $links = sprintf(
-                    __( '%s and %s', MSLS_DEF_STRING ),
+                    __( '%s and %s', 'msls' ),
                     implode( ', ', $links ),
                     $last
                 );
@@ -166,7 +127,7 @@ function msls_content_filter( $content ) {
             }
             $content .= '<p id="msls">' .
                 sprintf(
-                    __( 'This post is also available in %s.', MSLS_DEF_STRING ),
+                    __( 'This post is also available in %s.', 'msls' ),
                     $links
                 ) .
                 '</p>';
