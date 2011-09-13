@@ -127,7 +127,7 @@ class MslsOptions extends MslsRegistryInstance {
     }
 
     public static function whoami() {
-        return __CLASS__;
+        return 'MslsOptions';
     }
 
 }
