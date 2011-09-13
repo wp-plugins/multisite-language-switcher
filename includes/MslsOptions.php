@@ -15,16 +15,34 @@ require_once dirname( __FILE__ ) . '/MslsRegistry.php';
  */
 class MslsOptionsFactory {
 
-    static function create() {
-        if ( is_single() || is_page() ) {
-            global $post;
-            return new MslsPostOptions( $post->ID );
-        } elseif ( is_category() ) {
-            return new MslsCategoryOptions( get_query_var( 'cat' ) );
-        } elseif ( is_tag() ) {
-            return new MslsTermOptions( get_query_var( 'tag_id' ) );
+    static function create($type = '', $id = 0) {
+        if ( '' == $type ) ) {
+            if ( is_single() || is_page() ) {
+                global $post;
+                return new MslsPostOptions( $post->ID );
+            } elseif ( is_category() ) {
+                return new MslsCategoryOptions( get_query_var( 'cat' ) );
+            } elseif ( is_tag() ) {
+                return new MslsTermOptions( get_query_var( 'tag_id' ) );
+            }
+            return new MslsOptions();
         }
-        return new MslsOptions();
+        else {
+            $id = (int) $id;
+            switch( $type ) {
+                case 'post':
+                case 'page':
+                    return new MslsPostOptions( $id );
+                    break;
+                case 'category':
+                    return new MslsCategoryOptions( $id );
+                    break;
+                case 'post_tag':
+                    return new MslsTermOptions( $id );
+                    break;
+            }
+        }
+        return null;
     }
 
 }
