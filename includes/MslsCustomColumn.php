@@ -47,35 +47,37 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $this->columns( 'post', $column_name, $post_id );
     }
 
-    public function category_columns( $column_name, $post_id ) {
+    public function category_columns( $deprecated, $column_name, $term_id ) {
         $this->columns( 'category', $column_name, $post_id );
     }
 
-    public function post_tag_columns( $column_name, $post_id ) {
+    public function post_tag_columns( $deprecated, $column_name, $term_id ) {
         $this->columns( 'post_tag', $column_name, $post_id );
     }
 
-    protected function columns( $type, $column_name, $post_id ) {
-        $blogs = $this->blogs->get();
-        if ( $blogs ) {
-            $arr    = array();
-            $mydata = MslsOptionsFactory::create( $type, $post_id );
-            foreach ( $blogs as $blog ) {
-                switch_to_blog( $blog->userblog_id );
-                $language = $blog->get_language();
-                $edit_link = MslsAdminIcon::create( $type );
-                $edit_link->set_language( $language );
-                if ( $mydata->has_value( $language ) ) {
-                    $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
-                    $edit_link->set_href( $mydata->$language );
+    protected function columns( $type, $column_name, $item_id ) {
+        if ( 'mslscol' == $column_name ) {
+            $blogs = $this->blogs->get();
+            if ( $blogs ) {
+                $arr    = array();
+                $mydata = MslsOptionsFactory::create( $type, $item_id );
+                foreach ( $blogs as $blog ) {
+                    switch_to_blog( $blog->userblog_id );
+                    $language = $blog->get_language();
+                    $edit_link = MslsAdminIcon::create( $type );
+                    $edit_link->set_language( $language );
+                    if ( $mydata->has_value( $language ) ) {
+                        $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
+                        $edit_link->set_href( $mydata->$language );
+                    }
+                    else {
+                        $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
+                    }
+                    $arr[] = sprintf( '%s', $edit_link );
+                    restore_current_blog();
                 }
-                else {
-                    $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
-                }
-                $arr[] = sprintf( '%s', $edit_link );
-                restore_current_blog();
+                echo implode( '&nbsp;', $arr );
             }
-            echo implode( '&nbsp;', $arr );
         }
     }
 
