@@ -159,7 +159,7 @@ class MslsAdminIcon {
             );
         }
         return sprintf(
-            '<a title="%s" href="%s">%s</a>',
+            '<a title="%s" href="%s">%s</a>&nbsp;',
             $title,
             $href,
             $this->get_img()

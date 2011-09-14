@@ -44,7 +44,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                         $selected = '';
                         if ( $term->term_id == $mydata->$language ) {
                             $selected = 'selected="selected"';
-                            $edit_link->set_href( get_edit_term_link( $mydata->$language, $this->taxonomy ) );
+                            $edit_link->set_href( $mydata->$language );
                         }
                         $options .= sprintf(
                             '<option value="%s"%s>%s</option>',

@@ -11,9 +11,10 @@ class MslsBlog {
     private $language;
 
     public function __construct( $obj, $description ) {
+        if ( isset( $obj->userblog_id ) ) $obj->blog_id = $obj->userblog_id;
         $this->obj         = $obj;
         $this->description = (string) $description;
-        $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
+        $this->language    = (string) get_blog_option( $this->obj->blog_id, 'WPLANG' );
     }
 
     final public function __get( $key ) {
@@ -111,10 +112,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     }
 
     public function get( $frontend = false ) {
-        $objects = $this->objects;
+        $objects = apply_filters( 'msls_blog_collection_get', $this->objects );
         if ( (!$frontend || !$this->current_blog_output) && $this->has_current_blog() )
             unset( $objects[$this->current_blog_id] );
-        $objects = apply_filters( 'msls_blog_collection_get', $objects );
         usort( $objects, array( 'MslsBlog', $this->objects_order ) );
         return $objects;
     }
