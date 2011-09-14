@@ -72,7 +72,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                     else {
                         $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
                     }
-                    echo edit_link;
+                    echo $edit_link;
                     restore_current_blog();
                 }
             }
