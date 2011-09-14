@@ -59,7 +59,6 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
-                $arr    = array();
                 $mydata = MslsOptionsFactory::create( $type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
@@ -73,10 +72,9 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                     else {
                         $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
                     }
-                    $arr[] = sprintf( '%s', $edit_link );
+                    echo edit_link;
                     restore_current_blog();
                 }
-                echo implode( '&nbsp;', $arr );
             }
         }
     }
