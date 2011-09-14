@@ -63,7 +63,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                 $mydata = MslsOptionsFactory::create( $type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
-                    $language = $blog->get_language();
+                    $language  = $blog->get_language();
                     $edit_link = MslsAdminIcon::create( $type );
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {

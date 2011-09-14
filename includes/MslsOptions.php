@@ -15,7 +15,7 @@ require_once dirname( __FILE__ ) . '/MslsRegistry.php';
  */
 class MslsOptionsFactory {
 
-    static function create($type = '', $id = 0) {
+    static function create( $type = '', $id = 0 ) {
         if ( '' == $type ) {
             if ( is_single() || is_page() ) {
                 global $post;
@@ -29,7 +29,7 @@ class MslsOptionsFactory {
         }
         else {
             $id = (int) $id;
-            switch( $type ) {
+            switch ( $type ) {
                 case 'post':
                 case 'page':
                     return new MslsPostOptions( $id );

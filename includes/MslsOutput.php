@@ -10,7 +10,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
     static function init() { }
 
     public function get( $display, $exists = false ) {
-        $arr = array();
+        $arr   = array();
         $blogs = $this->blogs->get( (false == $exists ? true : false) );
         if ( $blogs ) {
             $mydata = MslsOptionsFactory::create();
@@ -30,7 +30,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
                 $link->txt = $blog->get_description();
                 $link->src = $this->get_flag_url( $language );
                 $link->alt = $language;
-                $arr[] = sprintf(
+                $arr[]     = sprintf(
                     '<a href="%s" title="%s">%s</a>',
                     $url,
                     $link->txt,
