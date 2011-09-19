@@ -39,6 +39,9 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.8.1 =
+* new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
+
 = 0.8 =
 * new: now flags in the backend are allways clickable, link to edit the translation or to create a new item
 * new: meta-box is now also available when you want to add a new post 
