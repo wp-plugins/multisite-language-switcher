@@ -206,12 +206,12 @@ class MslsBlog {
          * instead of a blog_id ... so we need just some correction ;)
          *
          */
-        if ( !isset( $obj->userblog_id ) ) {
-            $obj->userblog_id = $obj->blog_id;
+        if ( !isset( $this->userblog_id ) ) {
+            $this->userblog_id = $this->blog_id;
         }
         $this->obj         = $obj;
         $this->description = (string) $description;
-        $this->language    = (string) get_blog_option( $this->obj->blog_id, 'WPLANG' );
+        $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
     }
 
     /**
