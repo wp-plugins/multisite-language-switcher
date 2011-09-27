@@ -64,7 +64,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         $this->objects_order       = $options->get_order();
         if ( !$options->is_excluded() ) {
             $blogs_collection = array();
-            if ( has_filters( 'msls_blog_collection_construct' ) ) {
+            if ( has_filter( 'msls_blog_collection_construct' ) ) {
                 $blogs_collection = apply_filters(
                     'msls_blog_collection_construct',
                     array()
