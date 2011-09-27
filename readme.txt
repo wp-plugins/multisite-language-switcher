@@ -41,6 +41,7 @@ If you have created your own language pack, or have an update of an existing one
 
 = 0.8.1 =
 * new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
+* language files for fr_FR and es_ES updated
 
 = 0.8 =
 * new: now flags in the backend are allways clickable, link to edit the translation or to create a new item

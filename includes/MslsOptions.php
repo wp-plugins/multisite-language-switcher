@@ -139,7 +139,7 @@ class MslsPostOptions extends MslsOptions {
     public function get_postlink( $language ) {
         return(
             $this->has_value( $language ) ? 
-            get_permalink( (int) $this->__get( $language ) :
+            get_permalink( (int) $this->__get( $language ) ) :
             null
         );
     }

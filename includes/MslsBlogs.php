@@ -16,6 +16,12 @@
 require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 
 /**
+ * ms-functions.php is required because MslsBlogCollection uses
+ * get_blogs_of_user
+ */
+require_once ABSPATH . WPINC . '/ms-functions.php';
+
+/**
  * Collection of blog-objects
  *
  * @package Msls
@@ -58,11 +64,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         if ( true == (bool) $options->sort_by_description )
             $this->objects_order = 'description';
         if ( !$options->is_excluded() ) {
-            $user_id = get_user_id_from_string(
-                get_blog_option( $this->current_blog_id, 'admin_email' )
-            );
-            $blogs_collection = (array) apply_filters( 'msls_blog_collection_construct', $blogs_collection );
-            foreach ( ( $blogs_collection ? $blogs_collection : get_blogs_of_user( $user_id ) ) as $blog ) {
+            $blogs_collection = (array) apply_filters( 'msls_blog_collection_construct', array() );
+            if ( empty( $blogs_collection ) ) {
+                $user_id = get_user_id_from_string(
+                    get_blog_option( $this->current_blog_id, 'admin_email' )
+                );
+                $blogs_collection = get_blogs_of_user( $user_id );
+            }
+            foreach ( $blogs_collection as $blog ) {
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
                     if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
