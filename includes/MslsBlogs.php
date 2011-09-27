@@ -64,14 +64,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         if ( true == (bool) $options->sort_by_description )
             $this->objects_order = 'description';
         if ( !$options->is_excluded() ) {
-            $blogs_collection = (array) apply_filters( 'msls_blog_collection_construct', array() );
+            $blogs_collection = apply_filters( 'msls_blog_collection_construct', array() );
             if ( empty( $blogs_collection ) ) {
                 $user_id = get_user_id_from_string(
                     get_blog_option( $this->current_blog_id, 'admin_email' )
                 );
                 $blogs_collection = get_blogs_of_user( $user_id );
             }
-            foreach ( $blogs_collection as $blog ) {
+            foreach ( (array) $blogs_collection as $blog ) {
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
                     if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
