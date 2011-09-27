@@ -193,7 +193,7 @@ class MslsGetSet {
     }
 
     final public function has_value( $key ) {
-        return empty( $this->arr[$key] ) ? true : false;
+        return !empty( $this->arr[$key] ) ? true : false;
     }
 
     /**
