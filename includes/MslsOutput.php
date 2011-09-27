@@ -75,7 +75,7 @@ class MslsWidget extends WP_Widget {
         parent::__construct( false, $name = __( 'Multisite Language Switcher', 'msls' ) );
     }
 
-    function widget( $args, $instance ) {
+    public function widget( $args, $instance ) {
         extract( $args );
         $title = apply_filters( 'widget_title', $instance['title'] );
         echo $before_widget;
@@ -86,13 +86,13 @@ class MslsWidget extends WP_Widget {
         echo $after_widget;
     }
 
-    function update( $new_instance, $old_instance ) {
+    public function update( $new_instance, $old_instance ) {
         $instance          = $old_instance;
         $instance['title'] = strip_tags( $new_instance['title'] );
         return $instance;
     }
 
-    function form( $instance ) {
+    public function form( $instance ) {
         $title = esc_attr( $instance['title'] );
         printf(
             '<p><label for="%s">%s:</label> <input class="widefat" id="%s" name="%s" type="text" value="%s" /></p>',

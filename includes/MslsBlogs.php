@@ -50,7 +50,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
      * @access private
      * @var string
      */
-    private $objects_order = 'language';
+    private $objects_order;
 
     /**
      * Constructor
@@ -60,12 +60,17 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     public function __construct() {
         $options                   = MslsOptions::instance();
         $this->current_blog_id     = get_current_blog_id();
-        $this->current_blog_output = (bool) $options->output_current_blog;
-        if ( true == (bool) $options->sort_by_description )
-            $this->objects_order = 'description';
+        $this->current_blog_output = $options->has_value( 'output_current_blog' );
+        $this->objects_order       = $options->get_order();
         if ( !$options->is_excluded() ) {
-            $blogs_collection = apply_filters( 'msls_blog_collection_construct', array() );
-            if ( empty( $blogs_collection ) ) {
+            $blogs_collection = array();
+            if ( has_filters( 'msls_blog_collection_construct' ) ) {
+                $blogs_collection = apply_filters(
+                    'msls_blog_collection_construct',
+                    array()
+                );
+            }
+            else {
                 $user_id = get_user_id_from_string(
                     get_blog_option( $this->current_blog_id, 'admin_email' )
                 );
@@ -108,7 +113,11 @@ class MslsBlogCollection implements IMslsRegistryInstance {
      * @return bool
      */
     public function has_current_blog() {
-        return( isset( $this->objects[$this->current_blog_id] ) ? true : false );
+        return(
+            isset( $this->objects[$this->current_blog_id] ) ?
+            true :
+            false
+        );
     }
 
     /**
@@ -193,12 +202,12 @@ class MslsBlog {
      */
     public function __construct( StdClass $obj, $description ) {
         /*
-         * get_user_id_from_string returns objects with userblog_id-members instead
-         * of blog_id ... just some correction ;)
+         * get_user_id_from_string returns objects with userblog_id-members 
+         * instead of a blog_id ... so we need just some correction ;)
          *
          */
-        if ( isset( $obj->userblog_id ) ) {
-            $obj->blog_id = $obj->userblog_id;
+        if ( !isset( $obj->userblog_id ) ) {
+            $obj->userblog_id = $obj->blog_id;
         }
         $this->obj         = $obj;
         $this->description = (string) $description;
