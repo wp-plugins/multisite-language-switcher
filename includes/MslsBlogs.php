@@ -17,7 +17,7 @@ require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 
 /**
  * ms-functions.php is required because MslsBlogCollection uses
- * get_blogs_of_user
+ * get user id from string
  */
 require_once ABSPATH . WPINC . '/ms-functions.php';
 

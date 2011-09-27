@@ -106,8 +106,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     }
 
     public function is_excluded() {
-        if ( false == $this->exists )
-            return true;
         return $this->has_value( 'exclude_current_blog' );
     }
 
