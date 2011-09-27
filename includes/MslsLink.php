@@ -2,14 +2,35 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Link
+ *
+ * @author Dennis Ploetner <re@lloc.de>
+ * @package Msls
+ */
+
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
-class MslsLink {
+class MslsLink extends MslsGetSet {
 
+    /**
+     * @access protected
+     * @var array
+     */
     protected $args = array();
+
+    /**
+     * @access protected
+     * @var string
+     */
     protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
-    static function get_types() {
+    /**
+     * Get link types
+     *
+     * @return array
+     */
+    public static function get_types() {
         return array( 
             '0' => 'MslsLink',
             '1' => 'MslsLinkTextOnly',
@@ -18,11 +39,23 @@ class MslsLink {
         );
     }
 
-    static function get_description() {
+    /**
+     * Get link description
+     *
+     * @access public
+     * @return string
+     */
+    public static function get_description() {
         return __( 'Flag and description', 'msls' );
     }
 
-    static function get_types_description() {
+    /**
+     * Get array with all link descriptions
+     *
+     * @access public
+     * @return array
+     */
+    public static function get_types_description() {
         $temp = array();
         foreach ( self::get_types() as $key => $class ) {
             $temp[$key] = call_user_func(
@@ -32,32 +65,26 @@ class MslsLink {
         return $temp;
     }
     
-    public function create( $display ) {
+    /**
+     * Factory: Create a specific instance of MslsLink
+     *
+     * @access public
+     * @return MslsLink
+     */
+    public static function create( $display ) {
         $types = self::get_types();
         if ( !in_array( $display, array_keys( $types ), true ) ) $display = 0;
         return new $types[$display];
     }
 
-    public function __set( $key, $value ) {
-        $this->args[$key] = $value;
-    }
-
-    public function __get( $key ) {
-        return(
-            isset ($this->args[$key]) ?
-            $this->args[$key] :
-            null
-        );
-    }
-
     public function __toString() {
         $temp = array();
-        foreach ( array_keys( $this->args ) as $key ) {
+        foreach ( array_keys( $this->getArr() ) as $key ) {
             $temp[] = '{' . $key . '}';
         }
         return str_replace(
             $temp,
-            $this->args,
+            $this->getArr(),
             $this->format_string
         );
     }

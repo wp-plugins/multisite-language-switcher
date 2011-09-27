@@ -2,6 +2,13 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Custom Column
+ *
+ * @author Dennis Ploetner <re@lloc.de>
+ * @package Msls
+ */
+
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 require_once dirname( __FILE__ ) . '/MslsLink.php';

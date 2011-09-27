@@ -2,20 +2,63 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Main
+ *
+ * @author Dennis Ploetner <re@lloc.de>
+ * @package Msls
+ */
+
+/**
+ * MslsMain requests a instance of MslsOptions in his constructor
+ */
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
+
+/**
+ * MslsMain requests a instance of MslsBlogCollection in his constructor
+ */
 require_once dirname( __FILE__ ) . '/MslsBlogs.php';
 
+/**
+ * Interface for hook classes
+ *
+ * @package Msls
+ */
 interface IMslsMain {
 
+    /**
+     * A class which implements IMslsMain must define such a init-method
+     *
+     * @access public
+     */
     public static function init();
 
 }
 
+/**
+ * Generic hook class
+ *
+ * @package Msls
+ */
 class MslsMain {
 
+    /**
+     * @access protected
+     * @var MslsOptions
+     */
     protected $options;
+
+    /**
+     * @access protected
+     * @var MslsBlogCollection
+     */
     protected $blogs;
 
+    /**
+     * Constructor
+     *
+     * @access public
+     */
     public function __construct() {
         load_plugin_textdomain(
             'msls',
@@ -75,6 +118,11 @@ class MslsMain {
 
 }
 
+/**
+ * Provides functionalities for activation an deactivation
+ *
+ * @package Msls
+ */
 class MslsPlugin {
 
     public static function activate() {
@@ -89,7 +137,77 @@ class MslsPlugin {
     public static function deactivate() { }
 
 }
-   
+
+/**
+ * Generic class for overloading properties
+ *
+ * <code>
+ * $obj = new MslsGetSet;
+ * $obj->test = 'This is just a test';
+ * echo $obj->test;
+ * </code>
+ * 
+ * @package Msls
+ */
+class MslsGetSet {
+
+    /**
+     * @access protected
+     * @var array
+     */
+    protected $arr = array();
+
+    /**
+     * "Magic" set arg
+     *
+     * @access public
+     * @param mixed $key
+     * @param mixed $value
+     */
+    final public function __set( $key, $value ) {
+        $this->arr[$key] = $value;
+        if ( empty( $this->arr[$key] ) )
+            unset( $this->arr[$key] );
+    }
+
+    /**
+     * "Magic" get arg
+     *
+     * @access public
+     * @param mixed $key
+     * @return mixed
+     */
+    final public function __get( $key ) {
+        return isset( $this->arr[$key] ) ? $this->arr[$key] : null;
+    }
+
+    /**
+     * "Magic" isset
+     *
+     * @access public
+     * @param mixed $key
+     * @return bool
+     */
+    final public function __isset( $key ) {
+        return isset( $this->arr[$key] );
+    }
+
+    final public function has_value( $key ) {
+        return empty( $this->arr[$key] ) ? true : false;
+    }
+
+    /**
+     * Get args-array
+     *
+     * @access protected
+     * @return array
+     */
+    final protected function getArr() {
+        return $this->arr;
+    }
+
+}
+
 /*
  * Local variables:
  * tab-width: 4

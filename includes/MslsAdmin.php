@@ -2,6 +2,13 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Admin
+ *
+ * @author Dennis Ploetner <re@lloc.de>
+ * @package Msls
+ */
+
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
@@ -139,6 +146,11 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         echo $this->render_input( 'image_url' );
     }
 
+    /**
+     * Render form-element (checkbox)
+     * 
+     * @param string $key
+     */
     public function render_checkbox( $key ) {
         return sprintf(
             '<input type="checkbox" id="%s" name="%s[%s]" value="1"%s/>',
@@ -150,6 +162,13 @@ class MslsAdmin extends MslsMain implements IMslsMain {
 
     }
 
+    /**
+     * Render form-element (text-input)
+     *
+     * @param string $key
+     * @param string $size
+     * @return string
+     */
     public function render_input( $key, $size = '30' ) {
         return sprintf(
             '<input id="%s" name="%s[%s]" value="%s" size="%s"/>',
@@ -161,7 +180,13 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
-    public function validate( $input ) {
+    /**
+     * Validate input before saving it
+     * 
+     * @param array $input
+     * @return array
+     */ 
+    public function validate( array $input ) {
         if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
         $input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
         return $input;

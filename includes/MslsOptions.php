@@ -3,8 +3,9 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * MslsOptions.php
+ * Options
  *
+ * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
@@ -50,11 +51,10 @@ class MslsOptionsFactory {
 /**
  * MslsOptions
  */
-class MslsOptions implements IMslsRegistryInstance {
+class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     protected $args;
     protected $name;
-    protected $options  = array();
     protected $exists   = false;
     protected $sep      = '';
     protected $autoload = 'yes';
@@ -67,35 +67,10 @@ class MslsOptions implements IMslsRegistryInstance {
         $this->base   = $this->get_base();
     }
 
-    /**
-     * @param mixed $key
-     * @return string
-     */
-    public function __get( $key ) {
-        return (
-            isset( $this->options[$key] ) ?
-            $this->options[$key] :
-            ''
-        );
-    }
-
-    public function __set( $key, $value ) {
-        if ( '' == $value ) {
-            if (isset( $this->options[$key] ) )
-                unset( $this->options[$key] );
-        } else {
-            $this->options[$key] = $value;
-        }
-    }
-
-    public function __isset( $key ) {
-        return isset( $this->options[$key] );
-    }
-
     public function save( $arr ) {
         if ( $this->set( $arr ) ) {
             delete_option( $this->name );
-            add_option( $this->name, $this->options, '', $this->autoload );
+            add_option( $this->name, $this->getArr(), '', $this->autoload );
         }
     }
 
@@ -128,10 +103,6 @@ class MslsOptions implements IMslsRegistryInstance {
 
     public function get_current_link() {
         return site_url();
-    }
-
-    public function has_value( $value ) {
-        return !empty( $this->options[$value] ) ? true : false;
     }
 
     public function is_excluded() {
@@ -168,7 +139,7 @@ class MslsPostOptions extends MslsOptions {
     public function get_postlink( $language ) {
         return(
             $this->has_value( $language ) ? 
-            get_permalink( $this->options[$language] ) :
+            get_permalink( (int) $this->__get( $language ) :
             null
         );
     }
@@ -202,7 +173,7 @@ class MslsTermOptions extends MslsOptions {
     public function get_postlink( $language ) {
         if ( $this->has_value( $language ) ) {
             $url = get_term_link(
-                (int) $this->options[$language], 
+                (int) $this->__get( $language ), 
                 $this->taxonomy
             );
             if ( empty( $url ) || !is_string( $url ) )
