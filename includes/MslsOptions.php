@@ -113,7 +113,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         return $this->has_value( 'content_filter' );
     }
 
-    public function function get_order() {
+    public function get_order() {
         return ( 
             $this->has_value( 'sort_by_description' ) ?
             'description' :
