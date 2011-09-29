@@ -1,23 +1,18 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Blogs
  *
- * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
 /**
- * MslsRegistry.php is required because MslsBlogCollection implements
- * IMslsRegistryInstance
+ * MslsBlogCollection implements IMslsRegistryInstance
  */
 require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 
 /**
- * ms-functions.php is required because MslsBlogCollection uses
- * get user id from string
+ * MslsBlogCollection uses get_user_id_from_string()
  */
 require_once ABSPATH . WPINC . '/ms-functions.php';
 
@@ -63,7 +58,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         $this->current_blog_output = $options->has_value( 'output_current_blog' );
         $this->objects_order       = $options->get_order();
         if ( !$options->is_excluded() ) {
-            $blogs_collection = array();
             if ( has_filter( 'msls_blog_collection_construct' ) ) {
                 $blogs_collection = apply_filters(
                     'msls_blog_collection_construct',

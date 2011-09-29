@@ -1,11 +1,8 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Main
  *
- * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
@@ -44,13 +41,13 @@ class MslsMain {
 
     /**
      * @access protected
-     * @var MslsOptions
+     * @var MslsOptions $options
      */
     protected $options;
 
     /**
      * @access protected
-     * @var MslsBlogCollection
+     * @var MslsBlogCollection $blogs
      */
     protected $blogs;
 

@@ -1,21 +1,44 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Output
  *
- * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
+/**
+ * MslsOutput extends MslsMain and implements IMslsMain
+ */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+
+/**
+ * MslsOutput::get() uses MslsLink::create()
+ */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
+/**
+ * Output in the frontend
+ *
+ * @package Msls
+ */
 class MslsOutput extends MslsMain implements IMslsMain {
 
-    static function init() { }
+    /**
+     * Init
+     * 
+     * Just a placeholder
+     * @access public
+     */
+    public static function init() { }
 
+    /**
+     * Get the output as array
+     * 
+     * @access public
+     * @param string $display
+     * @param bool $exists
+     * @return array
+     */
     public function get( $display, $exists = false ) {
         $arr   = array();
         $blogs = $this->blogs->get( (false == $exists ? true : false) );
@@ -48,6 +71,12 @@ class MslsOutput extends MslsMain implements IMslsMain {
         return $arr;
     }
 
+    /**
+     * Returns a string when the object will treated like a string
+     * 
+     * @see get_the_msls()
+     * @return string
+     */ 
     public function __toString() {
         $arr = $this->get(
             (int) $this->options->display,
@@ -69,12 +98,29 @@ class MslsOutput extends MslsMain implements IMslsMain {
 
 }
 
+/**
+ * Output in the frontend
+ *
+ * @package Msls
+ */
 class MslsWidget extends WP_Widget {
 
+    /**
+     * Constructor
+     * 
+     * @access public
+     */
     public function __construct() {
         parent::__construct( false, $name = __( 'Multisite Language Switcher', 'msls' ) );
     }
 
+    /**
+     * Output of the widget in the frontend
+     * 
+     * @param array $args
+     * @param array instance
+     * @uses MslsOutput
+     */
     public function widget( $args, $instance ) {
         extract( $args );
         $title = apply_filters( 'widget_title', $instance['title'] );
@@ -108,6 +154,8 @@ class MslsWidget extends WP_Widget {
 
 /**
  * Registers Widget
+ * 
+ * @uses MslsOptions::instance()
  */
 function msls_widgets_init() {
     $options = MslsOptions::instance();
@@ -116,6 +164,14 @@ function msls_widgets_init() {
 }
 add_action( 'widgets_init', 'msls_widgets_init' );
 
+/**
+ * Filter for the_content()
+ * 
+ * @uses MslsOptions::instance()
+ * @uses MslsOutput
+ * @param string $content
+ * @return string
+ */ 
 function msls_content_filter( $content ) {
     $options = MslsOptions::instance();
     if ( $options->is_content_filter() ) {
@@ -148,6 +204,7 @@ add_filter( 'the_content', 'msls_content_filter' );
  * Get the output for using the links to the translations in your code
  * 
  * @return string
+ * @see the_msls()
  */
 function get_the_msls() {
     $obj = new MslsOutput();
@@ -157,18 +214,10 @@ function get_the_msls() {
 /**
  * Output the links to the translations in your template
  * 
- * @uses get_the_msls
+ * @uses get_the_msls()
  */
 function the_msls() {
     echo get_the_msls();
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>

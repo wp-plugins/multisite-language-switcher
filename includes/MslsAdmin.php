@@ -1,20 +1,34 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Admin
  *
- * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
+/**
+ * MslsMain.php is required because MslsAdmin extends MslsMain and implements
+ * IMslsMain
+ */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+
+/**
+ * MslsLink.php is required because MslsAdmin uses 
+ * MslsLink::get_types_description()
+ */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
+/**
+ * Administration of the options
+ *
+ * @package Msls
+ */
 class MslsAdmin extends MslsMain implements IMslsMain {
 
-    static function init() {
+    /**
+     * Init
+     */
+    public static function init() {
         $obj = new self();
         add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
@@ -24,9 +38,11 @@ class MslsAdmin extends MslsMain implements IMslsMain {
             array( $obj, 'render' )
         );
         add_action( 'admin_init', array( $obj, 'register' ) );
-        return $obj;
     }
 
+    /**
+     * Render the options-page
+     */
     public function render() {
         printf(
             '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><p>%s</p><form action="options.php" method="post">',
@@ -41,6 +57,9 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
+    /**
+     * Register the form-elements
+     */
     public function register() {
         register_setting( 'msls', 'msls', array( $this, 'validate' ) );
         add_settings_section(
@@ -64,21 +83,19 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'section' );
     }
 
+    /**
+     * Section is just a placeholder
+     */
     public function section() {}
 
+    /**
+     * Shows the select-form-field 'display'
+     */
     public function display() {
-        $items = '';
-        foreach ( MslsLink::get_types_description() as $key => $value ) {
-            $items .= sprintf(
-                '<option value="%s"%s>%s</option>',
-                $key, 
-                ( $this->options->display == $key ? ' selected="selected"' : '' ), 
-                $value
-            );
-        }
-        printf(
-            '<select id="display" name="%s[display]">%s</select>',
-            'msls', $items
+        echo $this->render_select(
+            'display',
+            MslsLink::get_types_description(),
+            $this->options->display
         );
     }
 
@@ -123,23 +140,14 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     }
 
     public function content_priority() {
-        $priority = (
+        $arr      = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
+        $arr      = array_combine( $keys, $keys );
+        $selected = (
             !empty ($this->options->content_priority) ? 
             $this->options->content_priority :
             10
         );
-        $items    = '';
-        foreach ( range( 1, 10 ) as $key ) {
-            $items .= sprintf(
-                '<option%s>%s</option>',
-                ( $priority == $key ? ' selected="selected"' : '' ), 
-                $key
-            );
-        }
-        printf(
-            '<select id="content_priority" name="%s[content_priority]">%s</select>',
-            'msls', $items
-        );
+        echo $this->render_select( 'content_priority', $arr, $selected );
     }
 
     public function image_url() {
@@ -178,6 +186,34 @@ class MslsAdmin extends MslsMain implements IMslsMain {
             esc_attr( $this->options->$key ),
             $size
         );
+    }
+
+    /**
+     * Render form-element (select)
+     *
+     * @param string $key
+     * @param array $arr
+     * @param string $selected
+     * @return string
+     */
+    public function render_select( $key, array $arr, $selected ) {
+        $options = array();
+        foreach ( $arr as $value => $description ) {
+            $options[] = sprintf(
+                '<option value="%s"%s>%s</option>',
+                $value
+                ( $value == $selected ? ' selected="selected"' : '' ), 
+                $description
+            );
+        }
+        return sprintf(
+            '<select id="%s" name="%s[%s]">%s</select>',
+            $key,
+            'msls',
+            $key,
+            implode( '', $options )
+        );
+        
     }
 
     /**
