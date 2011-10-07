@@ -10,14 +10,12 @@
 class MslsRegistry {
 
     /**
-     * @access private
-     * @var array $objects
+     * @var array
      */
     private static $objects = array();
 
     /**
-     * @access private
-     * @var mixed $instance
+     * @var mixed
      */
     private static $instance;
 
@@ -94,13 +92,5 @@ interface IMslsRegistryInstance {
     public static function instance();
 
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>

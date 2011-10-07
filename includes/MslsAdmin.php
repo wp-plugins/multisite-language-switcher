@@ -189,8 +189,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
      * for the output
      */ 
     public function content_priority() {
-        $arr      = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
-        $arr      = array_combine( $keys, $keys );
+        $temp     = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
+        $arr      = array_combine( $temp, $temp );
         $selected = (
             !empty ($this->options->content_priority) ? 
             $this->options->content_priority :
@@ -256,7 +256,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         foreach ( $arr as $value => $description ) {
             $options[] = sprintf(
                 '<option value="%s"%s>%s</option>',
-                $value
+                $value,
                 ( $value == $selected ? ' selected="selected"' : '' ), 
                 $description
             );
