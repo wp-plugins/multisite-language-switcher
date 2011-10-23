@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsOutput extends MslsMain and implements IMslsMain
+ * MslsOutput extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  *
  * @package Msls
  */
-class MslsOutput extends MslsMain implements IMslsMain {
+class MslsOutput extends MslsMain {
 
     /**
      * Init
@@ -34,20 +34,21 @@ class MslsOutput extends MslsMain implements IMslsMain {
      * Get the output as array
      * 
      * @param string $display
+     * @param bool frontend
      * @param bool $exists
      * @return array
      */
-    public function get( $display, $exists = false ) {
+    public function get( $display, $filter = false, $exists = false ) {
         $arr   = array();
-        $blogs = $this->blogs->get( (false == $exists ? true : false) );
+        $blogs = $this->blogs->get_filtered( $filter );
         if ( $blogs ) {
             $mydata = MslsOptions::create();
             $link   = MslsLink::create( $display );
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                if ( true == $exists && !$mydata->has_value( $language ) )
-                    continue;
                 if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
+                    if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() )
+                        continue;
                     switch_to_blog( $blog->userblog_id );
                     $url = $mydata->get_permalink( $language );
                     restore_current_blog();
@@ -56,14 +57,26 @@ class MslsOutput extends MslsMain implements IMslsMain {
                     $url = $mydata->get_current_link();
                 }
                 $link->txt = $blog->get_description();
-                $link->src = $this->get_flag_url( $language );
+                $link->src = $this->options->get_flag_url( $language );
                 $link->alt = $language;
-                $arr[]     = sprintf(
-                    '<a href="%s" title="%s">%s</a>',
-                    $url,
-                    $link->txt,
-                    $link
-                );
+                $current   = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
+                if ( has_filter( 'msls_output_get' ) ) {
+                    $arr[] = apply_filters(
+                        'msls_output_get',
+                        $url,
+                        $link,
+                        $current
+                    );
+                }
+                else {
+                    $arr[] = sprintf(
+                        '<a href="%s" title="%s"%s>%s</a>',
+                        $url,
+                        $link->txt,
+                        ( $current ? ' class="current_language"' : '' ),
+                        $link
+                    );
+                }
             }
         }
         return $arr;
@@ -78,7 +91,8 @@ class MslsOutput extends MslsMain implements IMslsMain {
     public function __toString() {
         $arr = $this->get(
             (int) $this->options->display,
-            (bool) $this->options->only_with_translation
+            false,
+            $this->options->has_value( 'only_with_translation' )
         );
         $str = '';
         if ( !empty( $arr ) ) {
@@ -183,27 +197,29 @@ add_action( 'widgets_init', 'msls_widgets_init' );
  * @return string
  */ 
 function msls_content_filter( $content ) {
-    $options = MslsOptions::instance();
-    if ( $options->is_content_filter() ) {
-        $obj   = new MslsOutput();
-        $links = $obj->get( 1, true );
-        if ( !empty( $links ) ) {
-            if ( count( $links ) > 1 ) {
-                $last  = array_pop( $links );
-                $links = sprintf(
-                    __( '%s and %s', 'msls' ),
-                    implode( ', ', $links ),
-                    $last
-                );
-            } else {
-                $links = $links[0];
+    if ( is_single() || is_page() ) {
+        $options = MslsOptions::instance();
+        if ( $options->is_content_filter() ) {
+            $obj   = new MslsOutput();
+            $links = $obj->get( 1, true, true );
+            if ( !empty( $links ) ) {
+                if ( count( $links ) > 1 ) {
+                    $last  = array_pop( $links );
+                    $links = sprintf(
+                        __( '%s and %s', 'msls' ),
+                        implode( ', ', $links ),
+                        $last
+                    );
+                } else {
+                    $links = $links[0];
+                }
+                $content .= '<p id="msls">' .
+                    sprintf(
+                        __( 'This post is also available in %s.', 'msls' ),
+                        $links
+                    ) .
+                    '</p>';
             }
-            $content .= '<p id="msls">' .
-                sprintf(
-                    __( 'This post is also available in %s.', 'msls' ),
-                    $links
-                ) .
-                '</p>';
         }
     }
     return $content;

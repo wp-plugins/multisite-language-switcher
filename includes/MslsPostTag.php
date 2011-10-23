@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsPostTag extends MslsMain and implements IMslsMain
+ * MslsPostTag extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,12 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * 
  * @package Msls
  */
-class MslsPostTag extends MslsMain implements IMslsMain {
-
-    /**
-     * @var string
-     */
-    public $taxonomy;
+class MslsPostTag extends MslsMain {
 
     /**
      * Init
@@ -34,12 +29,13 @@ class MslsPostTag extends MslsMain implements IMslsMain {
     public static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
-            $obj = new self();
-            $obj->taxonomy = $_REQUEST['taxonomy'];
-            if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
-                add_action( "{$obj->taxonomy}_edit_form_fields", array( $obj, 'add' ) );
-                add_action( "{$obj->taxonomy}_add_form_fields", array( $obj, 'add' ) );
-                add_action( "edited_{$obj->taxonomy}", array( $obj, 'set' ) );
+            $taxonomy = MslsContentTypes::create()->get_request();
+            if ( !empty( $taxonomy ) ) {
+                $obj = new self();
+                add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
+                add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
+                add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+                add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
             }
         }
     }
@@ -57,15 +53,16 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                 '<tr><th colspan="2"><strong>%s</strong></th></tr>',
                 __( 'Multisite Language Switcher', 'msls' )
             );
-            $mydata = new MslsTermOptions( $term_id );
+            $mydata = MslsTaxOptions::create( $term_id );
+            $type   = MslsContentTypes::create()->get_request();
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $language  = $blog->get_language();
                 $options   = '';
-                $terms     = get_terms( $this->taxonomy );
-                $edit_link = MslsAdminIcon::create( $this->taxonomy );
+                $terms     = get_terms( $type, array( 'hide_empty' => 0 ) );
+                $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_flag_url( $language ) );
+                $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
                         $selected = '';
@@ -100,9 +97,9 @@ class MslsPostTag extends MslsMain implements IMslsMain {
      * 
      * @param int $term_id
      */
-    public function set( $term_id ) {
+    public function set( $term_id, $tt_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
-        $this->save( $term_id, 'MslsTermOptions' );
+        $this->save( $term_id, 'MslsTaxOptions' );
     }
 
 }

@@ -3,15 +3,15 @@
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
-Requires at least: 3.0
+Requires at least: 3.2
 Tested up to:  3.3
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 
-A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
+A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 
 == Description ==
 
-A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
+A simple but powerful plugin that will help you to manage the relations of posts, pages, custom post types, categories, tags and custom taxonomies in your multilingual multisite-installation.
 
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
@@ -39,11 +39,20 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.9.2 =
+* new: _msls_output_get_-filter for customizing the output
+* new: link of the current language is marked with `class="current_language"`
+* new: index.php in all directories redirects to HTTP_HOST
+* bugfix: admin metabox and the link to a _new_ page
+* bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
+* bugfix: _msls_content_filter_ should work only when display a post_type
+* _msls_blog_collection_get_-filter deleted
+
 = 0.9.1 =
 * bugfix: broken methods in MslsAdmin
 
 = 0.9 =
-* new: support for custom post types 
+* new: support for custom post types
 * new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
 * bugfix: msls_blog_collection_get
 * language files for fr_FR and es_ES updated

@@ -3,8 +3,8 @@
 /*
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
-Description: A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
-Version: 0.9.1
+Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
+Version: 0.9.2
 Author: Dennis Ploetner 
 Author URI: http://lloc.de/
 */
@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( !class_exists( 'Msls' ) ) {
+if ( !class_exists( 'MslsPlugin' ) ) {
     if ( !defined( 'MSLS_PLUGIN_PATH' ) )  
         define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 
@@ -48,6 +48,11 @@ if ( !class_exists( 'Msls' ) ) {
         require_once dirname( __FILE__ ) . '/includes/MslsCustomColumn.php';
         add_action( 'load-edit.php', 'MslsCustomColumn::init' );
         add_action( 'load-edit-tags.php', 'MslsCustomColumnTaxonomy::init' );
+
+        if ( isset( $_POST['action'] ) && $_POST['action'] == 'add-tag' ) {
+            add_action( 'admin_init', 'MslsPostTag::init' );
+            add_action( 'admin_init', 'MslsCustomColumnTaxonomy::init' );
+        }
     }
 }
 
