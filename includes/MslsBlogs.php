@@ -12,6 +12,11 @@
 require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 
 /**
+ * MslsMain requests a instance of MslsOptions
+ */
+require_once dirname( __FILE__ ) . '/MslsOptions.php';
+
+/**
  * MslsBlogCollection uses get_user_id_from_string()
  */
 require_once ABSPATH . WPINC . '/ms-functions.php';
@@ -19,8 +24,8 @@ require_once ABSPATH . WPINC . '/ms-functions.php';
 /**
  * Collection of blog-objects
  * 
- * Implements the interface IMslsRegistryInstance because we are working with an
- * single object of MslsBlogCollection all the time.
+ * Implements the interface IMslsRegistryInstance because we want to work with 
+ * a singleton instance of MslsBlogCollection all the time.
  * @package Msls
  */
 class MslsBlogCollection implements IMslsRegistryInstance {
@@ -67,6 +72,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 $blogs_collection = get_blogs_of_user( $user_id );
             }
             foreach ( (array) $blogs_collection as $blog ) {
+                /*
+                 * get_user_id_from_string returns objects with userblog_id-members 
+                 * instead of a blog_id ... so we need just some correction ;)
+                 *
+                 */
+                if ( !isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
+                    $blog->userblog_id = $blog->blog_id;
+                }
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
                     if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
@@ -83,6 +96,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                     );
                 }
             }
+            uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
         }
     }
 
@@ -122,17 +136,36 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     }
 
     /**
-     * Get an array with blog-objects
+     * Get an array with all blog-objects
      *
-     * @param bool $frontend Are we in the frontend?
      * @return array Collection of MslsBlog-objects
      */
-    public function get( $frontend = false ) {
-        $objects = apply_filters( 'msls_blog_collection_get', $this->objects );
-        if ( (!$frontend || !$this->current_blog_output) && $this->has_current_blog() )
+    public function get_objects() {
+        return $this->objects;
+    }
+
+    /**
+     * Get an arry of blog-objects without the current blog
+     * 
+     * @return array Collection of MslsBlog-objects
+     */
+    public function get() {
+        $objects = $this->get_objects();
+        if ( $this->has_current_blog() )
             unset( $objects[$this->current_blog_id] );
-        usort( $objects, array( 'MslsBlog', $this->objects_order ) );
         return $objects;
+    }
+
+    /**
+     * Get an array with filtered blog-objects
+     *
+     * @param bool $filter
+     * @return array Collection of MslsBlog-objects
+     */
+    public function get_filtered( $filter = false ) {
+        if ( !$filter && $this->current_blog_output )  
+            return $this->get_objects();
+        return $this->get();
     }
 
     /**
@@ -166,14 +199,14 @@ class MslsBlog {
     private $obj;
 
     /**
-     * @var string Description eg. Deutsch
-     */
-    private $description;
-
-    /**
      * @var string Language-code eg. de_DE
      */
     private $language;
+
+    /**
+     * @var string Description eg. Deutsch
+     */
+    private $description;
 
     /**
      * Constructor
@@ -181,18 +214,12 @@ class MslsBlog {
      * @param StdClass $obj 
      * @param string description
      */
-    public function __construct( StdClass $obj, $description ) {
-        /*
-         * get_user_id_from_string returns objects with userblog_id-members 
-         * instead of a blog_id ... so we need just some correction ;)
-         *
-         */
-        if ( !isset( $obj->userblog_id ) ) {
-            $obj->userblog_id = $obj->blog_id;
+    public function __construct( $obj, $description ) {
+        if ( is_object( $obj ) ) {
+            $this->obj         = $obj;
+            $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
         }
-        $this->obj         = $obj;
         $this->description = (string) $description;
-        $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
     }
 
     /**
@@ -255,7 +282,6 @@ class MslsBlog {
         return( $a < $b ? (-1) : 1 );
     }
 
-    
     /**
      * Sort objects by language
      * 

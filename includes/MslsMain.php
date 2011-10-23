@@ -7,35 +7,26 @@
  */
 
 /**
- * MslsMain requests a instance of MslsOptions in his constructor
+ * MslsContentTypes implements IMslsRegistryInstance
+ */
+require_once dirname( __FILE__ ) . '/MslsRegistry.php';
+
+/**
+ * MslsMain requests a instance of MslsOptions
  */
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 
 /**
- * MslsMain requests a instance of MslsBlogCollection in his constructor
+ * MslsMain requests a instance of MslsBlogCollection
  */
 require_once dirname( __FILE__ ) . '/MslsBlogs.php';
 
 /**
- * Interface for hook classes
+ * Abstraction for the hook classes
  *
  * @package Msls
  */
-interface IMslsMain {
-
-    /**
-     * A class which implements IMslsMain must define such a init-method
-     */
-    public static function init();
-
-}
-
-/**
- * Generic hook class
- *
- * @package Msls
- */
-class MslsMain {
+abstract class MslsMain {
 
     /**
      * @var MslsOptions
@@ -48,6 +39,11 @@ class MslsMain {
     protected $blogs;
 
     /**
+     * Every child of MslsMain has to define a init-method
+     */
+    abstract public static function init();
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -58,45 +54,6 @@ class MslsMain {
         );
         $this->options = MslsOptions::instance();
         $this->blogs   = MslsBlogCollection::instance();
-    }
-
-    /**
-     * Get url
-     * 
-     * @param string $dir
-     * @return string
-     */
-    public function get_url( $dir ) {
-        $url = sprintf(
-            '%s/%s/%s',
-            WP_PLUGIN_URL, 
-            dirname( MSLS_PLUGIN_PATH ),
-            $dir
-        );
-        return esc_url( $url );
-    }
-
-    /**
-     * Get flag url
-     * 
-     * @param string $language
-     * @param bool $plugin
-     * @return string
-     */
-    public function get_flag_url( $language, $plugin = false ) {
-        if ( !$plugin && !empty( $this->options->image_url ) ) {
-            $url = $this->options->image_url;
-        }
-        else {
-            $url = $this->get_url( 'flags' );
-        }
-        if ( 5 == strlen( $language ) )
-            $language = strtolower( substr( $language, -2 ) );
-        return sprintf(
-            '%s/%s.png',
-            $url,
-            $language
-        );
     }
 
     /**
@@ -221,8 +178,210 @@ class MslsGetSet {
      *
      * @return array
      */
-    final protected function getArr() {
+    final protected function get_arr() {
         return $this->arr;
+    }
+
+}
+
+/**
+ * Supported content types
+ *
+ * @package Msls
+ */
+class MslsContentTypes {
+
+    /**
+     * @var string
+     */
+    protected $request;
+
+    /**
+     * @var array
+     */
+    protected $types = array();
+
+    /**
+     * Factory method
+     * 
+     * @return MslsContentTypes
+     */
+    public static function create() {
+        if ( isset( $_REQUEST['taxonomy'] ) )
+            return MslsTaxonomy::instance();
+        return MslsPostType::instance();
+    }
+
+    /**
+     * Getter
+     * 
+     * @return array
+     */
+    public function get() {
+        return $this->types;
+    }
+
+    /**
+     * Gets the request if it is an allowed content type
+     * 
+     * @return string
+     */
+    public function get_request() {
+        return(
+            in_array( $this->request, $this->types ) ?
+            $this->request :
+            ''
+        );
+    }
+
+    /**
+     * Get the requested taxonomy without a check
+     * 
+     * @return string
+     */
+    public function get_taxonomy() {
+        return $this->taxonomy;
+    }
+    
+    /**
+     * Check for post_type
+     * 
+     * @return bool
+     */
+    public function is_post_type() {
+        return false;
+    }
+
+    /**
+     * Check for taxonomy
+     * 
+     * @return bool
+     */
+    public function is_taxonomy() {
+        return false;
+    }
+
+}
+
+/**
+ * Supported post types
+ *
+ * @package Msls
+ */
+class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $args = array(
+            'public'   => true,
+            '_builtin' => false,
+        ); 
+        $this->types = array_merge(
+            array( 'post', 'page' ),
+            get_post_types( $args, 'names', 'and' )
+        );
+        if ( !empty( $_REQUEST['post_type'] ) ) {
+            $this->request = esc_attr( $_REQUEST['post_type'] );
+        }
+        else {
+            $this->request = get_post_type();
+            if ( !$this->request ) $this->request = 'post'; 
+        }
+    }
+
+    /**
+     * Check for post_type
+     * 
+     * @return bool
+     */
+    function is_post_type() {
+        return true;
+    }
+
+    /**
+     * Get or create a instance of MslsPostType
+     *
+     * @return MslsPostType
+     */
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
+    }
+
+}
+
+/**
+ * Supported taxonomies
+ *
+ * @package Msls
+ */
+class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
+
+    /**
+     * @var string
+     */
+    protected $post_type = '';
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $args = array(
+            'public'   => true,
+            '_builtin' => false,
+        ); 
+        $this->types   = array_merge(
+            array( 'category', 'post_tag' ),
+            get_taxonomies( $args, 'names', 'and' )
+        );
+        $this->request = esc_attr( $_REQUEST['taxonomy'] );
+        if ( empty( $this->request ) )
+            $this->request = get_query_var( 'taxonomy' );
+        if ( !empty( $_REQUEST['post_type'] ) ) {
+            $this->post_type = esc_attr( $_REQUEST['post_type'] );
+        }
+    }
+
+    /**
+     * Get the requested post_type of the taxonomy
+     * 
+     * @return string
+     */
+    public function get_post_type() {
+        return $this->post_type;
+    }
+
+    /**
+     * Check for taxonomy
+     * 
+     * @return bool
+     */
+    public function is_taxonomy() {
+        return true;
+    }
+
+    /**
+     * Get or create a instance of MslsTaxonomy
+     *
+     * @return MslsBlogCollection
+     */
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
     }
 
 }

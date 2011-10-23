@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsAdmin extends MslsMain and implements IMslsMain
+ * MslsAdmin extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,8 +21,8 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  *
  * @package Msls
  */
-class MslsAdmin extends MslsMain implements IMslsMain {
-
+class MslsAdmin extends MslsMain {
+    
     /**
      * Init
      */
@@ -43,8 +43,9 @@ class MslsAdmin extends MslsMain implements IMslsMain {
      */
     public function render() {
         printf(
-            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><p>%s</p><form action="options.php" method="post">',
+            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2>%s<form class="clear" action="options.php" method="post"><p>%s</p>',
             __( 'Multisite Language Switcher Options', 'msls' ),
+            $this->subsubsub(),
             __( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' )
         );
         settings_fields( 'msls' );
@@ -53,6 +54,33 @@ class MslsAdmin extends MslsMain implements IMslsMain {
             '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
             __( 'Update', 'msls' )
         );
+    }
+
+    /**
+     * Create a submenu which contains links to all blogs of the current user
+     */
+    protected function subsubsub() {
+        $arr = array();
+        foreach ( $this->blogs->get_objects() as $id => $blog ) {
+            $current = '';
+            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
+                $current = ' class="current"';
+            $arr[] = sprintf(
+                '<a href="%s"%s>%s / %s</a>',
+                get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
+                $current,
+                $blog->blogname,
+                $blog->get_description()
+            );
+        }
+        return(
+            !empty( $arr ) ?
+            sprintf(
+                '<ul class="subsubsub"><li>%s</li></ul>', 
+                implode( ' | </li><li>', $arr )
+            ) :
+            ''
+        ); 
     }
 
     /**
@@ -189,7 +217,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
      * for the output
      */ 
     public function content_priority() {
-        $temp     = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
+        $temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
         $arr      = array_combine( $temp, $temp );
         $selected = (
             !empty ($this->options->content_priority) ? 
