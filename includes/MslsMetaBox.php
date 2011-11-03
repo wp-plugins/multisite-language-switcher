@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsMetaBox extends MslsMain and implements IMslsMain
+ * MslsMetaBox extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * 
  * @package Msls
  */
-class MslsMetaBox extends MslsMain implements IMslsMain {
+class MslsMetaBox extends MslsMain {
 
     /**
      * Init
@@ -39,13 +39,8 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
      * Add
      */
     public function add() {
-        $args = array(
-            'public'   => true,
-            '_builtin' => false,
-        ); 
-        $post_types = get_post_types( $args, 'names', 'and' ); 
-        $post_types = array_merge( array( 'post', 'page' ), $post_types );
-        foreach ( $post_types as $pt ) {
+        $obj = MslsPostType::instance();
+        foreach ( $obj->get() as $pt ) {
             add_meta_box(
                 'msls',
                 __( 'Multisite Language Switcher', 'msls' ),
@@ -81,16 +76,16 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                 $my_query  = new WP_Query( $args );
                 $language  = $blog->get_language();
                 $options   = '';
-                $edit_link = MslsAdminIcon::create( $type );
+                $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_flag_url( $language ) );
+                $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 while ( $my_query->have_posts() ) {
                     $my_query->the_post();
                     $my_id    = get_the_ID();
                     $selected = '';
                     if ( $my_id == $mydata->$language ) {
                         $selected = 'selected="selected"';
-                        $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+                        $edit_link->set_href( $mydata->$language );
                     }
                     $options .= sprintf(
                         '<option value="%s"%s>%s</option>',
