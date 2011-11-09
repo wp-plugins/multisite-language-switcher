@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to:  3.3
-Stable tag: 0.9.3
+Stable tag: 0.9.4
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 
@@ -19,10 +19,11 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
-* Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
+* Brazillian Portuguese (pt_BR) - [Coolweb](http://www.coolweb.com.br/)
 * Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
 * French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 * Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
+* Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -39,6 +40,9 @@ If you have created your own language pack, or have an update of an existing one
 * optionally you can use a line like `<?php if ( function_exists( 'the_msls' )) the_msls(); ?>` directly in your theme-files
 
 == Changelog ==
+
+= 0.9.4 =
+language files for uk_UK added
 
 = 0.9.3 =
 language files for ru_RU added
