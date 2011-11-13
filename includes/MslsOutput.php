@@ -47,9 +47,11 @@ class MslsOutput extends MslsMain {
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
                 if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
-                    if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() )
-                        continue;
                     switch_to_blog( $blog->userblog_id );
+                    if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ) {
+                        restore_current_blog();
+                        continue;
+                    }
                     $url = $mydata->get_permalink( $language );
                     restore_current_blog();
                 }
@@ -161,7 +163,7 @@ class MslsWidget extends WP_Widget {
      * @param array $instance
      */
     public function form( $instance ) {
-        $title = esc_attr( $instance['title'] );
+        $title = ( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' );
         printf(
             '<p><label for="%s">%s:</label> <input class="widefat" id="%s" name="%s" type="text" value="%s" /></p>',
             $this->get_field_id( 'title' ),

@@ -69,11 +69,14 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             return new MslsPostOptions( $id );
         }
         else {
-            if ( is_home() || is_front_page() ) {
+            if ( is_home() || is_front_page() || is_search() || is_404() ) {
                 return new MslsOptions();
-            } 
+            }
             elseif ( is_category() || is_tag() || is_tax() ) {
                 return MslsTaxOptions::create();
+            }
+            elseif ( is_date() || is_author() ) {
+                return MslsQueryOptions::create();
             }
             global $post;
             return new MslsPostOptions( $post->ID );
@@ -477,5 +480,198 @@ class MslsCategoryOptions extends MslsTermOptions {
     protected $base_defined = 'category';
 
 }
+
+/**
+ * MslsQueryOptions
+ * 
+ * @package Msls
+ */
+class MslsQueryOptions extends MslsOptions {
+
+    /**
+     * Factory method
+     * 
+     * @return MslsQueryOptions
+     */
+    public static function create() {
+        if ( is_day() ) {
+            return new MslsDayOptions( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
+        } 
+        elseif ( is_month() ) {
+            return new MslsMonthOptions( get_query_var('year'), get_query_var('monthnum') );
+        }
+        elseif ( is_year() ) {
+            return new MslsYearOptions( get_query_var('year') );
+        }
+        elseif ( is_author() ) {
+            global $wp_query;
+            return new MslsAuthorOptions( $wp_query->get_queried_object_id() );
+        }
+        return null;
+    }
+
+    /**
+     * Get postlink
+     * 
+     * @param string $language
+     * @return string
+     */
+    public function get_postlink( $language ) {
+        return(
+            $this->has_value( $language ) ?
+            $this->get_current_link() :
+            ''
+        );
+    }
+
+}
+
+/**
+ * MslsDayOptions
+ * 
+ * @package Msls
+ */
+class MslsDayOptions extends MslsQueryOptions {
+
+    /**
+     * Check if the array has an non emty item
+     * 
+     * @param string $key
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        if ( !isset( $this->arr[$language] ) ) {
+            global $wpdb;
+            $sql= sprintf(
+                "SELECT count(ID) FROM {$wpdb->posts} WHERE DATE(post_date) = '%d-%02d-%02d' AND post_status = 'publish'",
+                (int) $this->args[0],
+                (int) $this->args[1],
+                (int) $this->args[2]
+            );
+            $this->arr[$language] = $wpdb->get_var( $sql );
+        }
+        return (bool) $this->arr[$language];
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return get_day_link( $this->args[0], $this->args[1], $this->args[2] );
+    }
+
+}
+
+/**
+ * MslsMonthOptions
+ * 
+ * @package Msls
+ */
+class MslsMonthOptions extends MslsQueryOptions {
+
+    /**
+     * Check if the array has an non emty item
+     * 
+     * @param string $key
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        if ( !isset( $this->arr[$language] ) ) {
+            global $wpdb;
+            $sql= sprintf(
+                "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
+                (int) $this->args[0],
+                (int) $this->args[1]
+            );
+            $this->arr[$language] = $wpdb->get_var( $sql );
+        }
+        return (bool) $this->arr[$language];
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return get_month_link( $this->args[0], $this->args[1] );
+    }
+
+}
+
+/**
+ * MslsYearOptions
+ * 
+ * @package Msls
+ */
+class MslsYearOptions extends MslsQueryOptions {
+
+    /**
+     * Check if the array has an non emty item
+     * 
+     * @param string $key
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        if ( !isset( $this->arr[$language] ) ) {
+            global $wpdb;
+            $sql= sprintf(
+                "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
+                (int) $this->args[0]
+            );
+            $this->arr[$language] = $wpdb->get_var( $sql );
+        }
+        return (bool) $this->arr[$language];
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return get_year_link( $this->args[0] );
+    }
+
+}
+
+/**
+ * MslsAuthorOptions
+ * 
+ * @package Msls
+ */
+class MslsAuthorOptions extends MslsQueryOptions {
+
+    /**
+     * Check if the array has an non emty item
+     * 
+     * @param string $key
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        if ( !isset( $this->arr[$language] ) ) {
+            global $wpdb;
+            $sql= sprintf(
+                "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
+                (int) $this->args[0]
+            );
+            $this->arr[$language] = $wpdb->get_var( $sql );
+        }
+        return (bool) $this->arr[$language];
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return get_author_posts_url( $this->args[0] );
+    }
+
+}
+
 
 ?>
