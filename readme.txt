@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to:  3.3
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 
@@ -24,6 +24,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 * Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
 * Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
+* Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -43,6 +44,8 @@ If you have created your own language pack, or have an update of an existing one
 
 = 0.9.5 =
 * new: Support for author- and date-archives
+* language files for hr_HR added
+* some modifications of the image path handling by [Tobias Bäthge](http://tobias.baethge.com/)
 
 = 0.9.4 =
 * language files for uk_UK added
