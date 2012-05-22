@@ -1,30 +1,10 @@
 <?php
 
 /**
- * Custom Column
- *
- * @package Msls
- */
-
-/**
- * MslsCustomColumn extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsCustomColumn::init() uses MslsOptions for a check
- */ 
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
-
-/**
- * MslsAdminIcon is used
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
- * MslsCustomColumn
+ * CustomColumn
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsCustomColumn extends MslsMain {
 
@@ -39,6 +19,7 @@ class MslsCustomColumn extends MslsMain {
                 $obj = new self();
                 add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
                 add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
+                add_action( 'trashed_post', array( $obj, 'delete' ) );
             }
         }
     }
@@ -57,7 +38,7 @@ class MslsCustomColumn extends MslsMain {
                 $language = $blog->get_language();
                 $icon     = new MslsAdminIcon( null );
                 $icon->set_language( $language );
-                $icon->set_src( $this->options->get_flag_url( $language, true ) );
+                $icon->set_src( $this->options->get_flag_url( $language ) );
                 $arr[] = $icon->get_img();
             }
             $columns['mslscol'] = implode( '&nbsp;', $arr );
@@ -78,17 +59,17 @@ class MslsCustomColumn extends MslsMain {
                 $mydata = MslsOptions::create( $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
-                    $language  = $blog->get_language();
-                    $edit_link = MslsAdminIcon::create();
-                    $edit_link->set_language( $language );
+                    $language = $blog->get_language();
+                    $icon     = MslsAdminIcon::create();
+                    $icon->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
-                        $edit_link->set_src( $this->options->get_url( 'images/link_edit.png' ) );
-                        $edit_link->set_href( $mydata->$language );
+                        $icon->set_href( $mydata->$language );
+                        $icon->set_src( $this->options->get_url( 'images/link_edit.png' ) );
                     }
                     else {
-                        $edit_link->set_src( $this->options->get_url( 'images/link_add.png' ) );
+                        $icon->set_src( $this->options->get_url( 'images/link_add.png' ) );
                     }
-                    echo $edit_link;
+                    echo $icon;
                     restore_current_blog();
                 }
             }
@@ -96,40 +77,3 @@ class MslsCustomColumn extends MslsMain {
     }
 
 }
-
-/**
- * MslsCustomColumnTaxonomy
- * 
- * @package Msls
- */
-class MslsCustomColumnTaxonomy extends MslsCustomColumn {
-
-    /**
-     * Init
-     */
-    static function init() {
-        $options = MslsOptions::instance();
-        if ( !$options->is_excluded() ) {
-            $taxonomy = MslsTaxonomy::instance()->get_request();
-            if ( !empty( $taxonomy ) ) {
-                $obj = new self();
-                add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
-                add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
-            }
-        }
-    }
-
-    /**
-     * Table body
-     * 
-     * @param string $deprecated
-     * @param string $column_name
-     * @param int $item_id
-     */
-    public function td( $deprecated, $column_name, $item_id ) {
-        parent::td( $column_name, $item_id );
-    }
-
-}
-
-?>

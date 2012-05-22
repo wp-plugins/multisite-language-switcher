@@ -4,6 +4,7 @@
  * Registry
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsRegistry {
 
@@ -38,11 +39,7 @@ class MslsRegistry {
      * @return mixed
      */
     private function get( $key ) {
-        return( 
-            isset( $this->arr[$key] ) ?
-            $this->arr[$key] :
-            null
-        );
+        return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
     }
 
     /**
@@ -61,9 +58,8 @@ class MslsRegistry {
      * @return mixed
      */
     public static function singleton() {
-        if ( !isset( self::$instance ) ) {
+        if ( !isset( self::$instance ) )
             self::$instance = new self();
-        }
         return self::$instance;
     }
 
@@ -88,21 +84,3 @@ class MslsRegistry {
     }
 
 }
-
-/**
- * Interface for classes which are to register in the MslsRegistry-instance
- *
- * get_called_class is just avalable in php >= 5.3 so I defined an interface here
- * 
- * @package Msls
- */
-interface IMslsRegistryInstance {
-
-    /**
-     * @return object
-     */
-    public static function instance();
-
-}
-
-?>

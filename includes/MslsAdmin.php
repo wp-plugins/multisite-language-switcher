@@ -1,25 +1,10 @@
 <?php
 
 /**
- * Admin
- *
- * @package Msls
- */
-
-/**
- * MslsAdmin extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsAdmin uses MslsLink::get_types_description()
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
  * Administration of the options
  *
  * @package Msls
+ * @subpackage Main
  */
 class MslsAdmin extends MslsMain {
     
@@ -27,6 +12,8 @@ class MslsAdmin extends MslsMain {
      * Init
      */
     public static function init() {
+        wp_register_style( 'msls-styles', plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ) );
+        wp_enqueue_style( 'msls-styles' );
         $obj = new self();
         add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
@@ -36,17 +23,14 @@ class MslsAdmin extends MslsMain {
             array( $obj, 'render' )
         );
         add_action( 'admin_init', array( $obj, 'register' ) );
+		add_action( 'admin_notices', array( $obj, 'warning' ) );
     }
 
-    /**
-     * Load textdomain
-     */
-    public static function init_i18n_support() {
-        load_plugin_textdomain(
-            'msls',
-            false,
-            dirname( MSLS_PLUGIN_PATH ) . '/languages/'
-        );
+    public function warning() {
+        if ( $this->options->is_empty() )
+            echo '<div id="msls-warning" class="updated fade"><p>' .
+                sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
+                '</p></div>';
     }
 
     /**
@@ -63,7 +47,7 @@ class MslsAdmin extends MslsMain {
         do_settings_sections( __CLASS__ );
         printf(
             '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
-            __( 'Update', 'msls' )
+            ( $this->options->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
         );
     }
 
@@ -71,8 +55,10 @@ class MslsAdmin extends MslsMain {
      * Create a submenu which contains links to all blogs of the current user
      */
     protected function subsubsub() {
-        $arr = array();
+        $arr            = array();
         foreach ( $this->blogs->get_objects() as $id => $blog ) {
+            if ( !$this->blogs->is_plugin_active( $blog->userblog_id ) )
+                continue;
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
                 $current = ' class="current"';
@@ -91,7 +77,7 @@ class MslsAdmin extends MslsMain {
                 implode( ' | </li><li>', $arr )
             ) :
             ''
-        ); 
+        );
     }
 
     /**
@@ -231,7 +217,7 @@ class MslsAdmin extends MslsMain {
         $temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
         $arr      = array_combine( $temp, $temp );
         $selected = (
-            !empty ($this->options->content_priority) ? 
+            !empty( $this->options->content_priority ) ? 
             $this->options->content_priority :
             10
         );
@@ -255,9 +241,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render_checkbox( $key ) {
         return sprintf(
-            '<input type="checkbox" id="%s" name="%s[%s]" value="1"%s/>',
-            $key,
-            'msls',
+            '<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1"%2$s/>',
             $key,
             ( $this->options->$key == 1 ? ' checked="checked"' : '' )
         );
@@ -273,9 +257,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render_input( $key, $size = '30' ) {
         return sprintf(
-            '<input id="%s" name="%s[%s]" value="%s" size="%s"/>',
-            $key,
-            'msls',
+            '<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"/>',
             $key,
             esc_attr( $this->options->$key ),
             $size
@@ -301,9 +283,7 @@ class MslsAdmin extends MslsMain {
             );
         }
         return sprintf(
-            '<select id="%s" name="%s[%s]">%s</select>',
-            $key,
-            'msls',
+            '<select id="%1$s" name="msls[%1$s]">%2$s</select>',
             $key,
             implode( '', $options )
         );
@@ -317,11 +297,10 @@ class MslsAdmin extends MslsMain {
      * @return array Validated input 
      */ 
     public function validate( array $input ) {
-        if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
+        if ( !is_numeric( $input['display'] ) )
+            $input['display'] = 0;
         $input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
         return $input;
     }
 
 }
-
-?>
