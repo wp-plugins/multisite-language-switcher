@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 0.9.6
+Stable tag: 0.9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ A simple, powerful and easy to use plugin that will help you to manage your cont
 
 A simple, powerful and easy to use plugin that will help you to manage the relations of posts, pages, custom post types, categories, tags and custom taxonomies in your multilingual multisite-installation.
 
-The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
+The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition, I would like to thank [Jürgen Mayer](http://designetage.com/) for making the banner of this plugin.
 
 = Translators =
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
@@ -48,6 +48,9 @@ Now you can
 Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki) for more information.
 
 == Changelog ==
+
+= 0.9.7 =
+* further bugfixes and enhancements
 
 = 0.9.6 =
 * a lot of bugfixes and enhancements
