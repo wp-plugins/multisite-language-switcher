@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to: 3.6
-Stable tag: 0.9.8.1
+Stable tag: 0.9.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,15 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Ukrainian (uk) - [Victor Melnichenko](http://worm.org.ua/)
 * Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
+* Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
+* Lithuanian (lt_LT) - Ovidijus Pukys
+* Catalan (ca_ES) - Joan López
+* Czech (cs_CZ) - Rastr
+* Hungarian (hu_HU) - RobiG
+* Georgian (ka_GE) - [Jas Saran](http://www.gwebpro.com/)
+* Greek (el) - [Christoforos Aivazidis](http://www.aivazidis.org/)
+* Serbian (sr_RS) - [Web Hosting Hub](http://www.webhostinghub.com/)
+* Turkish (tr) - Alican Cakil
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -48,6 +57,9 @@ Now you can
 Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki) for more information.
 
 == Changelog ==
+
+= 0.9.8.2 =
+* lots of language files added ... and we are close to 0.9.9
 
 = 0.9.8.1 =
 * Fix for "All inone event calendar"

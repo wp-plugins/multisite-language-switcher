@@ -2,139 +2,166 @@
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
+"Project-Id-Version: Multisite Language Switcher 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2012-05-22 16:32:53+00:00\n"
+"POT-Creation-Date: 2013-12-22 19:12+0100\n"
+"PO-Revision-Date: 2013-12-22 19:12+0100\n"
+"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
+"Language-Team: realloc's asylum <re@lloc.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
 
-#: MultisiteLanguageSwitcher.php:117
+#: ../MultisiteLanguageSwitcher.php:160
+#, php-format
 msgid "%s and %s"
 msgstr ""
 
-#: MultisiteLanguageSwitcher.php:126
+#: ../MultisiteLanguageSwitcher.php:171
+#, php-format
 msgid "This post is also available in %s."
 msgstr ""
 
-#: includes/MslsAdmin.php:19 includes/MslsAdmin.php:20
-#: includes/MslsMetaBox.php:32 includes/MslsPostTag.php:42
-#: includes/MslsWidget.php:17
+#: ../includes/MslsMetaBox.php:67 ../includes/MslsWidget.php:20
+#: ../includes/MslsAdmin.php:34 ../includes/MslsAdmin.php:35
+#: ../includes/MslsPostTag.php:94
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: includes/MslsAdmin.php:32
-msgid ""
-"Multisite Language Switcher is almost ready. You must <a href=\"%s"
-"\">complete the configuration process</a>."
-msgstr ""
-
-#: includes/MslsAdmin.php:42
-msgid "Multisite Language Switcher Options"
-msgstr ""
-
-#: includes/MslsAdmin.php:44
-msgid ""
-"To achieve maximum flexibility, you have to configure each blog separately."
-msgstr ""
-
-#: includes/MslsAdmin.php:50
-msgid "Configure"
-msgstr ""
-
-#: includes/MslsAdmin.php:50 includes/MslsMetaBox.php:113
+#: ../includes/MslsMetaBox.php:121 ../includes/MslsAdmin.php:72
 msgid "Update"
 msgstr ""
 
-#: includes/MslsAdmin.php:90
-msgid "Main Settings"
-msgstr ""
-
-#: includes/MslsAdmin.php:94
-msgid "Display"
-msgstr ""
-
-#: includes/MslsAdmin.php:95
-msgid "Sort output by description"
-msgstr ""
-
-#: includes/MslsAdmin.php:96
-msgid "Exclude this blog from output"
-msgstr ""
-
-#: includes/MslsAdmin.php:97
-msgid "Show only links with a translation"
-msgstr ""
-
-#: includes/MslsAdmin.php:98
-msgid "Display link to the current language"
-msgstr ""
-
-#: includes/MslsAdmin.php:99
-msgid "Description"
-msgstr ""
-
-#: includes/MslsAdmin.php:100
-msgid "Text/HTML before the list"
-msgstr ""
-
-#: includes/MslsAdmin.php:101
-msgid "Text/HTML after the list"
-msgstr ""
-
-#: includes/MslsAdmin.php:102
-msgid "Text/HTML before each item"
-msgstr ""
-
-#: includes/MslsAdmin.php:103
-msgid "Text/HTML after each item"
-msgstr ""
-
-#: includes/MslsAdmin.php:104
-msgid "Add hint for available translations"
-msgstr ""
-
-#: includes/MslsAdmin.php:105
-msgid "Hint priority"
-msgstr ""
-
-#: includes/MslsAdmin.php:106
-msgid "Custom URL for flag-images"
-msgstr ""
-
-#: includes/MslsAdminIcon.php:133
-msgid "Edit the translation in the %s-blog"
-msgstr ""
-
-#: includes/MslsAdminIcon.php:140
-msgid "Create a new translation in the %s-blog"
-msgstr ""
-
-#: includes/MslsLink.php:41
-msgid "Flag and description"
-msgstr ""
-
-#: includes/MslsLinkImageOnly.php:22
-msgid "Flag only"
-msgstr ""
-
-#: includes/MslsLinkTextImage.php:22
-msgid "Description and flag"
-msgstr ""
-
-#: includes/MslsLinkTextOnly.php:22
-msgid "Description only"
-msgstr ""
-
-#: includes/MslsMetaBox.php:120
+#: ../includes/MslsMetaBox.php:128
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
 
-#: includes/MslsWidget.php:61
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr ""
+
+#: ../includes/MslsWidget.php:68
 msgid "Title"
+msgstr ""
+
+#: ../includes/MslsLink.php:43
+msgid "Flag and description"
+msgstr ""
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:51
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+
+#: ../includes/MslsAdmin.php:64
+msgid "Multisite Language Switcher Options"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:66
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr ""
+
+#: ../includes/MslsAdmin.php:72
+msgid "Configure"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:110
+msgid "Main Settings"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:114
+msgid "Display"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:115
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:116
+msgid "Sort output by description"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:117
+msgid "Exclude this blog from output"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:118
+msgid "Show only links with a translation"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:119
+msgid "Display link to the current language"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:120
+msgid "Description"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:121
+msgid "Text/HTML before the list"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:122
+msgid "Text/HTML after the list"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:123
+msgid "Text/HTML before each item"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:124
+msgid "Text/HTML after each item"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:125
+msgid "Add hint for available translations"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:126
+msgid "Hint priority"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:127
+msgid "Custom URL for flag-images"
+msgstr ""
+
+#: ../includes/MslsAdminIcon.php:143
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr ""
+
+#: ../includes/MslsAdminIcon.php:150
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr ""
+
+#: ../includes/MslsPlugin.php:41
+msgid ""
+"This plugin needs the activation of the multisite-feature for working "
+"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
+"don't know the meaning."
+msgstr ""
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
 msgstr ""

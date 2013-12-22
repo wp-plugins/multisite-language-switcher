@@ -1,12 +1,14 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2013-09-26 10:00+0100\n"
-"PO-Revision-Date: 2013-09-26 10:01+0100\n"
+"POT-Creation-Date: 2013-09-25 10:40+0100\n"
+"PO-Revision-Date: 2013-09-25 10:40+0100\n"
 "Last-Translator: \n"
-"Language-Team: Andreas Breitschopp <a-breitschopp@ab-tools.com>\n"
-"Language: French (fr_FR)\n"
+"Language-Team: Rastr\n"
+"Language: Czech (cs_CZ)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,19 +21,16 @@ msgstr ""
 "X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-# @ msls
 #: ../MultisiteLanguageSwitcher.php:147
 #, php-format
 msgid "%s and %s"
-msgstr "%s et %s"
+msgstr "%s a %s"
 
-# @ msls
 #: ../MultisiteLanguageSwitcher.php:157
 #, php-format
 msgid "This post is also available in %s."
-msgstr "Ce article est également disponible en %s."
+msgstr "Tento příspěvek je dostupný také v %s."
 
-# @ msls
 #: ../includes/MslsAdmin.php:33 ../includes/MslsAdmin.php:34
 #: ../includes/MslsMetaBox.php:65 ../includes/MslsPostTag.php:93
 #: ../includes/MslsWidget.php:20
@@ -44,144 +43,122 @@ msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
 "\">complete the configuration process</a>."
 msgstr ""
+"Multisite Language Switcher je téměř připraven. Musíte <a href=\"%s"
+"\">dokončit konfigurační proces<a>."
 
-# @ msls
 #: ../includes/MslsAdmin.php:68
 msgid "Multisite Language Switcher Options"
-msgstr "Options de Multisite Language Switcher"
+msgstr "Nastavení Multisite Language Switcher"
 
-# @ msls
 #: ../includes/MslsAdmin.php:70
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
-"Pour un maximum de flexibilité, vous devez configurer chaque blog séparément."
+"Pro dosažení maximální flexibility, budete muset nakonfigurovat každý blog "
+"zvlášť."
 
 #: ../includes/MslsAdmin.php:76
 msgid "Configure"
-msgstr ""
+msgstr "Konfigurovat"
 
-# @ msls
 #: ../includes/MslsAdmin.php:76 ../includes/MslsMetaBox.php:119
 msgid "Update"
-msgstr "Mise à jour"
+msgstr "Aktualizace"
 
-# @ msls
 #: ../includes/MslsAdmin.php:114
 msgid "Main Settings"
-msgstr "Paramètres principaux"
+msgstr "Hlavní nastavení"
 
-# @ msls
 #: ../includes/MslsAdmin.php:118
 msgid "Display"
-msgstr "Affichage"
+msgstr "Zobrazení"
 
 #: ../includes/MslsAdmin.php:119
 msgid "Activate experimental autocomplete inputs"
 msgstr ""
 
-# @ msls
 #: ../includes/MslsAdmin.php:120
 msgid "Sort output by description"
-msgstr "Trier les résultats par description"
+msgstr "Seřadit výstup podle popisu"
 
-# @ msls
 #: ../includes/MslsAdmin.php:121
 msgid "Exclude this blog from output"
-msgstr "Exclure ce blog"
+msgstr "Vyloučit tento blog z výstupu"
 
-# @ msls
 #: ../includes/MslsAdmin.php:122
 msgid "Show only links with a translation"
-msgstr "Afficher uniquement les liens ayant une traduction"
+msgstr "Zobrazit pouze odkazy s překladem"
 
-# @ msls
 #: ../includes/MslsAdmin.php:123
 msgid "Display link to the current language"
-msgstr "Afficher un lien vers la langue en cours"
+msgstr "Zobrazit odkaz v aktuálním jazyce"
 
-# @ msls
 #: ../includes/MslsAdmin.php:124
 msgid "Description"
-msgstr "Description"
+msgstr "Popis"
 
-# @ msls
 #: ../includes/MslsAdmin.php:125
 msgid "Text/HTML before the list"
-msgstr "Texte/HTML avant la liste"
+msgstr "Text/HTML před seznamem"
 
-# @ msls
 #: ../includes/MslsAdmin.php:126
 msgid "Text/HTML after the list"
-msgstr "Texte/HTML après la liste"
+msgstr "Text/HTML za seznamem"
 
-# @ msls
 #: ../includes/MslsAdmin.php:127
 msgid "Text/HTML before each item"
-msgstr "Texte/HTML avant chaque article"
+msgstr "Text/HTML před každou položkou"
 
-# @ msls
 #: ../includes/MslsAdmin.php:128
 msgid "Text/HTML after each item"
-msgstr "Texte/HTML après chaque article"
+msgstr "Text/HTML za každou položkou"
 
-# @ msls
 #: ../includes/MslsAdmin.php:129
 msgid "Add hint for available translations"
-msgstr "Ajoutez une indication pour les traductions disponibles"
+msgstr "Přidat nápovědu pro dostupné překlady"
 
-# @ msls
 #: ../includes/MslsAdmin.php:130
 msgid "Hint priority"
-msgstr "Priorité de l'indication"
+msgstr "Priorita nápovědy"
 
-# @ msls
 #: ../includes/MslsAdmin.php:131
 msgid "Custom URL for flag-images"
-msgstr "URL personnalisée pour les images de drapeaux"
+msgstr "Vlastní URL pro obrázky vlajky"
 
-# @ msls
 #: ../includes/MslsAdminIcon.php:143
 #, php-format
 msgid "Edit the translation in the %s-blog"
-msgstr "Modifier la traduction dans le %s-blog"
+msgstr "Upravit překlad v blogu %s"
 
-# @ msls
 #: ../includes/MslsAdminIcon.php:150
 #, php-format
 msgid "Create a new translation in the %s-blog"
-msgstr "Créer une nouvelle traduction dans le %s-blog"
+msgstr "Vytvořit nový překlad v blogu %s"
 
-# @ msls
 #: ../includes/MslsLink.php:40
 msgid "Flag and description"
-msgstr "Drapeau et description"
+msgstr "Vlajka a popis"
 
-# @ msls
 #: ../includes/MslsLinkImageOnly.php:25
 msgid "Flag only"
-msgstr "Drapeau seul"
+msgstr "Jen vlajka"
 
-# @ msls
 #: ../includes/MslsLinkTextImage.php:25
 msgid "Description and flag"
-msgstr "Description et drapeau"
+msgstr "Popis a vlajka"
 
-# @ msls
 #: ../includes/MslsLinkTextOnly.php:25
 msgid "Description only"
-msgstr "Description seule"
+msgstr "Jen popis"
 
-# @ msls
 #: ../includes/MslsMetaBox.php:126
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
-"Vous devez définir au moins un autre blog dans une langue différente afin de "
-"pouvoir utiliser ce plugin !"
+"Měli byste definovat minimálně další jeden blog v jiném jazyce, abyste nějak "
+"využili tento plugin!"
 
-# @ msls
 #: ../includes/MslsWidget.php:60
 msgid "Title"
-msgstr "Titre"
+msgstr "Název"
