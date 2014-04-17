@@ -1,98 +1,157 @@
 <?php
+/**
+ * MslsOutput
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Output
- *
+ * Output in the frontend
  * @package Msls
- * @subpackage Output
  */
 class MslsOutput extends MslsMain {
 
-    /**
-     * Init
-     * 
-     * Just a placeholder
-     */
-    public static function init() { }
+	protected $tags;
 
-    /**
-     * Get the output as array
-     * 
-     * @param string $display
-     * @param bool frontend
-     * @param bool $exists
-     * @return array
-     */
-    public function get( $display, $filter = false, $exists = false ) {
-        $arr   = array();
-        $blogs = $this->blogs->get_filtered( $filter );
-        if ( $blogs ) {
-            $mydata = MslsOptions::create();
-            $link   = MslsLink::create( $display );
-            foreach ( $blogs as $blog ) {
-                $language = $blog->get_language();
-                $current  = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
-                if ( $current ) {
-                    $url = $mydata->get_current_link();
-                }
-                else {
-                    switch_to_blog( $blog->userblog_id );
-                    if ( 'MslsOptions' != get_class( $mydata ) && $exists && !$mydata->has_value( $language ) ) {
-                        restore_current_blog();
-                        continue;
-                    }
-                    $url = $mydata->get_permalink( $language );
-                    restore_current_blog();
-                }
-                $link->txt = $blog->get_description();
-                $link->src = $this->options->get_flag_url( $language );
-                $link->alt = $language;
-                if ( has_filter( 'msls_output_get' ) ) {
-                    $arr[] = apply_filters(
-                        'msls_output_get',
-                        $url,
-                        $link,
-                        $current
-                    );
-                }
-                else {
-                    $arr[] = sprintf(
-                        '<a href="%s" title="%s"%s>%s</a>',
-                        $url,
-                        $link->txt,
-                        ( $current ? ' class="current_language"' : '' ),
-                        $link
-                    );
-                }
-            }
-        }
-        return $arr;
-    }
+	/**
+	 * Init
+	 * @return MslsOutput
+	 */
+	static function init() {
+		return new self();
+	}
 
-    /**
-     * Returns a string when the object will be treated like a string
-     * 
-     * @see get_the_msls()
-     * @return string
-     */ 
-    public function __toString() {
-        $arr = $this->get(
-            (int) $this->options->display,
-            false,
-            $this->options->has_value( 'only_with_translation' )
-        );
-        $str = '';
-        if ( !empty( $arr ) ) {
-            $str = $this->options->before_output .
-                $this->options->before_item .
-                implode(
-                    $this->options->after_item . $this->options->before_item,
-                    $arr
-                ) .
-                $this->options->after_item .
-                $this->options->after_output;
-        }
-        return $str;
-    }
+	/**
+	 * Creates and gets the output as an array
+	 * @param string $display
+	 * @param bool frontend
+	 * @param bool $exists
+	 * @uses MslsOptions
+	 * @uses MslsLink
+	 * @return array
+	 */
+	public function get( $display, $filter = false, $exists = false ) {
+		$arr = array();
+
+		$blogs = MslsBlogCollection::instance()->get_filtered( $filter );
+		if ( $blogs ) {
+			$mydata = MslsOptions::create();
+			$link   = MslsLink::create( $display );
+
+			foreach ( $blogs as $blog ) {
+				$language = $blog->get_language();
+
+				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+				if ( $current ) {
+					$url = $mydata->get_current_link();
+					$link->txt = $blog->get_description();
+				}
+				else {
+					switch_to_blog( $blog->userblog_id );
+					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
+						/**
+						 * We set $language to false so we can first restore the current blog
+						 * and continue with the next blog right after this important step.
+						 */
+						$language = false;
+					}
+					else {
+						$url       = $mydata->get_permalink( $language );
+						$link->txt = $blog->get_description();
+					}
+					restore_current_blog();
+				}
+
+				/**
+				 * No language no party...
+				 */
+				if ( ! $language )
+					continue;
+
+				$link->src = MslsOptions::instance()->get_flag_url( $language );
+				$link->alt = $language;
+
+				if ( has_filter( 'msls_output_get' ) ) {
+					/**
+					 * Returns HTML-link for an item of the output-arr
+					 * @since 0.9.8
+					 * @param string $url
+					 * @param MslsLink $link
+					 * @param bool current
+					 */
+					$arr[] = (string) apply_filters(
+						'msls_output_get',
+						$url,
+						$link,
+						$current
+					);
+				}
+				else {
+					$arr[] = sprintf(
+						'<a href="%s" title="%s"%s>%s</a>',
+						$url,
+						$link->txt,
+						( $current ? ' class="current_language"' : '' ),
+						$link
+					);
+				}
+			}
+		}
+
+		return $arr;
+	}
+
+	/**
+	 * Returns a string when the object will be treated like a string
+	 * @return string
+	 */
+	public function __toString() {
+		$options = MslsOptions::instance();
+		$arr     = $this->get(
+			(int) $options->display,
+			false,
+			isset( $options->only_with_translation )
+		);
+
+		if ( empty( $arr ) )
+			return '';
+
+		$tags = $this->get_tags();
+		return $tags['before_output'] .
+			$tags['before_item'] .
+			implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+			$tags['after_item'] .
+			$tags['after_output'];
+	}
+
+	/**
+	 * Gets tags for the output
+	 *
+	 * @return array
+	 */
+	public function get_tags() {
+		if ( empty( $this->tags ) ) {
+			$options = MslsOptions::instance();
+
+			$this->tags = array(
+				'before_item'   => $options->before_item,
+				'after_item'    => $options->after_item,
+				'before_output' => $options->before_output,
+				'after_output'  => $options->after_output,
+			);
+		}
+		return $this->tags;
+	}
+
+	/**
+	 * Sets tags for the output
+	 *
+	 * @param array $arr
+	 * @return MslsOutput
+	 */
+	public function set_tags( array $arr = array() ) {
+		$this->tags = wp_parse_args( $this->get_tags(), $arr );
+		return $this;
+	}
 
 }

@@ -1,25 +1,28 @@
 <?php
+/**
+ * MslsLinkTextImage
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * LinkTextImage
- * 
+ * Link type: Text and image
  * @package Msls
- * @subpackage Link
  */
 class MslsLinkTextImage extends MslsLink {
 
-    /**
-     * @var string
-     */
-    protected $format_string = '{txt} <img src="{src}" alt="{alt}"/>';
+	/**
+	 * Output format
+	 * @var string
+	 */
+	protected $format_string = '{txt} <img src="{src}" alt="{alt}"/>';
 
-    /**
-     * Get the description
-     * 
-     * @return string
-     */
-    static function get_description() {
-        return __( 'Description and flag', 'msls' );
-    }
+	/**
+	 * Get the description
+	 * @return string
+	 */
+	static function get_description() {
+		return __( 'Description and flag', 'msls' );
+	}
 
 }
