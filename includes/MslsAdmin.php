@@ -7,7 +7,6 @@
 
 /**
  * Administration of the options
- *
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
@@ -82,6 +81,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Create a submenu which contains links to all blogs of the current user
+	 * @return string
 	 */
 	protected function subsubsub() {
 		$blogs = MslsBlogCollection::instance();
@@ -131,8 +131,8 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'msls' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
 		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
 
-		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'section' );
-		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'section' );
+		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
+		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
 
 		add_settings_section(
 			'advanced_section',
@@ -310,7 +310,7 @@ class MslsAdmin extends MslsMain {
 	 * Render form-element (checkbox)
 	 *
 	 * @param string $key Name and ID of the form-element
-	 * @return string HTML-Code of the checkbox
+	 * @return MslsAdmin
 	 */
 	public function render_checkbox( $key ) {
 		printf(
@@ -326,7 +326,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param string $size Size-attribute of the input-field
-	 * @return string HTML-code of the input-field
+	 * @return MslsAdmin
 	 */
 	public function render_input( $key, $size = '30' ) {
 		printf(
@@ -344,7 +344,7 @@ class MslsAdmin extends MslsMain {
 	 * @param string $key Name and ID of the form-element
 	 * @param array $arr Options as associative array
 	 * @param string $selected Values which should be selected
-	 * @return string HTML-code of the select-input
+	 * @return MslsAdmin
 	 */
 	public function render_select( $key, array $arr, $selected ) {
 		$options = array();
