@@ -33,7 +33,7 @@ thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's
 banner. 
 
 = Translators =
-* German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
+* German (de_DE) - [Dennis Ploetner](http://lloc.de/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
 * Brazillian Portuguese (pt_BR) - [Coolweb](http://www.coolweb.com.br/)
