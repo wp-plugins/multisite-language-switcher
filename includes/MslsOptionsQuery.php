@@ -7,17 +7,17 @@
 
 /**
  * OptionsQuery
- * 
+ *
  * @package Msls
  */
 class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Factory method
-	 * 
+	 * @param int $id This parameter is unused here
 	 * @return MslsQueryOptions
 	 */
-	static function create() {
+	public static function create( $id = 0 ) {
 		if ( is_day() ) {
 			return new MslsOptionsQueryDay(
 				get_query_var( 'year' ),
@@ -51,16 +51,18 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Get postlink
-	 * 
+	 *
 	 * @param string $language
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		return(
-			$this->has_value( $language ) ?
-			$this->get_current_link() :
-			''
-		);
+		if ( $this->has_value( $language ) ) {
+			$link = $this->get_current_link();
+			if ( ! empty( $link ) ) {
+				return $this->check_url( $link );
+			}
+		}
+		return '';
 	}
 
 }

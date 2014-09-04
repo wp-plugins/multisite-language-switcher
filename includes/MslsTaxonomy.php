@@ -29,23 +29,15 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 				'and'
 			)
 		);
-		if ( ! empty( $_REQUEST['taxonomy'] ) ) {
-			$this->request = esc_attr( $_REQUEST['taxonomy'] );
+
+		$_request = MslsPlugin::get_superglobals( array( 'taxonomy', 'post_type' ) );
+		if ( '' != $_request['taxonomy'] ) {
+			$this->request   = esc_attr( $_request['taxonomy'] );
+			$this->post_type = esc_attr( $_request['post_type'] );
 		}
 		else {
 			$this->request = get_query_var( 'taxonomy' );
 		}
-		if ( ! empty( $_REQUEST['post_type'] ) ) {
-			$this->post_type = esc_attr( $_REQUEST['post_type'] );
-		}
-	}
-
-	/**
-	 * Get the requested post_type of the taxonomy
-	 * @return string
-	 */
-	public function get_post_type() {
-		return $this->post_type;
 	}
 
 	/**
@@ -57,16 +49,40 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get or create a instance of MslsTaxonomy
-	 * @return MslsBlogCollection
+	 * Check if the current user can manage this content type
+	 *
+	 * Returns name of the content type if the user has access or an empty
+	 * string if the user can not access
+	 * @return string
 	 */
-	static function instance() {
-		$registry = MslsRegistry::singleton();
-		$cls      = __CLASS__;
-		$obj      = $registry->get_object( $cls );
-		if ( is_null( $obj ) ) {
-			$obj = new $cls;
-			$registry->set_object( $cls, $obj );
+	public function acl_request() {
+		if ( ! MslsOptions::instance()->is_excluded() ) {
+			$request = $this->get_request();
+			$tax = get_taxonomy( $request );
+			if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
+				return $request;
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Get the requested post_type of the taxonomy
+	 * @return string
+	 */
+	public function get_post_type() {
+		return $this->post_type;
+	}
+
+	/**
+	 * Get or create an instance of MslsTaxonomy
+	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
+	 * @return MslsTaxonomy
+	 */
+	public static function instance() {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsTaxonomy' ) ) ) {
+			$obj = new self();
+			MslsRegistry::set_object( 'MslsTaxonomy', $obj );
 		}
 		return $obj;
 	}

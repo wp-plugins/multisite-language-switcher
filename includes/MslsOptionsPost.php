@@ -1,6 +1,6 @@
 <?php
 /**
- * MslsOptions
+ * MslsOptionsPost
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -43,7 +43,7 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_permalink( (int) $this->args[0] );
+		return (string) get_permalink( $this->get_arg( 0, '' ) );
 	}
 
 }

@@ -8,6 +8,16 @@
 /**
  * General options class
  * @package Msls
+ * @property bool $activate_autocomplete
+ * @property int $display
+ * @property int $reference_user
+ * @property int $content_priority
+ * @property string $admin_language
+ * @property string $description
+ * @property string $before_item
+ * @property string $after_item
+ * @property string $before_output
+ * @property string $after_output
  */
 class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
@@ -48,29 +58,64 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	protected $base;
 
 	/**
+	 * Available languages
+	 * @var array
+	 */
+	private $available_languages;
+
+	/**
 	 * Factory method
 	 * @param int $id
 	 * @return MslsOptions
 	 */
-	static function create( $id = 0 ) {
+	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$id  = (int) $id;
-			$obj = MslsContentTypes::create();
-			if ( $obj->is_taxonomy() )
+
+			if ( MslsContentTypes::create()->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
+			}
+
 			return new MslsOptionsPost( $id );
 		}
-		else {
-			if ( is_front_page() || is_search() || is_404() )
-				return new MslsOptions();
-			elseif ( is_category() || is_tag() || is_tax() )
-				return MslsOptionsTax::create();
-			elseif ( is_date() || is_author() || is_post_type_archive() )
-				return MslsOptionsQuery::create();
-			global $wp_query;
-			return new MslsOptionsPost( $wp_query->get_queried_object_id() );
+
+		if ( self::is_main_page() ) {
+			return new MslsOptions();
 		}
-		return null;
+		elseif ( self::is_tax_page() ) {
+			return MslsOptionsTax::create();
+		}
+		elseif ( self::is_query_page() ) {
+			return MslsOptionsQuery::create();
+		}
+
+		global $wp_query;
+
+		return new MslsOptionsPost( $wp_query->get_queried_object_id() );
+	}
+
+	/**
+	 * Checks if the current page is a home, front or 404 page
+	 * @return boolean
+	 */
+	public static function is_main_page() {
+		return( is_front_page() || is_search() || is_404() );
+	}
+
+	/**
+	 * Checks if the current page is a category, tag or any other tax archive
+	 * @return boolean
+	 */
+	public static function is_tax_page() {
+		return( is_category() || is_tag() || is_tax() );
+	}
+
+	/**
+	 * Checks if the current page is a date, author any other post_type archive
+	 * @return boolean
+	 */
+	public static function is_query_page() {
+		return( is_date() || is_author() || is_post_type_archive() );
 	}
 
 	/**
@@ -80,12 +125,26 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		$this->args   = func_get_args();
 		$this->name   = 'msls' . $this->sep . implode( $this->sep, $this->args );
 		$this->exists = $this->set( get_option( $this->name ) );
-		$this->base   = $this->get_base();
+	}
+
+	/**
+	 * Gets an element of arg by index
+	 * The returning value is casted to the type of $retval or will be the
+	 * value of $retval if nothing is set at this index.
+	 * @param int $idx
+	 * @param mixed $val
+	 * @return mixed
+	 */
+	public function get_arg( $idx, $val = null ) {
+		$arg = ( isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val );
+		settype( $arg, gettype( $val ) );
+		return $arg;
 	}
 
 	/**
 	 * Save
 	 * @param mixed $arr
+	 * @codeCoverageIgnore
 	 */
 	public function save( $arr ) {
 		$this->delete();
@@ -99,11 +158,13 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Delete
+	 * @codeCoverageIgnore
 	 */
 	public function delete() {
 		$this->reset();
-		if ( $this->exists )
+		if ( $this->exists ) {
 			delete_option( $this->name );
+		}
 	}
 
 	/**
@@ -113,19 +174,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function set( $arr ) {
 		if ( is_array( $arr ) ) {
-			foreach ( $arr as $key => $value )
+			foreach ( $arr as $key => $value ) {
 				$this->__set( $key, $value );
+			}
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Get base
-	 * @return null
-	 */
-	protected function get_base() {
-		return null;
 	}
 
 	/**
@@ -134,20 +188,17 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_permalink( $language ) {
-		$postlink = $this->get_postlink( $language );
-		if ( has_filter( 'msls_options_get_permalink' ) ) {
-			/**
-			 * Filters the url by language
-			 * @since 0.9.8
-			 * @param string $postlink
-			 * @param string $language
-			 */
-			$postlink = apply_filters(
-				'msls_options_get_permalink',
-				$postlink,
-				$language
-			);
-		}
+		/**
+		 * Filters the url by language
+		 * @since 0.9.8
+		 * @param string $postlink
+		 * @param string $language
+		 */
+		$postlink = (string) apply_filters(
+			'msls_options_get_permalink',
+			$this->get_postlink( $language ),
+			$language
+		);
 		return( '' != $postlink ? $postlink : home_url() );
 	}
 
@@ -189,7 +240,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_order() {
-		return ( 
+		return (
 			isset( $this->sort_by_description ) ?
 			'description' :
 			'language'
@@ -211,20 +262,20 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_flag_url( $language ) {
-		if ( has_filter( 'msls_options_get_flag_url' ) ) {
-			/**
-			 * Override the path to the flag-icons
-			 * @since 0.9.9
-			 * @param MslsOptions $this
-			 */
-			$url = (string) apply_filters( 'msls_options_get_flag_url', $this );
-		}
-		elseif ( ! is_admin() && isset( $this->image_url ) ) {
+		if ( ! is_admin() && isset( $this->image_url ) ) {
 			$url = $this->__get( 'image_url' );
 		}
 		else {
 			$url = $this->get_url( 'flags' );
 		}
+
+		/**
+		 * Override the path to the flag-icons
+		 * @since 0.9.9
+		 * @param MslsOptions $this
+		 */
+		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
+
 		if ( 5 == strlen( $language ) ) {
 			$language = strtolower( substr( $language, -2 ) );
 		}
@@ -232,16 +283,71 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Instance
+	 * Get all available languages
+	 * @uses get_available_languages
+	 * @uses format_code_lang
+	 * @return array
+	 */
+	public function get_available_languages() {
+		if ( empty( $this->available_languages ) ) {
+			$this->available_languages = array(
+				'en_US' => format_code_lang( 'en_US' ),
+			);
+			foreach ( get_available_languages() as $code ) {
+				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
+			}
+
+			/**
+			 * Returns custom filtered available languages
+			 * @since 1.0
+			 * @param array $available_languages
+			 */
+			$this->available_languages = (array) apply_filters(
+				'msls_options_get_available_languages',
+				$this->available_languages
+			);
+		}
+		return $this->available_languages;
+	}
+
+	/**
+	 * Check and correct URL
+	 * @param string $url
+	 * @return string
+	 */
+	public function check_url( $url ) {
+		if ( empty( $url ) || ! is_string( $url ) ) {
+			return '';
+		}
+
+		/**
+		 * The 'blog'-slug-problem :/
+		 */
+		if ( ! is_subdomain_install() ) {
+			$count = 1;
+			$url   = str_replace( home_url(), '', $url, $count );
+
+			if ( is_main_site() ) {
+				$parts = explode( '/%', get_option( 'permalink_structure' ), 2 );
+				$url   = home_url( $parts[0] . $url );
+			}
+			else {
+				$url = home_url( preg_replace( '|^/?blog|', '', $url ) );
+			}
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get or create an instance of MslsOptions
+	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
 	 * @return MslsOptions
 	 */
-	static function instance() {
-		$registry = MslsRegistry::singleton();
-		$cls      = __CLASS__;
-		$obj      = $registry->get_object( $cls );
-		if ( is_null( $obj ) ) {
-			$obj = new $cls;
-			$registry->set_object( $cls, $obj );
+	public static function instance() {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsOptions' ) ) ) {
+			$obj = new self();
+			MslsRegistry::set_object( 'MslsOptions', $obj );
 		}
 		return $obj;
 	}

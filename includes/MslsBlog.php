@@ -7,6 +7,7 @@
 
 /**
  * Internal representation of a blog
+ * @property int $userblog_id 
  * @package Msls
  */
 class MslsBlog {
@@ -32,7 +33,7 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 * @param StdClass $obj 
-	 * @param string description
+	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {
@@ -72,15 +73,11 @@ class MslsBlog {
 	/**
 	 * Get the language stored in this object
 	 * 
-	 * This method returns the string 'us' if there is an empty value in language.  
+	 * This method returns the string 'us' if there is an empty value in language. 
 	 * @return string
 	 */
 	public function get_language() {
-		return(
-			empty( $this->language ) ?
-			'us' :
-			$this->language
-		);
+		return( empty( $this->language ) ? 'us' : $this->language );
 	}
 
 	/**
@@ -91,42 +88,39 @@ class MslsBlog {
 	 */
 	public function get_alpha2() {
 		$alpha2 = substr( $this->get_language(), 0, 2 );
-		return(
-			'us' == $alpha2 ?
-			'en' :
-			$alpha2
-		);
+		return( 'us' == $alpha2 ? 'en' : $alpha2 );
 	}
 
 	/**
 	 * Sort objects helper
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param string $a
+	 * @param string $b
 	 * return int
 	 */
-	static function _cmp( $a, $b ) {
-		if ( $a == $b )
+	public static function _cmp( $a, $b ) {
+		if ( $a == $b ) {
 			return 0;
+		}
 		return( $a < $b ? (-1) : 1 );
 	}
 
 	/**
 	 * Sort objects by language
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param MslsBlog $a
+	 * @param MslsBlog $b
 	 * return int
 	 */
-	static function language( $a, $b ) {
+	public static function language( MslsBlog $a, MslsBlog $b ) {
 		return( self::_cmp( $a->get_language(), $b->get_language() ) );
 	}
 
 	/**
 	 * Sort objects by description
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param MslsBlog $a
+	 * @param MslsBlog $b
 	 * return int
 	 */
-	static function description( $a, $b ) {
+	public static function description( MslsBlog $a, MslsBlog $b ) {
 		return( self::_cmp( $a->get_description(), $b->get_description() ) );
 	}
 

@@ -2,6 +2,7 @@
 /**
  * MslsCustomFilter
  * @author Maciej Czerpiński <contact@speccode.com>
+ * @contributor Dennis Ploetner <re@lloc.de>
  * @since 0.9.9
  */
 
@@ -15,7 +16,7 @@ class MslsCustomFilter extends MslsMain {
 	 * Init
 	 * @return MslsCustomFilter
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {
@@ -30,13 +31,18 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Echo's select tag with list of blogs
+	 * @uses selected
 	 */
 	public function add_filter() {
-		$id    = ( isset( $_GET['msls_filter'] ) ? (int) $_GET['msls_filter'] : '' );
+		$id = (
+			filter_has_var( INPUT_GET, 'msls_filter' ) ?
+			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
+			''
+		);
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
-			echo '<option value="">' . __( 'Show all blogs', 'msls' ) . '</option>';
+			echo '<option value="">' . esc_html( __( 'Show all blogs', 'msls' ) ) . '</option>';
 			foreach ( $blogs as $blog ) {
 				printf(
 					'<option value="%d" %s>%s</option>',
@@ -51,27 +57,29 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Execute filter. Exclude translated posts from WP_Query
-	 * @uses $wpdb
+	 * @param WP_Query $query
 	 * @return false or WP_Query object
 	 */
-	public function execute_filter( $query ) {
+	public function execute_filter( WP_Query $query ) {
 		$blogs = MslsBlogCollection::instance()->get();
 
-		//some "validation"
-		if ( ! isset( $_GET['msls_filter'] ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;
 		}
-		$id = (int) $_GET['msls_filter'];
-		if ( isset( $blogs[$id] ) ) {
-			global $wpdb;
 
-			//load post we need to exclude (already have translation) from search query
-			$sql   = $wpdb->prepare(
-				"SELECT option_id, option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND option_value LIKE %s",
-				'msls_%',
-				'%"' . $blogs[$id]->get_language() . '"%'
+		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
+
+		if ( isset( $blogs[ $id ] ) ) {
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+
+			// load post we need to exclude (already have translation) from search query
+			$posts = $cache->get_results(
+				$cache->prepare(
+					"SELECT option_id, option_name FROM {$cache->options} WHERE option_name LIKE %s AND option_value LIKE %s",
+					'msls_%',
+					'%"' . $blogs[ $id ]->get_language() . '"%'
+				)
 			);
-			$posts = $wpdb->get_results( $sql );
 
 			$exclude_ids = array();
 			foreach ( $posts as $post ) {

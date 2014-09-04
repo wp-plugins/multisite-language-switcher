@@ -51,11 +51,13 @@ class MslsAdminIcon {
 	 * Factory method
 	 * @return MslsAdminIcon
 	 */
-	static function create() {
+	public static function create() {
 		$obj  = MslsContentTypes::create();
 		$type = $obj->get_request();
-		if ( $obj->is_taxonomy() )
+
+		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
+		}
 		return new MslsAdminIcon( $type );
 	}
 
@@ -70,9 +72,10 @@ class MslsAdminIcon {
 
 	/**
 	 * Set the path by type
+	 * @uses add_query_arg()
 	 * @return MslsAdminIcon
 	 */
-	protected function set_path() {
+	public function set_path() {
 		if ( 'post' != $this->type ) {
 			$this->path = add_query_arg(
 				array( 'post_type' => $this->type ),
@@ -104,11 +107,12 @@ class MslsAdminIcon {
 
 	/**
 	 * Set href
+	 * @uses get_edit_post_link()
 	 * @param int $id
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
-		$this->href = get_edit_post_link( (int) $id );
+		$this->href = get_edit_post_link( $id );
 		return $this;
 	}
 
@@ -136,7 +140,7 @@ class MslsAdminIcon {
 	 * Get link as html-tag
 	 * @return string
 	 */
-	protected function get_a() {
+	public function get_a() {
 		if ( ! empty( $this->href ) ) {
 			$href  = $this->href;
 			$title = sprintf(
@@ -161,19 +165,19 @@ class MslsAdminIcon {
 
 	/**
 	 * Creates new admin link
+	 * @uses get_admin_url()
 	 * @return string
 	 */
-	protected function get_edit_new() {
-		$path = $this->path;
-		if ( has_filter( 'msls_admin_icon_get_edit_new' ) ) {
-			/**
-			 * Returns custom path to the admin icon
-			 * @since 0.9.9
-			 * @param string $path
-			 */
-			$path = (string) apply_filters( 'msls_admin_icon_get_edit_new', $path );
-		}
-		return get_admin_url( get_current_blog_id(), $path );
+	public function get_edit_new() {
+		/**
+		 * Returns custom path to the admin icon
+		 * @since 0.9.9
+		 * @param string $path
+		 */
+		return get_admin_url(
+			get_current_blog_id(),
+			(string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path )
+		);
 	}
 
 }

@@ -6,33 +6,40 @@
  */
 
 /**
- * Meta box for the edit mode of the (custom) post types 
+ * Meta box for the edit mode of the (custom) post types
  * @package Msls
  */
 class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Suggest
-	 * 
+	 *
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	static function suggest() {
+	public static function suggest() {
 		$json = new MslsJson;
-		if ( isset( $_REQUEST['blog_id'] ) ) {
-			switch_to_blog( (int) $_REQUEST['blog_id'] );
+
+		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
+			switch_to_blog(
+				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
+			);
 
 			$args = array(
-				'post_status'    => 'any',
+				'post_status'    => get_post_stati(),
 				'posts_per_page' => 10,
 			);
-				
-			if ( isset( $_REQUEST['post_type'] ) ) {
-				$args['post_type'] = sanitize_text_field( $_REQUEST['post_type'] );
+
+			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
+				$args['post_type'] = sanitize_text_field(
+					filter_input( INPUT_POST, 'post_type' )
+				);
 			}
 
-			if ( isset( $_REQUEST['s'] ) ) {
-				$args['s'] = sanitize_text_field( $_REQUEST['s'] );
+			if ( filter_has_var( INPUT_POST, 's' ) ) {
+				$args['s'] = sanitize_text_field(
+					filter_input( INPUT_POST, 's' )
+				);
 			}
 
 			/**
@@ -60,20 +67,19 @@ class MslsMetaBox extends MslsMain {
 			wp_reset_postdata();
 			restore_current_blog();
 		}
-		echo $json; // xss ok
-		die();
+		wp_die( $json->encode() );
 	}
 
 	/**
 	 * Init
 	 * @return MslsMetaBox
 	 */
-	static function init() {
+	public static function init() {
 		$obj = new self();
 		if ( ! MslsOptions::instance()->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-			add_action( 'save_post', array( $obj, 'set' ) );
-			add_action( 'trashed_post', array( $obj, 'delete' ) );
+			add_action( 'save_post',      array( $obj, 'set' ) );
+			add_action( 'trashed_post',   array( $obj, 'delete' ) );
 		}
 		return $obj;
 	}
@@ -88,7 +94,7 @@ class MslsMetaBox extends MslsMain {
 				__( 'Multisite Language Switcher', 'msls' ),
 				array(
 					$this,
-					( 
+					(
 						MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
@@ -103,53 +109,62 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Render the classic select-box
+	 * @uses selected
 	 */
 	public function render_select() {
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			global $post;
+
 			$type   = get_post_type( $post->ID );
 			$mydata = new MslsOptionsPost( $post->ID );
 			$temp   = $post;
-			$lis    = '';
+
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+
+			$lis = '';
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
-				$selects  = '';
-				$pto      = get_post_type_object( $type );
 
-				$icon = MslsAdminIcon::create();
-				$icon->set_language( $language );
-				$icon->set_src( $flag_url );
-
-				if ( $mydata->has_value( $language ) )
+				$icon = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_src( MslsOptions::instance()->get_flag_url( $language ) );
+				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
+				}
+
+				$selects = '';
+				$pto     = get_post_type_object( $type );
+
 				if ( $pto->hierarchical ) {
 					$selects .= wp_dropdown_pages(
 						array(
-							'post_type' => $type,
-							'selected' => $mydata->$language,
-							'name' => 'msls_input_' . $language,
-							'show_option_none' => ' ',
-							'sort_column' => 'menu_order, post_title',
-							'echo' => 0,
+							'post_type'         => $type,
+							'selected'          => $mydata->$language,
+							'name'              => 'msls_input_' . $language,
+							'show_option_none'  => ' ',
+							'option_none_value' => 0,
+							'sort_column'       => 'menu_order, post_title',
+							'echo'              => 0,
 						)
 					);
 				}
 				else {
 					$options  = '';
+
 					$my_query = new WP_Query(
 						array(
 							'post_type' => $type,
-							'post_status' => 'any',
+							'post_status' => get_post_stati(),
 							'orderby' => 'title',
 							'order' => 'ASC',
 							'posts_per_page' => (-1),
 						)
 					);
+
 					while ( $my_query->have_posts() ) {
 						$my_query->the_post();
 						$my_id    = get_the_ID();
@@ -160,18 +175,21 @@ class MslsMetaBox extends MslsMain {
 							get_the_title()
 						);
 					}
+
 					$selects .= sprintf(
-						'<select name="msls_input_%s"><option value=""></option>%s</select>',
+						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
 						$options
 					);
 				}
+
 				$lis .= sprintf(
 					'<li><label for="msls_input_%s">%s</label>%s</li>',
 					$language,
 					$icon,
 					$selects
 				);
+
 				restore_current_blog();
 			}
 			printf(
@@ -188,19 +206,23 @@ class MslsMetaBox extends MslsMain {
 			);
 		}
 	}
-	
+
 	/**
 	 * Render the suggest input-field
 	 */
 	public function render_input() {
 		$blogs = MslsBlogCollection::instance()->get();
+
 		if ( $blogs ) {
 			global $post;
+
 			$post_type = get_post_type( $post->ID );
 			$my_data   = new MslsOptionsPost( $post->ID );
 			$temp      = $post;
 			$items     = '';
+
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
@@ -209,11 +231,13 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 
 				$value = $title = '';
+
 				if ( $my_data->has_value( $language ) ) {
 					$icon->set_href( $my_data->$language );
 					$value = $my_data->$language;
 					$title = get_the_title( $value );
 				}
+
 				$items .= sprintf(
 					'<li>
 					<label for="msls_title_%1$s">%2$s</label>
@@ -226,17 +250,20 @@ class MslsMetaBox extends MslsMain {
 					$value,
 					$title
 				);
+
 				restore_current_blog();
 			}
+
 			printf(
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>
-				<input type="submit" class="button-secondary" value="%s"/>',
+				<input type="submit" class="button-secondary clear" value="%s"/>',
 				$items,
 				$post_type,
 				__( 'Update', 'msls' )
 			);
+
 			$post = $temp;
 		}
 		else {
@@ -252,20 +279,20 @@ class MslsMetaBox extends MslsMain {
 	 * @param int $post_id
 	 */
 	public function set( $post_id ) {
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) ) {
+		if ( $this->is_autosave( $post_id ) || ! $this->verify_nonce() ) {
 			return;
 		}
-		if ( ! isset( $_POST['msls_noncename'] ) || ! wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) ) {
+
+		$capability = (
+			'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
+			'edit_page' :
+			'edit_post'
+		);
+
+		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;
 		}
-		if ( 'page' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_page', $post_id ) )
-				return;
-		}
-		else {
-			if ( ! current_user_can( 'edit_post', $post_id ) )
-				return;
-		}
+
 		$this->save( $post_id, 'MslsOptionsPost' );
 	}
 

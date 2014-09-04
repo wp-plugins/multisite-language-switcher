@@ -16,7 +16,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * Init
 	 * @return MslsCustomColumnTaxonomy
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {
@@ -42,12 +42,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
 	 * Delete
-	 * @param int $term_id
-	 * @param int $tt_id
+	 * @param int $object_id
 	 */
 	public function delete( $object_id ) {
-		$options = new MslsOptionsTax( $object_id );
-		$this->save( $object_id, 'MslsOptionsTax', $options->get_arr() );
+		$this->save( $object_id, 'MslsOptionsTax' );
 	}
 
 }

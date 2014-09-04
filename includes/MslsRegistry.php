@@ -25,41 +25,43 @@ class MslsRegistry {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Don't call me directly!
+	 * @codeCoverageIgnore
 	 */
 	final private function __construct() { }
 
 	/**
 	 * Clone
-	 * 
+	 *
 	 * Don't call me directly!
+	 * @codeCoverageIgnore
 	 */
 	final private function __clone() { }
 
 	/**
 	 * Get an object by key
-	 * @param mixed $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return( isset( self::$arr[$key] ) ? self::$arr[$key] : null );
+		return( isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null );
 	}
 
 	/**
 	 * Set an object
-	 * @param mixed $key
+	 * @param string $key
 	 * @param mixed $instance
 	 */
 	private function set( $key, $instance ) {
-		self::$arr[$key] = $instance;
+		self::$arr[ $key ] = $instance;
 	}
 
 	/**
 	 * Registry is a singleton
-	 * @return mixed
+	 * @return MslsRegistry
 	 */
-	static function singleton() {
+	public static function instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -67,21 +69,21 @@ class MslsRegistry {
 	}
 
 	/**
-	 * Static get_object calls getW
-	 * @param mixed $key
+	 * Static get_object calls get
+	 * @param string $key
 	 * @return mixed
 	 */
-	static function get_object( $key ) {
-		return self::singleton()->get( $key );
+	public static function get_object( $key ) {
+		return self::instance()->get( $key );
 	}
 
 	/**
 	 * Static set_object calls set
-	 * @param mixed $key
+	 * @param string $key
 	 * @param mixed $instance
 	 */
-	static function set_object( $key, $instance ) {
-		self::singleton()->set( $key, $instance );
+	public static function set_object( $key, $instance ) {
+		self::instance()->set( $key, $instance );
 	}
 
 }

@@ -28,21 +28,33 @@ class MslsWidget extends WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$title   = $instance['title'];
-		$content = MslsOutput::init()->__toString();
+		$args = wp_parse_args(
+			$args,
+			array(
+				'before_widget' => '',
+				'after_widget'  => '',
+				'before_title'  => '',
+				'after_title'   => '',
+			)
+		);
 
 		/** This filter is documented in wp-includes/default-widgets.php */
-		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
-
+		$title = apply_filters(
+			'widget_title',
+			( isset( $instance['title'] ) ? $instance['title'] : '' ),
+			$instance,
+			$this->id_base
+		);
 		if ( $title ) {
 			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
+		$content = MslsOutput::init()->__toString();
 		if ( '' == $content ) {
 			$content = __( 'No available translations found', 'msls' );
 		}
 
-		echo $args['before_widget'], $title, $content, $args['after_widget'];  // xss ok
+		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
 	}
 
 	/**
@@ -52,14 +64,17 @@ class MslsWidget extends WP_Widget {
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance          = $old_instance;
-		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance = $old_instance;
+		if ( isset( $new_instance['title'] ) ) {
+			$instance['title'] = strip_tags( $new_instance['title'] );
+		}
 		return $instance;
 	}
 
 	/**
 	 * Display an input-form in the backend
 	 * @param array $instance
+	 * @codeCoverageIgnore
 	 */
 	public function form( $instance ) {
 		printf(

@@ -7,22 +7,7 @@
 
 /**
  * Generic class for overloading properties
- * 
- *     $obj = new MslsGetSet;
- *     $obj->tmp = 'test';
- * 
- *     $val = $obj->get_arr();          // array( 'tmp' => 'test' ) == $val
- *     $val = $obj->has_value( 'tmp' ); // true == $val
- *     $val = $obj->is_empty();         // false == $val
- *     echo $obj->tmp;                  // Output: test
- * 
- *     $obj->reset();
- * 
- *     $val = $obj->get_arr();          // array() == $val
- *     $val = $obj->has_value( 'tmp' ); // false == $val
- *     $val = $obj->is_empty();         // true == $val
- *     echo $obj->tmp;                  // Output:
- * 
+ * @example http://msls.co/examples/MslsGetSet.php How to use MslsGetSet
  * @package Msls
  */
 class MslsGetSet {
@@ -35,49 +20,51 @@ class MslsGetSet {
 
 	/**
 	 * Overloads the set method.
-	 * 
-	 * @param mixed $key
+	 *
+	 * @param string $key
 	 * @param mixed $value
 	 */
 	final public function __set( $key, $value ) {
-		$this->arr[$key] = $value;
-		if ( empty( $this->arr[$key] ) )
-			unset( $this->arr[$key] );
+		$this->arr[ $key ] = $value;
+		if ( empty( $this->arr[ $key ] ) ) {
+			unset( $this->arr[ $key ] );
+		}
 	}
 
 	/**
 	 * Overloads the get method.
-	 * 
-	 * @param mixed $key
+	 *
+	 * @param string $key
 	 * @return mixed
 	 */
 	final public function __get( $key ) {
-		return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
+		return( isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null );
 	}
 
 	/**
 	 * Overloads the isset method.
-	 * 
-	 * @param mixed $key
+	 *
+	 * @param string $key
 	 * @return bool
 	 */
 	final public function __isset( $key ) {
-		return isset( $this->arr[$key] );
+		return isset( $this->arr[ $key ] );
 	}
 
 	/**
 	 * Overloads the unset method.
-	 * 
-	 * @param mixed $key
+	 *
+	 * @param string $key
 	 */
 	final public function __unset( $key ) {
-		if ( isset( $this->arr[$key] ) )
-			unset( $this->arr[$key] );
+		if ( isset( $this->arr[ $key ] ) ) {
+			unset( $this->arr[ $key ] );
+		}
 	}
 
 	/**
 	 * Resets the properties container to an empty array.
-	 * 
+	 *
 	 * @return MslsGetSet
 	 */
 	public function reset() {
@@ -87,37 +74,37 @@ class MslsGetSet {
 
 	/**
 	 * Checks if the array has an non empty item with the specified key name.
-	 * 
+	 *
 	 * This is method is similar to the overloaded __isset-method since
 	 * __set cleans empty properties but I use for example
-	 * 
+	 *
 	 *     $obj->has_value( $temp )
-	 * 
+	 *
 	 * and not
-	 * 
+	 *
 	 *     isset( $obj->$temp )
-	 * 
+	 *
 	 * which is the same but in my opinion a little bit ugly.
-	 * 
+	 *
 	 * @param string $key
 	 * @return bool
-	 */ 
+	 */
 	public function has_value( $key ) {
-		return( ! empty( $this->arr[$key] ) );
+		return( ! empty( $this->arr[ $key ] ) );
 	}
 
 	/**
 	 * Checks if the properties-container is empty.
-	 * 
+	 *
 	 * @return bool
-	 */ 
+	 */
 	public function is_empty() {
 		return( empty( $this->arr ) );
 	}
 
 	/**
 	 * Gets the complete properties-container as an array.
-	 * 
+	 *
 	 * @return array
 	 */
 	final public function get_arr() {

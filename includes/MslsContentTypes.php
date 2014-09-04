@@ -27,40 +27,14 @@ class MslsContentTypes {
 	 * Factory method
 	 * @return MslsContentTypes
 	 */
-	static function create() {
-		if ( isset( $_REQUEST['taxonomy'] ) )
+	public static function create() {
+		$_request = MslsPlugin::get_superglobals( array( 'taxonomy' ) );
+		if ( '' != $_request['taxonomy'] ) {
 			return MslsTaxonomy::instance();
+		}
 		return MslsPostType::instance();
 	}
 
-	/**
-	 * Getter
-	 * @return array
-	 */
-	public function get() {
-		return $this->types;
-	}
-
-	/**
-	 * Gets the request if it is an allowed content type
-	 * @return string
-	 */
-	public function get_request() {
-		return(
-			in_array( $this->request, $this->types ) ?
-			$this->request :
-			''
-		);
-	}
-
-	/**
-	 * Get the requested taxonomy without a check
-	 * @return string
-	 */
-	public function get_taxonomy() {
-		return $this->taxonomy;
-	}
-	
 	/**
 	 * Check for post_type
 	 * @return bool
@@ -75,6 +49,37 @@ class MslsContentTypes {
 	 */
 	public function is_taxonomy() {
 		return false;
+	}
+
+	/**
+	 * Check if the current user can manage this content type
+	 *
+	 * Returns name of the content type if the user has access or an empty
+	 * string if the user can not access
+	 * @return string
+	 */
+	public function acl_request() {
+		return '';
+	}
+
+	/**
+	 * Getter
+	 * @return array
+	 */
+	public function get() {
+		return (array) $this->types;
+	}
+
+	/**
+	 * Gets the request if it is an allowed content type
+	 * @return string
+	 */
+	public function get_request() {
+		return(
+			in_array( $this->request, $this->types ) ?
+			$this->request :
+			''
+		);
 	}
 
 }

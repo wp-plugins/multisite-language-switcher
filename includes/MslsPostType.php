@@ -13,6 +13,7 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
 	/**
 	 * Constructor
+	 * @uses get_post_types
 	 */
 	public function __construct() {
 		$this->types = array_merge(
@@ -26,13 +27,16 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 				'and'
 			)
 		);
-		if ( ! empty( $_REQUEST['post_type'] ) ) {
-			$this->request = esc_attr( $_REQUEST['post_type'] );
+
+		$_request = MslsPlugin::get_superglobals( array( 'post_type' ) );
+		if ( '' != $_request['post_type'] ) {
+			$this->request = esc_attr( $_request['post_type'] );
 		}
 		else {
 			$this->request = get_post_type();
-			if ( ! $this->request )
-				$this->request = 'post'; 
+			if ( ! $this->request ) {
+				$this->request = 'post';
+			}
 		}
 	}
 
@@ -45,16 +49,14 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get or create a instance of MslsPostType
-	 * @return MslsPostType
+	 * Get or create an instance of MslsPostType
+	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
+	 * @return MslsBlogPostType
 	 */
-	static function instance() {
-		$registry = MslsRegistry::singleton();
-		$cls      = __CLASS__;
-		$obj      = $registry->get_object( $cls );
-		if ( is_null( $obj ) ) {
-			$obj = new $cls;
-			$registry->set_object( $cls, $obj );
+	public static function instance() {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogPostType' ) ) ) {
+			$obj = new self();
+			MslsRegistry::set_object( 'MslsBlogPostType', $obj );
 		}
 		return $obj;
 	}

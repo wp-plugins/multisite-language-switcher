@@ -28,50 +28,36 @@ class MslsOptionsTax extends MslsOptions {
 	 * @param int $id
 	 * @return MslsOptionsTax
 	 */
-	static function create( $id = 0 ) {
+	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
-			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
-			if ( $obj->is_taxonomy() ) {
-				switch ( $obj->get_request() ) {
-					case 'category':
-						return new MslsOptionsTaxTermCategory( $id );
-						break;
-					case 'post_tag':
-						return new MslsOptionsTaxTerm( $id );
-						break;
-					default:
-						return new MslsOptionsTax( $id );
-				}
-			}
+
+			$id  = (int) $id;
+			$req = $obj->acl_request();
 		}
 		else {
 			global $wp_query;
-			if ( is_category() ) {
-				return new MslsOptionsTaxTermCategory(
-					$wp_query->get_queried_object_id()
-				);
-			}
-			elseif ( is_tag() ) {
-				return new MslsOptionsTaxTerm(
-					$wp_query->get_queried_object_id()
-				);
-			}
-			elseif ( is_tax() ) {
-				return new MslsOptionsTax(
-					$wp_query->get_queried_object_id()
-				);
-			}
+
+			$id  = $wp_query->get_queried_object_id();
+			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
-		return null;
+
+		if ( 'category' == $req ) {
+			return new MslsOptionsTaxTermCategory( $id );
+		}
+		elseif ( 'post_tag' == $req ) {
+			return new MslsOptionsTaxTerm( $id );
+		}
+		return new MslsOptionsTax( $id );
 	}
 
 	/**
 	 * Get the queried taxonomy
 	 * @return string
 	 */
-	protected function get_tax_query() {
+	public function get_tax_query() {
 		global $wp_query;
+
 		return(
 			isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
 			$wp_query->tax_query->queries[0]['taxonomy'] :
@@ -79,14 +65,6 @@ class MslsOptionsTax extends MslsOptions {
 		);
 	}
 
-	/**
-	 * Check and correct URL
-	 * @param string $url
-	 * @return string
-	 */
-	protected function check_url( $url ) {
-		return( empty( $url ) || ! is_string( $url ) ? '' : $url );
-	}
 
 	/**
 	 * Get postlink
@@ -94,17 +72,13 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		$url = '';
 		if ( $this->has_value( $language ) ) {
-			$taxonomy = $this->get_tax_query();
-			$url      = $this->check_url(
-				get_term_link(
-					(int) $this->__get( $language ),
-					$taxonomy
-				)
-			);
+			$link = $this->get_term_link( (int) $this->__get( $language ) );
+			if ( ! empty( $link ) ) {
+				return $this->check_url( $link );
+			}
 		}
-		return $url;
+		return '';
 	}
 
 	/**
@@ -112,12 +86,24 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	public function get_current_link() {
-		$taxonomy = $this->get_tax_query();
-		return(
-			empty( $taxonomy ) ?
-			null :
-			get_term_link( (int) $this->args[0], $taxonomy )
-		);
+		return $this->get_term_link( $this->get_arg( 0, '' ) );
+	}
+
+	/**
+	 * Wraps the call to get_term_link
+	 * @param int $term_id
+	 */
+	public function get_term_link( $term_id ) {
+		if ( ! empty( $term_id ) ) {
+			$taxonomy = $this->get_tax_query();
+			if ( ! empty( $taxonomy ) ) {
+				$link = get_term_link( $term_id, $taxonomy );
+				if ( ! is_wp_error( $link ) ) {
+					return $link;
+				}
+			}
+		}
+		return '';
 	}
 
 }

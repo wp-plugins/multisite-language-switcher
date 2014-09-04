@@ -5,32 +5,30 @@ msgstr ""
 "POT-Creation-Date: 2014-09-01 16:43+0100\n"
 "PO-Revision-Date: 2014-09-01 16:43+0100\n"
 "Last-Translator: \n"
-"Language-Team: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
-"Language: Serbian\n"
+"Language-Team: Erik Bernskiold <erik@bernskioldmedia.com>\n"
+"Language: Swedish (sv_SE)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: Poedit 1.5.7\n"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-# @ msls
 #: ../MultisiteLanguageSwitcher.php:165
 #, php-format
 msgid "This post is also available in %s."
-msgstr "Ovaj post je takodje dostupan na %s."
+msgstr "Detta inlägg finns också på %s."
 
-# @ msls
 #: ../MultisiteLanguageSwitcher.php:182
 #, php-format
 msgid "%s and %s"
-msgstr "%s i %s"
+msgstr "%s och %s"
 
 #: ../MultisiteLanguageSwitcher.php:287
 msgid ""
@@ -39,8 +37,11 @@ msgid ""
 "href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
 "\">this post</a> if you don't know the meaning."
 msgstr ""
+"För att fungera kräver Multisite Language Switcher att multisite-funktionen "
+"i WordPress är aktiverad. Vänligen läs <a onclick=\"window.open(this.href); "
+"return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">denna "
+"artikel</a> för att få hjälp med att göra detta."
 
-# @ msls
 #: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
 #: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:151
 #: ../includes/MslsPostTagClassic.php:112 ../includes/MslsWidget.php:20
@@ -61,43 +62,39 @@ msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
 "\">complete the configuration process</a>."
 msgstr ""
+"Multisite Language Switcher är nästan redo. Du måste bara <a href=\"%s"
+"\">slutföra konfigurationsprocessen</a>."
 
-# @ msls
 #: ../includes/MslsAdmin.php:71
 msgid "Multisite Language Switcher Options"
-msgstr "Multisite Language Switcher opcije"
+msgstr "Inställningar för Multisite Language Switcher"
 
-# @ msls
 #: ../includes/MslsAdmin.php:73
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Za maksimum fleksibilnost morate da konfigurišete svaki blog odvojeno"
+msgstr "För maximal flexibilitet måste du konfigurera varje site separat."
 
 #: ../includes/MslsAdmin.php:81
 msgid "Configure"
-msgstr ""
+msgstr "Konfigurera"
 
-# @ msls
 #: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:197
 #: ../includes/MslsMetaBox.php:263
 msgid "Update"
-msgstr "Update"
+msgstr "Uppdatera"
 
-# @ msls
 #: ../includes/MslsAdmin.php:120
 #, fuzzy
 msgid "Language Settings"
-msgstr "Glavne postavke"
+msgstr "Huvudinställningar"
 
-# @ msls
 #: ../includes/MslsAdmin.php:121
 msgid "Main Settings"
-msgstr "Glavne postavke"
+msgstr "Huvudinställningar"
 
-# @ msls
 #: ../includes/MslsAdmin.php:122
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Avancerade inställningar"
 
 #: ../includes/MslsAdmin.php:137
 msgid "Blog Language"
@@ -107,136 +104,113 @@ msgstr ""
 msgid "Admin Language"
 msgstr ""
 
-# @ msls
 #: ../includes/MslsAdmin.php:154
 msgid "Display"
-msgstr "Prikaz"
+msgstr "Visning"
 
-# @ msls
 #: ../includes/MslsAdmin.php:155
 msgid "Sort output by description"
-msgstr "Sortiraj output po opisu"
+msgstr "Sortera output på beskrivning"
 
-# @ msls
 #: ../includes/MslsAdmin.php:156
 msgid "Display link to the current language"
-msgstr "Prikaži link za sledeći jezik"
+msgstr "Visa en länk till det aktiva språket"
 
-# @ msls
 #: ../includes/MslsAdmin.php:157
 msgid "Show only links with a translation"
-msgstr "Prikaži samo linkove sa prevodom"
+msgstr "Visa enbart länkar med en översättning"
 
-# @ msls
 #: ../includes/MslsAdmin.php:158
 msgid "Description"
-msgstr "Opis"
+msgstr "Beskrivning"
 
-# @ msls
 #: ../includes/MslsAdmin.php:159
 msgid "Text/HTML before the list"
-msgstr "Text/HTML pre liste"
+msgstr "Text/HTML före listan"
 
-# @ msls
 #: ../includes/MslsAdmin.php:160
 msgid "Text/HTML after the list"
-msgstr "Text/HTML nakon liste"
+msgstr "Text/HTML efter listan"
 
-# @ msls
 #: ../includes/MslsAdmin.php:161
 msgid "Text/HTML before each item"
-msgstr "Text/HTML pre svake stavke"
+msgstr "Text/HTML före varje språk"
 
-# @ msls
 #: ../includes/MslsAdmin.php:162
 msgid "Text/HTML after each item"
-msgstr "Text/HTML aposle svake stavke"
+msgstr "Text/HTML efter varje språk"
 
-# @ msls
 #: ../includes/MslsAdmin.php:163
 msgid "Add hint for available translations"
-msgstr "Dodajte hint za dostupne prevode"
+msgstr "Lägg till tips för tillgängliga översättningar"
 
-# @ msls
 #: ../includes/MslsAdmin.php:164
 msgid "Hint priority"
-msgstr "Hint prioritet"
+msgstr "Prioritet för tips"
 
 #: ../includes/MslsAdmin.php:180
 msgid "Activate experimental autocomplete inputs"
-msgstr ""
+msgstr "Aktivera experimentell funktion för automatisk ifyllnad av textfält"
 
-# @ msls
 #: ../includes/MslsAdmin.php:181
 msgid "Custom URL for flag-images"
-msgstr "Custom URL za slike zastava"
+msgstr "Egen URL för flagg-bilder"
 
 #: ../includes/MslsAdmin.php:182
 msgid "Reference user"
-msgstr ""
+msgstr "Referensanvändare"
 
-# @ msls
 #: ../includes/MslsAdmin.php:183
 msgid "Exclude this blog from output"
-msgstr "Isključi ovaj blog iz output-a"
+msgstr "Exkludera denna site från output"
 
-# @ msls
 #: ../includes/MslsAdminIcon.php:147
 #, php-format
 msgid "Edit the translation in the %s-blog"
-msgstr "Edituj prevod u %s-blogu"
+msgstr "Redigera översättningen på %s-siten"
 
-# @ msls
 #: ../includes/MslsAdminIcon.php:154
 #, php-format
 msgid "Create a new translation in the %s-blog"
-msgstr "Napravi novi prevod u %s-blogu"
+msgstr "Skapa en ny översättning på %s-siten"
 
 #: ../includes/MslsCustomFilter.php:45
 msgid "Show all blogs"
-msgstr ""
+msgstr "Visa alla siter"
 
-# @ msls
 #: ../includes/MslsCustomFilter.php:51
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "Inte översatt i %s-siten"
 
-# @ msls
 #: ../includes/MslsLink.php:45
 msgid "Flag and description"
-msgstr "Oznaka i zastava"
+msgstr "Flagga och beskrivning"
 
-# @ msls
 #: ../includes/MslsLinkImageOnly.php:25
 msgid "Flag only"
-msgstr "Samo zastava"
+msgstr "Enbart flagga"
 
-# @ msls
 #: ../includes/MslsLinkTextImage.php:25
 msgid "Description and flag"
-msgstr "Opis i zastava"
+msgstr "Beskrivning och flagga"
 
-# @ msls
 #: ../includes/MslsLinkTextOnly.php:25
 msgid "Description only"
-msgstr "Samo opis"
+msgstr "Enbart beskrivning"
 
-# @ msls
 #: ../includes/MslsMetaBox.php:204 ../includes/MslsMetaBox.php:271
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
-"Trebalo bi da definišete makar još jedan blog na drugom jeziku da biste "
-"imali bilo kakve koristi od ovog plugina!"
+"Du bör skapa minst en till site i ett annat språk för att ha nytta av detta "
+"tillägg!"
 
-# @ msls
 #: ../includes/MslsWidget.php:54
 msgid "No available translations found"
-msgstr ""
+msgstr "Inga tillgängliga översättningar funna"
 
-# @ msls
 #: ../includes/MslsWidget.php:83
 msgid "Title"
-msgstr "Naslov"
+msgstr "Titel"

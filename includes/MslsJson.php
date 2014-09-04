@@ -7,13 +7,7 @@
 
 /**
  * Container for an array which will used in JavaScript as object in JSON
- * 
- *     $obj = new MslsJson;
- *     $obj->add( null, 'Test 3' )
- *         ->add( '2', 'Test 2' )
- *         ->add( 1, 'Test 1' );
- *     echo $obj; // Output: [{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]
- * 
+ * @example http://msls.co/examples/MslsJson.php How to use MslsJson
  * @package Msls
  */
 class MslsJson {
@@ -40,23 +34,23 @@ class MslsJson {
 
 	/**
 	 * compare
-	 * 
+	 *
 	 * Compare the item with the key "label" of the array $a and the
 	 * array $b
 	 * @param array $a
 	 * @param array $b
 	 * @return int
 	 */
-	static function compare( array $a, array $b ) {
+	public static function compare( array $a, array $b ) {
 		return strnatcmp( $a['label'], $b['label'] );
 	}
 
 	/**
 	 * get
-	 * 
+	 *
 	 * Get the array container sorted by label
 	 * @return array
-	 */ 
+	 */
 	public function get() {
 		$arr = $this->arr;
 		usort( $arr, array( __CLASS__, 'compare' ) );
@@ -64,14 +58,24 @@ class MslsJson {
 	}
 
 	/**
-	 * __toString
-	 * 
-	 * Return the array container as a JSON string when the object will
-	 * be converted to a string
+	 * encode
+	 *
+	 * Encodes object and returns it as a json-string
 	 * @return string
-	 */ 
-	public function __toString() {
+	 */
+	public function encode() {
 		return json_encode( $this->get() );
+	}
+
+	/**
+	 * __toString
+	 *
+	 * Return the encoded object as a string using the encode-method
+	 * @uses encode
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->encode();
 	}
 
 }

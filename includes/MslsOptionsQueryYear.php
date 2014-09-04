@@ -19,16 +19,17 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 	 * @return bool
 	 */
 	public function has_value( $language ) {
-		if ( ! isset( $this->arr[$language] ) ) {
-			global $wpdb;
-			$this->arr[$language] = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
-					$this->args[0]
+		if ( ! isset( $this->arr[ $language ] ) ) {
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
+
+			$this->arr[ $language ] = $cache->get_var(
+				$cache->prepare(
+					"SELECT count(ID) FROM {$cache->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
+					$this->get_arg( 0, 0 )
 				)
 			);
 		}
-		return (bool) $this->arr[$language];
+		return (bool) $this->arr[ $language ];
 	}
 
 	/**
@@ -37,7 +38,7 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_year_link( $this->args[0] );
+		return get_year_link( $this->get_arg( 0, '' ) );
 	}
 
 }

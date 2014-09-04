@@ -6,8 +6,8 @@
  */
 
 /**
- * Handling of existing/not existing translations in the backend 
- * listings of various post types
+ * Handling of existing/not existing translations in the backend listings of
+ * various post types
  * @package Msls
  */
 class MslsCustomColumn extends MslsMain {
@@ -16,7 +16,7 @@ class MslsCustomColumn extends MslsMain {
 	 * Init
 	 * @return MslsCustomColumn
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {

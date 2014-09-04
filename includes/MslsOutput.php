@@ -11,20 +11,24 @@
  */
 class MslsOutput extends MslsMain {
 
+	/**
+	 * Holds the format for the output
+	 * @var array $tags
+	 */
 	protected $tags;
 
 	/**
 	 * Init
 	 * @return MslsOutput
 	 */
-	static function init() {
+	public static function init() {
 		return new self();
 	}
 
 	/**
 	 * Creates and gets the output as an array
-	 * @param string $display
-	 * @param bool frontend
+	 * @param int $display
+	 * @param bool $filter
 	 * @param bool $exists
 	 * @uses MslsOptions
 	 * @uses MslsLink
@@ -40,33 +44,26 @@ class MslsOutput extends MslsMain {
 
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
+				$url      = $mydata->get_current_link();
+				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
 
-				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
 				if ( $current ) {
-					$url = $mydata->get_current_link();
 					$link->txt = $blog->get_description();
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
-					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
-						/**
-						 * We set $language to false so we can first restore the current blog
-						 * and continue with the next blog right after this important step.
-						 */
-						$language = false;
+
+					if ( $this->is_requirements_not_fulfilled( $mydata, $exists, $language ) ) {
+						restore_current_blog();
+						continue;
 					}
 					else {
 						$url       = $mydata->get_permalink( $language );
 						$link->txt = $blog->get_description();
 					}
+
 					restore_current_blog();
 				}
-
-				/**
-				 * No language no party...
-				 */
-				if ( ! $language )
-					continue;
 
 				$link->src = MslsOptions::instance()->get_flag_url( $language );
 				$link->alt = $language;
@@ -79,12 +76,7 @@ class MslsOutput extends MslsMain {
 					 * @param MslsLink $link
 					 * @param bool current
 					 */
-					$arr[] = (string) apply_filters(
-						'msls_output_get',
-						$url,
-						$link,
-						$current
-					);
+					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $current );
 				}
 				else {
 					$arr[] = sprintf(
@@ -107,26 +99,26 @@ class MslsOutput extends MslsMain {
 	 */
 	public function __toString() {
 		$options = MslsOptions::instance();
-		$arr     = $this->get(
-			(int) $options->display,
-			false,
-			isset( $options->only_with_translation )
-		);
 
-		if ( empty( $arr ) )
-			return '';
+		$display = (int) $options->display;
+		$filter  = false;
+		$exists  = isset( $options->only_with_translation );
 
-		$tags = $this->get_tags();
-		return $tags['before_output'] .
-			$tags['before_item'] .
-			implode( $tags['after_item'] . $tags['before_item'], $arr ) .
-			$tags['after_item'] .
-			$tags['after_output'];
+		$arr = $this->get( $display, $filter, $exists );
+
+		if ( ! empty( $arr ) ) {
+			$tags = $this->get_tags();
+
+			return $tags['before_output'] . $tags['before_item'] .
+				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+				$tags['after_item'] . $tags['after_output'];
+
+		}
+		return '';
 	}
 
 	/**
 	 * Gets tags for the output
-	 *
 	 * @return array
 	 */
 	public function get_tags() {
@@ -139,6 +131,13 @@ class MslsOutput extends MslsMain {
 				'before_output' => $options->before_output,
 				'after_output'  => $options->after_output,
 			);
+
+			/**
+			 * Returns tags array for the output
+			 * @since 1.0
+			 * @param array $tags
+			 */
+			$this->tags = ( array ) apply_filters( 'msls_output_get_tags', $this->tags );
 		}
 		return $this->tags;
 	}
@@ -154,4 +153,18 @@ class MslsOutput extends MslsMain {
 		return $this;
 	}
 
+	/**
+	 * Returns true if the requirements not fulfilled
+	 * @param MslsOptions|null $mydata
+	 * @param boolean $exists
+	 * @param string $language
+	 * @return boolean
+	 */
+	public function is_requirements_not_fulfilled( $mydata, $exists, $language ) {
+		return(
+			'MslsOptions' != get_class( $mydata ) &&
+			$exists &&
+			( is_null( $mydata ) || ! $mydata->has_value( $language ) )
+		);
+	}
 }
