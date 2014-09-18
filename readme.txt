@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,7 +95,7 @@ if you need such functionality.
 
 = How can I add the Multisite Language Switcher to the nav-menu of my blog? =
 
-Please check this [example plugin](https://github.com/lloc/MslsMenu) out.
+Please check this [plugin](https://wordpress.org/plugins/mslsmenu/) out.
 
 = I don't want to upload the same media files for every site. What can I do? =
 
@@ -120,6 +120,9 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 4. Widget
 
 == Changelog ==
+
+= 1.0.1 =
+* Bugfix: filter internal types from get_post_stati
 
 = 1.0 =
 * you can choose now your frontend/backend language from the installed languages in the plugins settings
