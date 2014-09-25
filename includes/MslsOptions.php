@@ -64,7 +64,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
-			$id  = (int) $id;
+			$id = (int) $id;
 
 			if ( MslsContentTypes::create()->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
@@ -266,14 +266,27 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		/**
 		 * Override the path to the flag-icons
 		 * @since 0.9.9
-		 * @param MslsOptions $this
+		 * @param string $url
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
 		if ( 5 == strlen( $language ) ) {
-			$language = strtolower( substr( $language, -2 ) );
+			$icon = strtolower( substr( $language, -2 ) );
 		}
-		return sprintf( '%s/%s.png', $url, $language );
+		else {
+			$icon = $language;
+		}
+		$icon .= '.png';
+
+		/**
+		 * Use your own filename for the flag-icon
+		 * @since 1.0.3
+		 * @param string $icon
+		 * @param string $language
+		 */
+		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
+
+		return sprintf( '%s/%s', $url, $icon );
 	}
 
 	/**
